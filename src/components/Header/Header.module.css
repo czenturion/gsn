@@ -1,0 +1,37 @@
+.header {
+	grid-area: h;
+	background-color: #1e82f3;
+	display: flex;
+}
+
+.logo {
+	width: 300px;
+	display: flex;
+}
+
+.logo img {
+	width: 30px;
+	height: 30px;
+	padding: 10px;
+}
+
+.logo p {
+	padding-top: 0;
+	color: white;
+	font-size: 14px;
+}
+
+.authBlock {
+	margin-left: auto;
+	padding-top: 13px;
+	padding-right: 25px;
+}
+
+.authBlock a {
+	color: white;
+	text-decoration: none;
+}
+
+.authBlock:hover {
+	color: lime;
+}

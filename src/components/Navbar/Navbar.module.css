@@ -1,0 +1,51 @@
+.nav {
+	grid-area: n;
+	background-color: #1e82f3;
+	height: 101%;
+}
+
+.item {
+	margin-left: 5px;
+	margin-top: 10px;
+}
+
+.item a {
+	color: white;
+	text-decoration: none;
+}
+
+.item.settings {
+	margin-top: 25px;
+}
+
+.item.friends {
+	margin-top: 25px;
+}
+
+.friendsList {
+	display: flex;
+	margin-top: 10px;
+	width: 90%;
+}
+
+.friendsList img{
+	width: 30px;
+	height: 30px;
+	border-radius: 30px;
+}
+
+.friend {
+	display: block;
+	margin: 0 auto;
+	font-size: 10px;
+}
+
+.friend p {
+	margin-top: 0;
+	text-align: center;
+}
+
+.name {
+	width: 30px;
+	word-wrap: break-word;
+}

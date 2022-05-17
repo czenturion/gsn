@@ -1,0 +1,44 @@
+.backgroundPic img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+
+
+.avatar {
+    margin-top: 30px;
+    display: grid;
+    grid-template-areas:
+		"l r";
+    grid-template-columns: 1fr 2fr;
+}
+
+.leftField {
+    grid-area: l;
+    flex-direction: column;
+    font-size: x-large;
+}
+
+.fullName {
+    height: 30px;
+    padding-bottom: 5px;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.leftField img {
+    width: 200px;
+    height: 200px;
+    margin-right: 15px;
+}
+
+.rightField {
+    grid-area: r;
+}
+
+.profileLinksName {
+    font-size: x-large;
+    font-weight: bold;
+}
+

@@ -1,0 +1,23 @@
+.message {
+    margin-top: 20px;
+    display: flex;
+    width: 100%;
+}
+
+textarea {
+    font-size: 20px;
+}
+
+.message textarea {
+    width: 80%;
+}
+
+.message button {
+    width: 20%;
+    max-height: 60px;
+    font-size: 16px;
+    padding: 7px 0 7px 0;
+    margin-left: -2px;
+    color: white;
+    background-color: #1e82f3;
+}
