@@ -11,6 +11,13 @@ import Preloader from "../common/Preloader/Preloader";
 import {Carousel} from "./Carousel";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsFetching,
+    getPageSize, getSuperFilteredUsers,
+    getTotalUsersCount
+} from "../../redux/users-selectors";
 
 
 class UsersComponent extends React.Component {
@@ -21,7 +28,6 @@ class UsersComponent extends React.Component {
 
 
     onPageChanged = (pageNumber) => {
-        this.props.setCurrentPage(pageNumber);
         this.props.getUsers(pageNumber, this.props.pageSize);
     }
 
@@ -31,26 +37,29 @@ class UsersComponent extends React.Component {
         let slicedPages = Carousel(this.props.totalUsersCount, this.props.pageSize, this.props.currentPage);
 
         return <>
-            {this.props.isFetching ? <Preloader/> :
-                <Users slicedPages={slicedPages}
-                       currentPage={this.props.currentPage}
-                       onPageChanged={this.onPageChanged}
-                       users={this.props.users}
-                       follow={this.props.follow}
-                       unfollow={this.props.unfollow}
-                       followingInProgress={this.props.followingInProgress}/>}
+            {
+                this.props.isFetching
+                    ? <Preloader/>
+                    : <Users slicedPages={slicedPages}
+                             currentPage={this.props.currentPage}
+                             onPageChanged={this.onPageChanged}
+                             users={this.props.users}
+                             follow={this.props.follow}
+                             unfollow={this.props.unfollow}
+                             followingInProgress={this.props.followingInProgress}/>
+            }
         </>
     }
 }
 
 let mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        users: getSuperFilteredUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state)
     };
 };
 

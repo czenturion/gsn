@@ -1,5 +1,4 @@
 const SEND_MESSAGE = "SEND-MESSAGE";
-const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT";
 
 let initialState = {
     dialogs: [
@@ -44,8 +43,7 @@ let initialState = {
             id: 7, name: "Sanchez", ava: "https://cdn-icons-png.flaticon.com/512/2922/2922547.png",
             messages: []
         }
-    ],
-    newMessageText: ""
+    ]
 };
 
 const dialogsReducer = (state = initialState, action) => {
@@ -56,10 +54,9 @@ const dialogsReducer = (state = initialState, action) => {
 
         case SEND_MESSAGE: {
 
-            let newText = state.newMessageText;
+            let newText = action.message;
             stateCopy = {
                 ...state,
-                newMessageText: "",
                 dialogs: [...state.dialogs],
             };
             stateCopy.dialogs[0] = {...state.dialogs[0]};
@@ -70,12 +67,6 @@ const dialogsReducer = (state = initialState, action) => {
             }];
             return stateCopy;
         }
-        case UPDATE_NEW_MESSAGE_TEXT: {
-            return {
-                ...state,
-                newMessageText: action.newText
-            };
-        }
         default:
             return state;
     }
@@ -83,11 +74,9 @@ const dialogsReducer = (state = initialState, action) => {
 
 
 // Отправка и обновление сообщения
-export const messageSendButtonActionCreator = () => ({type: SEND_MESSAGE})
-
-export const messageFieldChangeActionCreator = (newMessageText) => ({
-    type: UPDATE_NEW_MESSAGE_TEXT,
-    newText: newMessageText
+export const messageSendButtonActionCreator = (message) => ({
+    type: SEND_MESSAGE,
+    message: message
 })
 
 

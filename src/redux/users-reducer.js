@@ -83,10 +83,11 @@ export const setIsFollowing = (isFetching, userId) => ({type: TOGGLE_IS_FOLLOWIN
 
 // Redux-thunk
 
-export const getUsers = (currentPage, pageSize) => {
+export const getUsers = (page, pageSize) => {
     return (dispatch) => {
         dispatch(setIsFetching(true));
-        usersAPI.getUsers(currentPage, pageSize).then(res => {
+        dispatch(setCurrentPage(page))
+        usersAPI.getUsers(page, pageSize).then(res => {
             dispatch(setIsFetching(false));
             dispatch(setUsers(res.items));
             dispatch(setUsersTotalCount(res.totalCount));

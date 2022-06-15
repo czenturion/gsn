@@ -39,32 +39,73 @@
 
 .messagesScroll {
     position: relative;
-    height: 74vh;
+    height: 70vh;
     overflow-y: scroll;
+    padding-right: 10px;
 }
 
 .messagesScrollRef {
     height: 30px;
 }
 
-.message {
-    padding: 8px;
-}
 
 .sendMessageField {
-    display:flex;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    display: flex;
 }
 
-.sendMessageField textarea {
-    width: 70%;
+.sendMessageField:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+}
+
+
+.messagesForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.messageField {
+    width: 100%;
+    margin-right: 2px;
+}
+
+.messageField input {
+    padding-left: 5px;
+}
+
+.messageField input:focus {
+    outline: none
 }
 
 .btnMessageSend {
+    width: 30%;
+    border: 1px solid #424242;
+    border-left: none;
+}
+
+.messageField > input,
+.btnMessageSend > input {
+    flex: 1; /* additionally, equal width */
+    padding: 1em 0 1em 0;
+    border: 1px solid #424242;
+    width: 100%;
+}
+
+.btnMessageSend input {
+    border: none;
     background-color: #1e82f3;
     color: white;
     text-transform: uppercase;
-    width: 30%;
-    margin-left: -2px;
 }
+
+.btnMessageSend input:hover {
+    background-color: #004ca6;
+}
+
+.error,
+.error p {
+    margin: 0;
+    color: red;
+    height: 20px;
+}
+
+

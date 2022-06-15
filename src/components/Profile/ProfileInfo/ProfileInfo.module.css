@@ -42,3 +42,6 @@
     font-weight: bold;
 }
 
+.statusSpan {
+    height: 10px;
+}

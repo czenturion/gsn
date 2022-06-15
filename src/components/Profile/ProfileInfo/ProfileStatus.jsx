@@ -1,51 +1,70 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import s from "./ProfileInfo.module.css";
+import {useForm} from "react-hook-form";
 
-class ProfileStatus extends React.Component {
-    state = {
-        editMode: false,
-        status: this.props.status
+const ProfileStatus = props => {
+    const [
+        editMode,
+        toggleEditMode
+    ] = useState(false)
+
+    const [
+        status,
+        updateStatus
+    ] = useState(props.status)
+
+    const {
+        register,
+        getValues,
+        formState: {errors}
+    } = useForm();
+
+    const maxStatusLengthValue = 20;
+
+    const activateEditMode = () => {
+        toggleEditMode(true)
     }
 
-    activateEditMode = () => {
-        this.setState({
-            editMode: true
-        })
+    const deactivateEditMode = () => {
+        props.updateStatus(getValues().status);
+        toggleEditMode(false)
     }
 
-    deactivateEditMode = () => {
-        this.setState({
-            editMode: false
-        })
-        this.props.updateStatus(this.state.status);
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.status !== this.props.status) {
-            this.setState({
-                status: this.props.status
-            })
+    useEffect(() => {
+        if (status !== props.status) {
+            updateStatus(props.status)
         }
-    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
-    onStatusChange = (e) => {
-        this.setState({
-            status: e.currentTarget.value
-        })
-    }
-
-    render() {
-        return (
-            <div>
-                { this.state.editMode
-                    ? <input onChange={this.onStatusChange} autoFocus={true} onBlur={this.deactivateEditMode} value={this.state.status}/>
-                    : <span  onClick={this.activateEditMode}>
-                        { this.props.status
-                            ? this.props.status
-                            : "set status" } </span>
-                }
-            </div>
-        )
-    }
+    return (
+        <div>
+            {editMode
+                ? <form>
+                    <input
+                        type="text"
+                        {...register("status", {
+                            required: true,
+                            maxLength: {
+                                value: maxStatusLengthValue,
+                                message: `Max length ${maxStatusLengthValue} symbols`
+                            }
+                        })}
+                        autoFocus={true}
+                        defaultValue={props.status}
+                        onBlur={deactivateEditMode}
+                    />
+                    {errors?.message && <p>{errors?.message?.message}</p>}
+                </form>
+                : <span
+                    className={s.statusSpan}
+                    onClick={activateEditMode}>
+                    {props.status
+                        ? props.status
+                        : "set status"}</span>
+            }
+        </div>
+    )
 }
 
 export default ProfileStatus;
