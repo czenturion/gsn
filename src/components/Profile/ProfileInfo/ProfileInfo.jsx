@@ -1,7 +1,7 @@
 import s from "./ProfileInfo.module.css";
 import Preloader from "../../common/Preloader/Preloader";
 import userPhoto from "../../../assets/images/astroIco.jpg";
-
+import ProfileStatus from "./ProfileStatus";
 
 const ProfileInfo = ( props ) => {
 
@@ -38,6 +38,8 @@ const ProfileInfo = ( props ) => {
                     <div className={ s.fullName }>
                         { props.pofile.fullName }
                     </div>
+
+                    <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
 
                     <div>
                         <h3>{ props.pofile.userId }</h3>
