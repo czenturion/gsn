@@ -1,6 +1,6 @@
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
-import {messageFieldChangeActionCreator, messageSendButtonActionCreator} from "../../redux/dialogs-reducer";
+import {messageSendButtonActionCreator} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import React from "react";
@@ -27,13 +27,9 @@ const mapDispatchToProps = (dispatch) => {
 
     return {
 
-        messageSendButton: (scrollToBottom) => {
-            dispatch(messageSendButtonActionCreator());
+        messageSendButton: (message, scrollToBottom) => {
+            dispatch(messageSendButtonActionCreator(message));
             scrollToBottom();
-        },
-
-        messageFieldChange: (text) => {
-            dispatch(messageFieldChangeActionCreator(text));
         }
     };
 };

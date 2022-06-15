@@ -1,31 +1,49 @@
 import s from "./MyPosts.module.css";
 import React from "react";
+import {useForm} from "react-hook-form";
 
 
-const MyPosts = (props) => {
+const AddPostForm = (props) => {
+    const {
+        register,
+        handleSubmit,
+        reset
+    } = useForm();
 
-    // Обработчик изменений textarea
-    let newPostText = React.createRef();
-    let onPostChange = () => {
-        let text = newPostText.current.value;
-        props.updateNewPostText(text);
+
+    const onSubmit = (values) => {
+        props.addPost(values.post)
+        reset()
     }
 
     return (
-        <div>
-            <div className={s.message}>
-                <textarea ref={newPostText}
-                          placeholder="Enter a new post..."
-                          onChange={onPostChange}
-                          value={props.newPostText}/>
-                <button onClick={props.addPost}>Add post</button>
+        <form
+            className={s.message}
+            onSubmit={handleSubmit(onSubmit)}>
+            <div className={s.text}>
+                <input
+                    type="text"
+                    placeholder="Enter a new post..."
+                    {...register("post")}/>
             </div>
+            <div className={s.submit}>
+                <input
+                    type={"submit"}/>
+            </div>
+        </form>
+    )
+}
+
+const MyPosts = (props) => {
+    return (
+        <div>
+            <AddPostForm addPost={props.addPost}/>
             <div>
                 {/* Посты */}
                 {props.postsElements}
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default MyPosts;

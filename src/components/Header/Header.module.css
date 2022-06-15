@@ -1,6 +1,7 @@
 .header {
 	grid-area: h;
 	background-color: #1e82f3;
+	color: white;
 	display: flex;
 }
 
@@ -32,6 +33,7 @@
 	text-decoration: none;
 }
 
-.authBlock:hover {
+.authItem:hover {
 	color: lime;
+	cursor: pointer;
 }
