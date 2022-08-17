@@ -1,6 +1,6 @@
 import {createSelector} from "reselect";
 
-export const getAllUsers = (state) => {
+const getAllUsers = (state) => {
     return state.usersPage.users
 }
 

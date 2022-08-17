@@ -15,6 +15,6 @@ Under development, to launch the app:
 - With installed node.js, execute in cmd next:
   - ~/gsn npm install
   - ~/gsn npm start
-## and be logged in your account on https://social-network.samuraijs.com/ and remember, without subscription your limit 20 API requests per hour.
+## and you should to have an account on https://social-network.samuraijs.com/ and remember, without subscription your limit 20 API requests per hour.
   
 ## App runs at http://localhost:3000 , while this port isn't busy.

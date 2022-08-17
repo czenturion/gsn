@@ -6,7 +6,7 @@ import {ErrorBorder} from "../common/FormsControls/Errors";
 import React from "react";
 import {Navigate} from "react-router-dom";
 
-const LoginForm = (props) => {
+const LoginForm = ({logIn, captcha, }) => {
     const {
         register,
         handleSubmit,
@@ -20,7 +20,7 @@ const LoginForm = (props) => {
     } = useForm()
 
     const onSubmit = (formData) => {
-        props.logIn(formData, setError)
+        logIn(formData, setError)
         reset()
         return <Navigate to="/profile/"/>
     }
@@ -67,9 +67,9 @@ const LoginForm = (props) => {
                 <p>Remember me</p>
             </div>
             <div>
-                {props.captcha
+                {captcha
                     ? <div className={s.captcha}>
-                        <img src={props.captcha} alt="captcha"/>
+                        <img src={captcha} alt="captcha"/>
                         <input
                             type="text"
                             {...register("captcha",
@@ -93,13 +93,13 @@ const LoginForm = (props) => {
     )
 }
 
-
-const Login = (props) => {
+const Login = ({auth, logIn}) => {
     return <>
-        {!props.auth.isAuth
+        {
+            !auth.isAuth
                 ? <div className={s.logFormInput}>
                     <h1>LOGIN</h1>
-                    <LoginForm logIn={props.logIn} captcha={props.auth.captcha}/>
+                    <LoginForm logIn={logIn} captcha={auth.captcha}/>
                 </div>
                 : <Navigate to="/profile"/>
         }

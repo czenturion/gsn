@@ -8,9 +8,9 @@ const Header = (props) => {
 				<img
 					src="https://icon-library.com/images/white-globe-icon/white-globe-icon-24.jpg"
 					alt="logo"
-					className="spinner"
+					className={s.logo}
 				/>
-				<p>Global Social Network</p>
+				<p>GSN</p>
 			</div>
 			<div className={s.authBlock}>
 				{props.isAuth

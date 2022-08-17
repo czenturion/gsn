@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import s from "./ProfileInfo.module.css";
-import {useForm} from "react-hook-form";
 
 const ProfileStatus = props => {
     const [
@@ -13,58 +12,47 @@ const ProfileStatus = props => {
         updateStatus
     ] = useState(props.status)
 
-    const {
-        register,
-        getValues,
-        formState: {errors}
-    } = useForm();
-
-    const maxStatusLengthValue = 20;
-
     const activateEditMode = () => {
         toggleEditMode(true)
     }
 
     const deactivateEditMode = () => {
-        props.updateStatus(getValues().status);
+        props.updateStatus(status);
         toggleEditMode(false)
+    }
+
+    const onChangeStatus = (e) => {
+        updateStatus(e.currentTarget.value)
     }
 
     useEffect(() => {
         if (status !== props.status) {
             updateStatus(props.status)
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [props.status])
 
     return (
         <div>
-            {editMode
-                ? <form>
-                    <input
-                        type="text"
-                        {...register("status", {
-                            required: true,
-                            maxLength: {
-                                value: maxStatusLengthValue,
-                                message: `Max length ${maxStatusLengthValue} symbols`
-                            }
-                        })}
-                        autoFocus={true}
-                        defaultValue={props.status}
-                        onBlur={deactivateEditMode}
-                    />
-                    {errors?.message && <p>{errors?.message?.message}</p>}
-                </form>
+            {editMode && props.currentProfileAuthUser
+                ?
+                <input
+                    type="text"
+                    autoFocus={true}
+                    defaultValue={props.status}
+                    onBlur={deactivateEditMode}
+                    onChange={onChangeStatus}
+                />
+
                 : <span
                     className={s.statusSpan}
                     onClick={activateEditMode}>
-                    {props.status
-                        ? props.status
+                    {status
+                        ? status
                         : "set status"}</span>
             }
         </div>
     )
 }
+
 
 export default ProfileStatus;

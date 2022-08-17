@@ -1,6 +1,7 @@
 import s from "./MyPosts.module.css";
 import React from "react";
 import {useForm} from "react-hook-form";
+import Post from "./Post/Post";
 
 
 const AddPostForm = (props) => {
@@ -9,7 +10,6 @@ const AddPostForm = (props) => {
         handleSubmit,
         reset
     } = useForm();
-
 
     const onSubmit = (values) => {
         props.addPost(values.post)
@@ -40,8 +40,13 @@ const MyPosts = (props) => {
         <div>
             <AddPostForm addPost={props.addPost}/>
             <div>
-                {/* Посты */}
-                {props.postsElements}
+                {
+                    props.postsElements
+                        ? props.postsElements.map(post => <Post message={post.message}
+                                                                likesCount={post.likesCount}
+                                                                key={post.id}/>)
+                        : <></>
+                }
             </div>
         </div>
     )

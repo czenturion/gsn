@@ -11,6 +11,8 @@
 }
 
 .text input {
+    border-radius: 0;
+    border-right: none;
     width: 100%;
     font-size: 20px;
     height: 40px;

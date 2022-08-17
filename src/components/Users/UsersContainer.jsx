@@ -1,21 +1,21 @@
 import {connect} from "react-redux";
 import {
-    follow,
-    unfollow,
     setCurrentPage,
-    getUsers
+    getUsers,
+    toggleUserFollow
 } from "../../redux/users-reducer";
 import React from "react";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
-import {Carousel} from "./Carousel";
+import {Carousel} from "../common/Paginator/Carousel";
 import {compose} from "redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {
     getCurrentPage,
     getFollowingInProgress,
     getIsFetching,
-    getPageSize, getSuperFilteredUsers,
+    getPageSize,
+    getSuperFilteredUsers,
     getTotalUsersCount
 } from "../../redux/users-selectors";
 
@@ -44,8 +44,7 @@ class UsersComponent extends React.Component {
                              currentPage={this.props.currentPage}
                              onPageChanged={this.onPageChanged}
                              users={this.props.users}
-                             follow={this.props.follow}
-                             unfollow={this.props.unfollow}
+                             toggleUserFollow={this.props.toggleUserFollow}
                              followingInProgress={this.props.followingInProgress}/>
             }
         </>
@@ -67,8 +66,7 @@ let mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps,
         {
-            follow,
-            unfollow,
+            toggleUserFollow,
             setCurrentPage,
             getUsers
         }),

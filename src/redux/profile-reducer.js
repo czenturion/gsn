@@ -1,8 +1,10 @@
 import {profileAPI} from "../api/api";
 
-const ADD_POST = "ADD-POST";
-const SET_USER_PROFILE = "SET_USER_PROFILE";
-const SET_USER_STATUS = "SET_USER_STATUS";
+const ADD_POST = "gsn/profile/ADD-POST";
+const SET_USER_PROFILE = "gsn/profile/SET_USER_PROFILE";
+const SET_USER_STATUS = "gsn/profile/SET_USER_STATUS";
+const CURRENT_PROFILE_AUTH_USER = "gsn/profile/CURRENT_PROFILE_AUTH_USER";
+const DELETE_POST = "gsn/profile/DELETE_POST";
 
 let initialState = {
     posts: [
@@ -12,7 +14,8 @@ let initialState = {
         {id: 4, message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", likesCount: 33}
     ],
     profile: null,
-    status: ""
+    status: "",
+    currentProfileAuthUser: false
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -31,6 +34,12 @@ const profileReducer = (state = initialState, action) => {
             };
 
 
+        case DELETE_POST:
+            return {
+                ...state,
+                posts: state.posts.filter(p => p.id !== action.postId)
+            }
+
         case SET_USER_PROFILE:
             return {
                 ...state,
@@ -41,6 +50,12 @@ const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 status: action.status
+            }
+
+        case CURRENT_PROFILE_AUTH_USER:
+            return {
+                ...state,
+                currentProfileAuthUser: action.currentProfileAuthUser
             }
 
         default:
@@ -54,6 +69,11 @@ const profileReducer = (state = initialState, action) => {
 export const addPostActionCreator = (post) => ({
     type: ADD_POST,
     post
+});
+
+export const deletePost = (postId) => ({
+    type: DELETE_POST,
+    postId
 });
 
 export const setUserProfile = (profile) => ({
@@ -71,32 +91,34 @@ export const updateUserStatus = (status) => ({
     status
 });
 
+export const setCurrentProfileAuthUser = (value) => ({
+    type: CURRENT_PROFILE_AUTH_USER,
+    currentProfileAuthUser: value
+})
+
 // Redux-thunk
-export const getUserProfile = (userId) => {
-    return (dispatch) => {
-        profileAPI.getUserProfile(userId).then(res => {
-            dispatch(setUserProfile(res));
-        })
+export const getUserProfile = (userId) => async (dispatch) => {
+    const res = await profileAPI.getUserProfile(userId);
+
+    dispatch(setUserProfile(res));
+}
+
+export const getUserStatus = (userId) => async (dispatch) => {
+    const res = await profileAPI.getUserStatus(userId);
+
+    dispatch(setUserStatus(res));
+}
+
+export const updateStatus = (status) => async (dispatch) => {
+    const res = await profileAPI.updateUserStatus(status);
+
+    if (res.resultCode === 0) {
+        dispatch(updateUserStatus(status));
     }
 }
 
-export const getUserStatus = (userId) => {
-    return (dispatch) => {
-        profileAPI.getUserStatus(userId).then(res => {
-            dispatch(setUserStatus(res));
-        })
-    }
+export const addPost = (post) => (dispatch) => {
+    dispatch(addPostActionCreator(post))
 }
-
-export const updateStatus = (status) => {
-    return (dispatch) => {
-        profileAPI.updateUserStatus(status).then(res => {
-            if (res.resultCode === 0) {
-                dispatch(updateUserStatus(status));
-            }
-        })
-    }
-}
-
 
 export default profileReducer;

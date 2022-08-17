@@ -28,8 +28,8 @@ export const initializedSuccess = () => ({
 // thunks
 export const initializeApp = () => (dispatch) => {
     let promise = dispatch(getAuthUserData())
-    promise.then(()=> {
-        dispatch(initializedSuccess())
+    Promise.all([promise])
+        .then(()=> {dispatch(initializedSuccess())
     })
 }
 
