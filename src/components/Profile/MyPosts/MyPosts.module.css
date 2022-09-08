@@ -25,3 +25,8 @@
     background-color: #1e82f3;
     height: 40px;
 }
+
+.submit input:hover {
+    background-color: #004ca6;
+    cursor: pointer;
+}

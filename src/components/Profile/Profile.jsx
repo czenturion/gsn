@@ -1,7 +1,7 @@
-import s from "./Profile.module.css";
-import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import MyPosts from "./MyPosts/MyPostsContainer";
-import React from "react";
+import s from "./Profile.module.css"
+import ProfileInfo from "./ProfileInfo/ProfileInfo"
+import MyPosts from "./MyPosts/MyPostsContainer"
+import React from "react"
 
 const Profile = (props) => {
     return (
@@ -10,10 +10,12 @@ const Profile = (props) => {
                 profile={props.profile}
                 status={props.status}
                 updateStatus={props.updateStatus}
-                currentProfileAuthUser={props.currentProfileAuthUser}/>
+                currentProfileAuthUser={props.currentProfileAuthUser}
+                savePhoto={props.savePhoto}
+                uploadingData={props.uploadingData}/>
             <MyPosts/>
         </div>
-    );
-};
+    )
+}
 
-export default Profile;
+export default Profile

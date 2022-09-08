@@ -7,7 +7,8 @@
 
 
 .avatar {
-    margin-top: 30px;
+    height: 300px;
+    margin-top: 10px;
     display: grid;
     grid-template-areas:
 		"l r";
@@ -20,6 +21,11 @@
     font-size: x-large;
 }
 
+.leftField img {
+    width: 100%;
+    min-width: 150px;
+}
+
 .fullName {
     height: 30px;
     padding-bottom: 5px;
@@ -27,14 +33,9 @@
     font-weight: bold;
 }
 
-.leftField img {
-    width: 200px;
-    height: 200px;
-    margin-right: 15px;
-}
-
 .rightField {
     grid-area: r;
+    margin-left: 15px;
 }
 
 .profileLinksName {
@@ -44,4 +45,31 @@
 
 .statusSpan {
     height: 10px;
+}
+
+.photoUpdateButtonField {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.customFileUpload {
+    font-size: 16px;
+    border: 2px solid black;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.customFileUpload:hover {
+    color: white;
+    background: #004ca6;
+}
+
+.contactsList {
+    cursor: pointer;
+    font-weight: bolder;
 }

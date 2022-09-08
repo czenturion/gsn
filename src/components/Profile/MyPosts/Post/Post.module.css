@@ -14,3 +14,10 @@
 .item .message {
 	width: 60%;
 }
+
+.buttonLike:hover {
+	cursor: pointer;
+	color: white;
+	background: #004ca6;
+	border-radius: 3px;
+}

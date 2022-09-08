@@ -1,13 +1,34 @@
-import s from "./ProfileInfo.module.css";
-import Preloader from "../../common/Preloader/Preloader";
-import userPhoto from "../../../assets/images/astroIco.jpg";
-import ProfileStatus from "./ProfileStatus";
-import {capitalize} from "../../../utils/helpers/helpers";
+import s from "./ProfileInfo.module.css"
+import Preloader from "../../common/Preloader/Preloader"
+import userPhoto from "../../../assets/images/astroIco.jpg"
+import ProfileStatus from "./ProfileStatus"
+import {capitalize} from "../../../utils/helpers/helpers"
+import {useState} from "react"
 
-const ProfileInfo = ({profile, ...props}) => {
+const ProfileInfo = ({profile, currentProfileAuthUser, savePhoto, ...props}) => {
+    const [contactsHidden, toggleContactsVisible] = useState(true)
+
+    const onClickToggleContactsVisible = () => {
+        toggleContactsVisible(!contactsHidden)
+    }
 
     if (!profile) {
         return <Preloader/>
+    }
+
+    const contacts = Object.keys(profile.contacts).map(item => {
+            return <div key={item}>
+                {
+                    capitalize(item) + " : " + profile.contacts[item]
+                }
+            </div>
+        }
+    )
+
+    const uploadUserPhoto = (e) => {
+        if (e.target.files.length > 0) {
+            savePhoto(e.target.files[0])
+        }
     }
 
     return (
@@ -21,9 +42,19 @@ const ProfileInfo = ({profile, ...props}) => {
             <div className={s.avatar}>
                 <div className={s.leftField}>
                     {
-                        profile.photos.large
-                            ? <img src={profile.photos.large} alt=""/>
-                            : <img src={userPhoto} alt=""/>
+                        props.uploadingData
+                            ? <Preloader/>
+                            : profile.photos.large
+                                ? <img src={profile.photos.large} alt=""/>
+                                : <img src={userPhoto} alt=""/>
+                    }
+                    {
+                        currentProfileAuthUser && <div className={s.photoUpdateButtonField}>
+                            <label htmlFor="file-upload" className={s.customFileUpload}>Upload Avatar</label>
+                            <input type="file"
+                                   onChange={uploadUserPhoto}
+                                   id="file-upload"
+                                   accept=".png,.jpg,.jpeg"/></div>
                     }
                 </div>
                 <div className={s.rightField}>
@@ -33,17 +64,16 @@ const ProfileInfo = ({profile, ...props}) => {
                     <ProfileStatus
                         status={props.status}
                         updateStatus={props.updateStatus}
-                        currentProfileAuthUser={props.currentProfileAuthUser}/>
+                        currentProfileAuthUser={currentProfileAuthUser}/>
                     <div>
                         <h3>{profile.userId}</h3>
                     </div>
                     {
-                        Object.keys(profile.contacts).map(item => {
-                                return <div key={item}>
-                                    {capitalize(item) + " : " + profile.contacts[item]}
-                                </div>
-                            }
-                        )
+                        <div>
+                            <span className={s.contactsList}
+                                  onClick={onClickToggleContactsVisible}>Contacts {!contactsHidden ? "- - -" : "+++"}</span>
+                            {!contactsHidden ? <div className={s.contacts}>{contacts}</div> : <></>}
+                        </div>
                     }
                     <div>
                         {
@@ -67,4 +97,4 @@ const ProfileInfo = ({profile, ...props}) => {
     )
 }
 
-export default ProfileInfo;
+export default ProfileInfo

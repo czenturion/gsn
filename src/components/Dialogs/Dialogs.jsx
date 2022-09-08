@@ -1,20 +1,19 @@
-import s from "./Dialogs.module.css";
-import React, {useRef} from "react";
-import Scroll from "react-scroll";
-import {useForm} from "react-hook-form";
-import {ErrorBorder} from "../common/FormsControls/Errors";
+import s from "./Dialogs.module.css"
+import React, {useRef} from "react"
+import Scroll from "react-scroll"
+import {useForm} from "react-hook-form"
+import {ErrorBorder} from "../common/FormsControls/Errors"
 
 
 const Dialogs = (props) => {
 
 
     // Автоскролл вниз после отправки сообщения
-    let Element = Scroll.Element;
+    let Element = Scroll.Element
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    let scrollRef = useRef(null);
+    let scrollRef = useRef(null)
     const scrollToBottom = () => {
-        scrollRef.current?.scrollIntoView({behavior: "smooth"});
+        scrollRef.current?.scrollIntoView({behavior: "smooth"})
     }
 
 
@@ -34,7 +33,7 @@ const Dialogs = (props) => {
             </div>
         </div>
     )
-};
+}
 
 const AddMessageForm = (props) => {
     const {
@@ -42,14 +41,14 @@ const AddMessageForm = (props) => {
         handleSubmit,
         reset,
         formState: {errors}
-    } = useForm();
+    } = useForm()
 
     const onSubmit = (values) => {
-        props.messageSendButton(values.message, props.scrollToBottom);
-        reset();
-    };
+        props.messageSendButton(values.message, props.scrollToBottom)
+        reset()
+    }
 
-    const maxMessageLengthValue = 10;
+    const maxMessageLengthValue = 10
 
     return (
         <form
@@ -82,4 +81,4 @@ const AddMessageForm = (props) => {
     )
 }
 
-export default Dialogs;
+export default Dialogs

@@ -1,7 +1,5 @@
 .pages,
 .spinner {
-    margin-left: 100px;
-    margin-bottom: 10px;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none;   /* Chrome/Safari/Opera */
     -khtml-user-select: none;    /* Konqueror */
@@ -22,11 +20,9 @@
 }
 
 .spinner {
-    width: 60%;
-    text-align: center;
-    padding-top: 100px;
-    padding-bottom: 100px;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .leftField {

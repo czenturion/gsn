@@ -1,4 +1,4 @@
-import s from "./../Navbar.module.css";
+import s from "./../Navbar.module.css"
 
 const Friends = (props) => {
     return (
@@ -19,4 +19,4 @@ const Friends = (props) => {
     )
 }
 
-export default Friends;
+export default Friends

@@ -1,12 +1,12 @@
-import {useForm} from "react-hook-form";
-import {logIn} from "../../redux/auth-reducer";
-import {connect} from "react-redux";
-import s from "./Login.module.css";
-import {ErrorBorder} from "../common/FormsControls/Errors";
-import React from "react";
-import {Navigate} from "react-router-dom";
+import {useForm} from "react-hook-form"
+import {logIn} from "../../redux/auth-reducer"
+import {connect} from "react-redux"
+import s from "./Login.module.css"
+import {ErrorBorderOutline} from "../common/FormsControls/Errors"
+import React from "react"
+import {Navigate} from "react-router-dom"
 
-const LoginForm = ({logIn, captcha, }) => {
+const LoginForm = ({logIn, captcha}) => {
     const {
         register,
         handleSubmit,
@@ -14,8 +14,7 @@ const LoginForm = ({logIn, captcha, }) => {
         setError,
         clearErrors,
         formState: {
-            errors,
-            touchedFields
+            errors
         }
     } = useForm()
 
@@ -38,7 +37,7 @@ const LoginForm = ({logIn, captcha, }) => {
             <div>
                 <input
                     className={s.logInput}
-                    style={touchedFields?.email && errors?.email && ErrorBorder(errors)}
+                    style={errors?.email && ErrorBorderOutline(errors)}
                     {...register(
                         "email",
                         {
@@ -50,7 +49,7 @@ const LoginForm = ({logIn, captcha, }) => {
             <div>
                 <input
                     className={s.logInput}
-                    style={touchedFields?.password && errors?.password && ErrorBorder(errors)}
+                    style={errors?.password && ErrorBorderOutline(errors)}
                     {...register(
                         "password",
                         {
@@ -111,5 +110,4 @@ let mapStateToProps = (state) => ({
     }
 )
 
-
-export default connect(mapStateToProps, {logIn})(Login);
+export default connect(mapStateToProps, {logIn})(Login)

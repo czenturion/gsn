@@ -1,6 +1,18 @@
-const SEND_MESSAGE = "SEND-MESSAGE";
+const SEND_MESSAGE = "gsn/dialogs/SEND-MESSAGE"
 
-let initialState = {
+type InitialStateTypeOfChildMessage = {
+    id: number
+    sender: string
+    message: string
+}
+type InitialStateTypeOfChild = {
+    id: number
+    name: string
+    ava: string
+    messages: InitialStateTypeOfChildMessage[]
+}
+
+const initialState = {
     dialogs: [
         {
             id: 1, name: "Lora", ava: "https://cdn-icons-png.flaticon.com/512/2922/2922748.png",
@@ -43,41 +55,41 @@ let initialState = {
             id: 7, name: "Sanchez", ava: "https://cdn-icons-png.flaticon.com/512/2922/2922547.png",
             messages: []
         }
-    ]
-};
+    ] as InitialStateTypeOfChild[]
+}
 
-const dialogsReducer = (state = initialState, action) => {
+type InitialStateType = typeof initialState
 
-    let stateCopy;
-
+const dialogsReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
-
         case SEND_MESSAGE: {
-
-            let newText = action.message;
-            stateCopy = {
+            let stateCopy = {
                 ...state,
-                dialogs: [...state.dialogs],
-            };
-            stateCopy.dialogs[0] = {...state.dialogs[0]};
+                dialogs: [...state.dialogs]
+            }
+
+            stateCopy.dialogs[0] = {...state.dialogs[0]}
+
             stateCopy.dialogs[0].messages = [...stateCopy.dialogs[0].messages, {
                 id: state.dialogs[0].messages.length + 1,
                 sender: "u",
-                message: newText
-            }];
-            return stateCopy;
+                message: action.message
+            }]
+            return stateCopy
         }
         default:
-            return state;
+            return state
     }
 }
 
-
 // Отправка и обновление сообщения
-export const messageSendButtonActionCreator = (message) => ({
+type messageSendButtonActionCreatorActionType = {
+    type: typeof SEND_MESSAGE
+    message: string
+}
+export const messageSendButtonActionCreator = (message: string): messageSendButtonActionCreatorActionType => ({
     type: SEND_MESSAGE,
     message: message
 })
 
-
-export default dialogsReducer;
+export default dialogsReducer
