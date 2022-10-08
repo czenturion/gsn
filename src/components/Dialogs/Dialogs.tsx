@@ -1,21 +1,25 @@
 import s from "./Dialogs.module.css"
-import React, {useRef} from "react"
+import * as React from "react"
+import {useRef} from "react"
 import Scroll from "react-scroll"
-import {useForm} from "react-hook-form"
+import {SubmitHandler, useForm} from "react-hook-form"
 import {ErrorBorder} from "../common/FormsControls/Errors"
 
+type PropsType = {
+    dialogsElements: any
+    messagesElements: any
+    messageSendButton: (message: string, scrollToBottom: () => void) => void
+}
 
-const Dialogs = (props) => {
-
+const Dialogs: React.FC<PropsType> = (props) => {
 
     // Автоскролл вниз после отправки сообщения
     let Element = Scroll.Element
 
-    let scrollRef = useRef(null)
+    let scrollRef = useRef<null | HTMLDivElement>(null)
     const scrollToBottom = () => {
         scrollRef.current?.scrollIntoView({behavior: "smooth"})
     }
-
 
     return (
         <div className={s.dialogs}>
@@ -35,20 +39,28 @@ const Dialogs = (props) => {
     )
 }
 
-const AddMessageForm = (props) => {
+type FormValues = {
+    message: string
+}
+type AddMessageFormType = {
+    messageSendButton: (message: string, scrollToBottom: () => void) => void
+    scrollToBottom: () => void
+}
+
+const AddMessageForm: React.FC<AddMessageFormType> = (props) => {
     const {
         register,
         handleSubmit,
         reset,
         formState: {errors}
-    } = useForm()
+    } = useForm<FormValues>()
 
-    const onSubmit = (values) => {
+    const onSubmit: SubmitHandler<FormValues> = (values) => {
         props.messageSendButton(values.message, props.scrollToBottom)
         reset()
     }
 
-    const maxMessageLengthValue = 10
+    const maxMessageLengthValue = 20
 
     return (
         <form

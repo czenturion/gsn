@@ -1,17 +1,19 @@
 const SEND_MESSAGE = "gsn/dialogs/SEND-MESSAGE"
 
-type InitialStateTypeOfChildMessage = {
+export type DialogsElementsMessageType = {
     id: number
     sender: string
     message: string
 }
-type InitialStateTypeOfChild = {
+export type DialogsElementsType = {
     id: number
     name: string
     ava: string
-    messages: InitialStateTypeOfChildMessage[]
+    messages: DialogsElementsMessageType[]
 }
-
+export type DialogsInitialStateType = {
+    dialogs: DialogsElementsType[]
+}
 const initialState = {
     dialogs: [
         {
@@ -55,12 +57,10 @@ const initialState = {
             id: 7, name: "Sanchez", ava: "https://cdn-icons-png.flaticon.com/512/2922/2922547.png",
             messages: []
         }
-    ] as InitialStateTypeOfChild[]
+    ]
 }
 
-type InitialStateType = typeof initialState
-
-const dialogsReducer = (state = initialState, action: any): InitialStateType => {
+const dialogsReducer = (state = initialState, action: any): DialogsInitialStateType => {
     switch (action.type) {
         case SEND_MESSAGE: {
             let stateCopy = {
@@ -83,11 +83,11 @@ const dialogsReducer = (state = initialState, action: any): InitialStateType => 
 }
 
 // Отправка и обновление сообщения
-type messageSendButtonActionCreatorActionType = {
+type MessageSendButtonActionCreatorActionType = {
     type: typeof SEND_MESSAGE
     message: string
 }
-export const messageSendButtonActionCreator = (message: string): messageSendButtonActionCreatorActionType => ({
+export const messageSendButtonActionCreator = (message: string): MessageSendButtonActionCreatorActionType => ({
     type: SEND_MESSAGE,
     message: message
 })

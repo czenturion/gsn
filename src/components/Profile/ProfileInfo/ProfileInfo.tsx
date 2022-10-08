@@ -3,9 +3,21 @@ import Preloader from "../../common/Preloader/Preloader"
 import userPhoto from "../../../assets/images/astroIco.jpg"
 import ProfileStatus from "./ProfileStatus"
 import {capitalize} from "../../../utils/helpers/helpers"
-import {useState} from "react"
+import {FC, useState} from "react"
+import * as React from "react"
+import {ProfileType} from "../../../redux/profile-reducer"
 
-const ProfileInfo = ({profile, currentProfileAuthUser, savePhoto, ...props}) => {
+type PropsType = {
+    profile: ProfileType | null
+    status: string | null
+    currentProfileAuthUser: boolean
+    uploadingData: boolean
+    savePhoto: (file: File) => void
+    updateStatus: (newStatus: string) => void
+}
+
+const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto, status, updateStatus, uploadingData}) => {
+
     const [contactsHidden, toggleContactsVisible] = useState(true)
 
     const onClickToggleContactsVisible = () => {
@@ -19,15 +31,17 @@ const ProfileInfo = ({profile, currentProfileAuthUser, savePhoto, ...props}) => 
     const contacts = Object.keys(profile.contacts).map(item => {
             return <div key={item}>
                 {
+                    // @ts-ignore
                     capitalize(item) + " : " + profile.contacts[item]
                 }
             </div>
         }
     )
 
-    const uploadUserPhoto = (e) => {
-        if (e.target.files.length > 0) {
-            savePhoto(e.target.files[0])
+    const uploadUserPhoto = (event: { target: HTMLInputElement }) => {
+        const target = event.target
+        if (target.files!.length > 0) {
+            savePhoto(target.files![0])
         }
     }
 
@@ -42,7 +56,7 @@ const ProfileInfo = ({profile, currentProfileAuthUser, savePhoto, ...props}) => 
             <div className={s.avatar}>
                 <div className={s.leftField}>
                     {
-                        props.uploadingData
+                        uploadingData
                             ? <Preloader/>
                             : profile.photos.large
                                 ? <img src={profile.photos.large} alt=""/>
@@ -62,8 +76,8 @@ const ProfileInfo = ({profile, currentProfileAuthUser, savePhoto, ...props}) => 
                         {profile.fullName}
                     </div>
                     <ProfileStatus
-                        status={props.status}
-                        updateStatus={props.updateStatus}
+                        status={status}
+                        updateStatus={updateStatus}
                         currentProfileAuthUser={currentProfileAuthUser}/>
                     <div>
                         <h3>{profile.userId}</h3>

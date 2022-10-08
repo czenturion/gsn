@@ -13,9 +13,9 @@ const initialState = {
     captcha: ""
 }
 
-type InitialStateType = typeof initialState
+export type InitialAuthStateType = typeof initialState
 
-const authReducer = (state = initialState, action: any): InitialStateType => {
+const authReducer = (state = initialState, action: any): InitialAuthStateType => {
 
     switch (action.type) {
         case SET_USER_DATA:

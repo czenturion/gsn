@@ -8,13 +8,13 @@ const DELETE_POST = "gsn/profile/DELETE_POST"
 const SAVE_PHOTO_SUCCESS = "gsn/profile/SAVE_PHOTO_SUCCESS"
 const SET_UPLOADING_DATA = "gsn/profile/SET_UPLOADING_DATA"
 
-type PostType = {
+export type PostType = {
     id: number
     message: string
     likesCount: number
 }
 
-type ProfileContactsType = {
+export type ProfileContactsType = {
     facebook: string
     github: string
     instagram: string
@@ -30,7 +30,7 @@ export type ProfilePhotosType = {
     small: string | null
 }
 
-type ProfileType = {
+export type ProfileType = {
     userId: number
     aboutMe: string
     fullName: string
@@ -192,6 +192,7 @@ export const setUploadingData = (value: boolean): SetUploadingDataType => ({
 
 // Redux-thunk
 export const getUserProfile = (userId: number) => async (dispatch: any) => {
+
     const res = await profileAPI.getUserProfile(userId)
 
     dispatch(setUserProfile(res))
@@ -215,7 +216,7 @@ export const addPost = (post: string) => async (dispatch: any) => {
     await dispatch(addPostActionCreator(post))
 }
 
-export const savePhoto = (file: any) => async (dispatch: any) => {
+export const savePhoto = (file: File) => async (dispatch: any) => {
     dispatch(setUploadingData(true))
     const res = await profileAPI.saveUserPhoto(file)
     if (res.resultCode === 0) {

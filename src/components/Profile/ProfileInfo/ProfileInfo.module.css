@@ -4,10 +4,8 @@
     object-fit: cover;
 }
 
-
-
 .avatar {
-    height: 300px;
+    min-height: 300px;
     margin-top: 10px;
     display: grid;
     grid-template-areas:

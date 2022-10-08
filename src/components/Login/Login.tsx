@@ -1,12 +1,28 @@
-import {useForm} from "react-hook-form"
-import {logIn} from "../../redux/auth-reducer"
+import {useForm, UseFormSetError} from "react-hook-form"
+import type {SubmitHandler} from "react-hook-form"
+import {InitialAuthStateType, logIn} from "../../redux/auth-reducer"
 import {connect} from "react-redux"
 import s from "./Login.module.css"
 import {ErrorBorderOutline} from "../common/FormsControls/Errors"
-import React from "react"
+import * as React from "react"
 import {Navigate} from "react-router-dom"
+import {FC} from "react"
+import {AppStateType} from "../../redux/redux-store"
 
-const LoginForm = ({logIn, captcha}) => {
+type FormValues = {
+    serverResponse?: string[]
+    email: string
+    password: string
+    captcha: string
+    rememberMe: boolean
+}
+
+type LoginFormPropsType = {
+    captcha: string
+    logIn: (formData: FormValues, setError: UseFormSetError<FormValues>) => void
+}
+
+const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha}) => {
     const {
         register,
         handleSubmit,
@@ -16,16 +32,16 @@ const LoginForm = ({logIn, captcha}) => {
         formState: {
             errors
         }
-    } = useForm()
+    } = useForm<FormValues>()
 
-    const onSubmit = (formData) => {
+    const onSubmit: SubmitHandler<FormValues> = (formData) => {
         logIn(formData, setError)
         reset()
         return <Navigate to="/profile/"/>
     }
 
     const clearErrorsForm = () => {
-        if (errors?.serverResponse?.message.length > 0) {
+        if (errors && errors.serverResponse && errors.serverResponse.message!.length > 0) {
             clearErrors("serverResponse")
         }
     }
@@ -66,15 +82,16 @@ const LoginForm = ({logIn, captcha}) => {
                 <p>Remember me</p>
             </div>
             <div>
-                {captcha
-                    ? <div className={s.captcha}>
-                        <img src={captcha} alt="captcha"/>
-                        <input
-                            type="text"
-                            {...register("captcha",
-                                {required: true})}/>
-                    </div>
-                    : <></>
+                {
+                    captcha
+                        ? <div className={s.captcha}>
+                            <img src={captcha} alt="captcha"/>
+                            <input
+                                type="text"
+                                {...register("captcha",
+                                    {required: true})}/>
+                        </div>
+                        : <></>
                 }
             </div>
             <div>
@@ -83,16 +100,27 @@ const LoginForm = ({logIn, captcha}) => {
                     type={"submit"}/>
             </div>
             <div>
-                {errors?.serverResponse?.message
-                    ? <p style={{color: "red"}}>{errors?.serverResponse?.message}</p>
-                    : <div className={s.errorEmptyString}/>
+                {
+                    errors?.serverResponse?.message
+                        ? <p style={{color: "red"}}>{errors.serverResponse.message}</p>
+                        : <div className={s.errorEmptyString}/>
                 }
             </div>
         </form>
     )
 }
 
-const Login = ({auth, logIn}) => {
+type LoginPropsType = {
+    auth: InitialAuthStateType
+}
+
+type LoginDispatchType = {
+    logIn: (formData: FormValues, setError: UseFormSetError<FormValues>) => void
+}
+
+type LoginPropsAndDispatchType = LoginPropsType & LoginDispatchType
+
+const Login: FC<LoginPropsAndDispatchType> = ({auth, logIn}) => {
     return <>
         {
             !auth.isAuth
@@ -105,9 +133,9 @@ const Login = ({auth, logIn}) => {
     </>
 }
 
-let mapStateToProps = (state) => ({
+let mapStateToProps = (state: AppStateType): LoginPropsType => ({
         auth: state.auth
     }
 )
 
-export default connect(mapStateToProps, {logIn})(Login)
+export default connect<LoginPropsType, LoginDispatchType, {}, AppStateType>(mapStateToProps, {logIn})(Login)

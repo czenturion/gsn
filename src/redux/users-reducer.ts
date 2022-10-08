@@ -8,7 +8,7 @@ const TOGGLE_IS_FETCHING = "gsn/users/TOGGLE_IS_FETCHING"
 const TOGGLE_IS_FOLLOWING_IN_PROGRESS = "gsn/users/TOGGLE_IS_FOLLOWING_IN_PROGRESS"
 const TOGGLE_FOLLOW = "gsn/users/TOGGLE_FOLLOW"
 
-type UsersType = {
+export type UserType = {
     name: string
     id: number
     uniqueUrlName: string | null
@@ -18,7 +18,7 @@ type UsersType = {
 }
 
 const initialState = {
-    users: [] as UsersType[],
+    users: [] as UserType[],
     pageSize: 10,
     totalUsersCount: 0,
     currentPage: 1,
@@ -92,9 +92,9 @@ const toggleFollow = (userId: number): ToggleFollowType => ({type:
 //
 type SetUsersType = {
     type: typeof SET_USERS
-    users: UsersType[]
+    users: UserType[]
 }
-export const setUsers = (users: UsersType[]): SetUsersType => ({type:
+const setUsers = (users: UserType[]): SetUsersType => ({type:
     SET_USERS,
     users})
 //
@@ -110,7 +110,7 @@ type SetUsersTotalCountType = {
     type: typeof SET_TOTAL_USERS_COUNT
     totalCount: number
 }
-export const setUsersTotalCount = (totalCount: number): SetUsersTotalCountType => ({
+const setUsersTotalCount = (totalCount: number): SetUsersTotalCountType => ({
     type: SET_TOTAL_USERS_COUNT,
     totalCount
 })
@@ -119,7 +119,7 @@ type SetIsFetchingType = {
     type: typeof TOGGLE_IS_FETCHING
     isFetching: boolean
 }
-export const setIsFetching = (isFetching: boolean): SetIsFetchingType => ({
+const setIsFetching = (isFetching: boolean): SetIsFetchingType => ({
     type: TOGGLE_IS_FETCHING,
     isFetching
 })
@@ -129,7 +129,7 @@ type SetIsFollowingType = {
     isFetching: boolean
     userId: number
 }
-export const setIsFollowing = (isFetching: boolean, userId: number): SetIsFollowingType => ({
+const setIsFollowing = (isFetching: boolean, userId: number): SetIsFollowingType => ({
     type: TOGGLE_IS_FOLLOWING_IN_PROGRESS,
     isFetching,
     userId

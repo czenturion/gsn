@@ -1,9 +1,16 @@
-import s from "./Users.module.css";
-import {NavLink} from "react-router-dom";
-import userPhoto from "../../assets/images/userPhoto.png";
-import React from "react";
+import s from "./Users.module.css"
+import {NavLink} from "react-router-dom"
+import userPhoto from "../../assets/images/userPhoto.png"
+import * as React from "react"
+import {UserType} from "../../redux/users-reducer"
 
-export let UsersShortcut = ({user, followingInProgress, toggleUserFollow}) => {
+type PropsType = {
+    user: UserType
+    followingInProgress: number[]
+    toggleUserFollow: (userId: number, followed: boolean) => void
+}
+
+export const UsersShortcut: React.FC<PropsType> = ({user, followingInProgress, toggleUserFollow}) => {
     return <div className={s.userDiv}>
                 <span className={s.leftField}>
                     <div className={s.avaDiv}>
@@ -28,10 +35,6 @@ export let UsersShortcut = ({user, followingInProgress, toggleUserFollow}) => {
                     <span className={s.userPersonalInfo}>
                         <div>{user.name + " " + user.id}</div>
                         <div className={s.status}>{user.status != null ? user.status : "No status."}</div>
-                    </span>
-                    <span className={s.location}>
-                        <div>{"u.location.country"}</div>
-                        <div className={s.city}>{"u.location.city"}</div>
                     </span>
                     </div>
                 </span>

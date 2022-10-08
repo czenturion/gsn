@@ -47,6 +47,9 @@
     text-align: center;
 }
 
+.leftFieldBtn button {
+    cursor: pointer;
+}
 
 .userDiv {
     padding-bottom: 15px;
@@ -69,25 +72,11 @@
 .userPersonalInfo {
     padding-left: 10px;
     padding-top: 5px;
-    width: 50%;
 }
 
 .status {
     padding-top: 20px;
-    width: 20vw;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-
-.location {
-    padding-right: 10px;
-    padding-top: 5px;
-    margin-left: auto;
-    text-align: right;
-}
-
-.city {
-    padding-top: 20px;
-}
-

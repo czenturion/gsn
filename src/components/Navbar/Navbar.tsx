@@ -1,9 +1,13 @@
-import s from "./Navbar.module.css";
-import {NavLink} from "react-router-dom";
-import FriendsContainer from "./Friends/FriendsContainer";
+import s from "./Navbar.module.css"
+import {NavLink} from "react-router-dom"
+import FriendsContainer from "./Friends/FriendsContainer"
+import * as React from "react"
 
-const Navbar = () => {
+type PropsType = {
 
+}
+
+const Navbar: React.FC<PropsType> = () => {
     return (
         <nav className={s.nav}>
             <div className={s.item}>
@@ -33,10 +37,9 @@ const Navbar = () => {
             </div>
             <div className={`${s.item} ${s.settings}`}>
                 <NavLink to="/settings" style={({isActive}) => ({
-                    color: isActive ? 'lime' : 'white'
+                    color: isActive ? 'yellow' : 'white'
                 })}>Settings</NavLink>
             </div>
-
             <div className={`${s.item} ${s.friends}`}>
                 <NavLink to="/dialogs">
                     <h1>Friends</h1>
@@ -44,7 +47,7 @@ const Navbar = () => {
                 </NavLink>
             </div>
         </nav>
-    );
-};
+    )
+}
 
-export default Navbar;
+export default Navbar

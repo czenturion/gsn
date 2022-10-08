@@ -1,18 +1,28 @@
-import s from "./MyPosts.module.css";
-import React from "react";
-import {useForm} from "react-hook-form";
-import Post from "./Post/Post";
+import s from "./MyPosts.module.css"
+import * as React from "react"
+import {SubmitHandler, useForm} from "react-hook-form"
+import Post from "./Post/Post"
+import {FC} from "react"
+import {PostType} from "../../../redux/profile-reducer";
 
+type PropsType = {
+    addPost: (post: string) => void
+    postsElements?: PostType[]
+}
 
-const AddPostForm = (props) => {
+type FormValues = {
+    post: string
+}
+
+const AddPostForm: FC<PropsType> = ({addPost}) => {
     const {
         register,
         handleSubmit,
         reset
-    } = useForm();
+    } = useForm<FormValues>()
 
-    const onSubmit = (values) => {
-        props.addPost(values.post)
+    const onSubmit: SubmitHandler<FormValues> = (values) => {
+        addPost(values.post)
         reset()
     }
 
@@ -35,7 +45,7 @@ const AddPostForm = (props) => {
     )
 }
 
-const MyPosts = (props) => {
+const MyPosts: FC<PropsType> = (props) => {
     return (
         <div>
             <AddPostForm addPost={props.addPost}/>
@@ -52,4 +62,4 @@ const MyPosts = (props) => {
     )
 }
 
-export default MyPosts;
+export default MyPosts
