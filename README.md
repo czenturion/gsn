@@ -16,7 +16,7 @@ Under development, to launch the app:
   - ~/gsn npm install
   - ~/gsn npm start
 ## Account to login and test:
-## Email: po4tafortest@gmail.com
-## Password: 1234test
+ - Email: po4tafortest@gmail.com
+ - Password: 1234test
  
 ## App runs at http://localhost:3000 , while this port isn't busy.
