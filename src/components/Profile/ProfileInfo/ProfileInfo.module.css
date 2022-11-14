@@ -5,7 +5,7 @@
 }
 
 .avatar {
-    min-height: 300px;
+    min-height: 310px;
     margin-top: 10px;
     display: grid;
     grid-template-areas:
@@ -60,6 +60,8 @@ input[type="file"] {
     border: 2px solid black;
     padding: 6px 12px;
     cursor: pointer;
+    width: 100%;
+    text-align: center;
 }
 
 .customFileUpload:hover {
