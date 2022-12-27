@@ -32,7 +32,6 @@ test('the message of new post should be added correctly', () => {
 
     // 3.expectation
     expect(newState.posts[4].message).toBe("czntrn")
-
 })
 
 test('a chosen post by id should be deleted and length of posts should be decremented', () => {
@@ -44,7 +43,6 @@ test('a chosen post by id should be deleted and length of posts should be decrem
 
     // 3.expectation
     expect(newState.posts.length).toBe(3)
-
 })
 
 test(`a chosen post by id shouldn't be deleted and length of posts 
@@ -57,5 +55,4 @@ test(`a chosen post by id shouldn't be deleted and length of posts
 
     // 3.expectation
     expect(newState.posts.length).toBe(4)
-
 })

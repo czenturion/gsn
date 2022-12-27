@@ -90,10 +90,9 @@ export const getAuthUserData = () => async (dispatch: any) => {
 }
 
 export const logIn = (logData: any, setError: any) => async (dispatch: any) => {
+    dispatch(setIsFetching(true))
     const {messages, resultCode} = await authAPI.login(logData)
-
     if (resultCode === 0) {
-        dispatch(setIsFetching(true))
         dispatch(getAuthUserData())
         dispatch(setCaptcha(""))
     }
