@@ -1,4 +1,4 @@
-import {authAPI} from "../api/api"
+import {authAPI, securityAPI} from "../api/api"
 
 const SET_USER_DATA = "gsn/auth/SET_USER_DATA"
 const TOGGLE_IS_FETCHING = "gsn/auth/TOGGLE_IS_FETCHING"
@@ -81,12 +81,14 @@ const setCaptcha = (captcha: string): SetCaptchaActionType => ({
 
 // thunks
 export const getAuthUserData = () => async (dispatch: any) => {
+    dispatch(setIsFetching(true))
     const res = await authAPI.me()
 
     if (res.resultCode === 0) {
         const {id, email, login} = res.data
         dispatch(setAuthUserData(id, email, login, true))
     }
+    dispatch(setIsFetching(false))
 }
 
 export const logIn = (logData: any, setError: any) => async (dispatch: any) => {
@@ -101,7 +103,7 @@ export const logIn = (logData: any, setError: any) => async (dispatch: any) => {
     }
     if (resultCode === 10) {
         setError("serverResponse", {type: "server", message: messages[0]})
-        const res = await authAPI.captcha()
+        const res = await securityAPI.getCaptchaUrl()
         dispatch(setCaptcha(res.url))
     }
     dispatch(setIsFetching(false))

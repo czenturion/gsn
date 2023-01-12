@@ -46,7 +46,8 @@ const ProfileContainer: FC<PropsType> = (props) => {
                  updateStatus={props.updateStatus}
                  currentProfileAuthUser={props.currentProfileAuthUser}
                  savePhoto={props.savePhoto}
-                 uploadingData={props.uploadingData}/>
+                 uploadingData={props.uploadingData}
+                 gettingUserProfileData={props.gettingUserProfileData}/>
 }
 
 const mapStateToProps = (state: AppStateType) => ({
@@ -54,6 +55,7 @@ const mapStateToProps = (state: AppStateType) => ({
     status: state.profilePage.status,
     currentProfileAuthUser: state.profilePage.currentProfileAuthUser,
     uploadingData: state.profilePage.uploadingData,
+    gettingUserProfileData: state.profilePage.gettingUserProfileData,
     auth: state.auth
 })
 

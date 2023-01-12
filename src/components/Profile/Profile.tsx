@@ -9,12 +9,13 @@ type PropsType = {
     profile: ProfileType | null
     status: string | null
     currentProfileAuthUser: boolean
+    gettingUserProfileData: boolean
     uploadingData: boolean
     savePhoto: (file: File) => void
     updateStatus: (newStatus: string) => void
 }
 
-const Profile: FC<PropsType> = ({profile, status, updateStatus, currentProfileAuthUser, savePhoto, uploadingData}) => {
+const Profile: FC<PropsType> = ({profile, status, updateStatus, currentProfileAuthUser, savePhoto, gettingUserProfileData, uploadingData}) => {
     return (
         <div className={s.profile}>
             <ProfileInfo
@@ -23,7 +24,8 @@ const Profile: FC<PropsType> = ({profile, status, updateStatus, currentProfileAu
                 updateStatus={updateStatus}
                 currentProfileAuthUser={currentProfileAuthUser}
                 savePhoto={savePhoto}
-                uploadingData={uploadingData}/>
+                uploadingData={uploadingData}
+                gettingUserProfileData={gettingUserProfileData}/>
             <MyPosts/>
         </div>
     )

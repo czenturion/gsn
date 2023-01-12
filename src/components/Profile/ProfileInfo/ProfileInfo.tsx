@@ -11,12 +11,13 @@ type PropsType = {
     profile: ProfileType | null
     status: string | null
     currentProfileAuthUser: boolean
+    gettingUserProfileData: boolean
     uploadingData: boolean
     savePhoto: (file: File) => void
     updateStatus: (newStatus: string) => void
 }
 
-const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto, status, updateStatus, uploadingData}) => {
+const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto, status, updateStatus, gettingUserProfileData, uploadingData}) => {
 
     const [contactsHidden, toggleContactsVisible] = useState(true)
 
@@ -53,60 +54,64 @@ const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto,
                     alt=""
                 />
             </div>
-            <div className={s.avatar}>
-                <div className={s.leftField}>
-                    {
-                        uploadingData
-                            ? <Preloader/>
-                            : profile.photos.large
-                                ? <img src={profile.photos.large} alt=""/>
-                                : <img src={userPhoto} alt=""/>
-                    }
-                    {
-                        currentProfileAuthUser && <div className={s.photoUpdateButtonField}>
-                            <label htmlFor="file-upload" className={s.customFileUpload}>Upload Avatar</label>
-                            <input type="file"
-                                   onChange={uploadUserPhoto}
-                                   id="file-upload"
-                                   accept=".png,.jpg,.jpeg"/></div>
-                    }
-                </div>
-                <div className={s.rightField}>
-                    <div className={s.fullName}>
-                        {profile.fullName}
-                    </div>
-                    <ProfileStatus
-                        status={status}
-                        updateStatus={updateStatus}
-                        currentProfileAuthUser={currentProfileAuthUser}/>
-                    <div>
-                        <h3>{profile.userId}</h3>
-                    </div>
-                    {
-                        <div>
-                            <span className={s.contactsList}
-                                  onClick={onClickToggleContactsVisible}>Contacts {!contactsHidden ? "- - -" : "+++"}</span>
-                            {!contactsHidden ? <div className={s.contacts}>{contacts}</div> : <></>}
+            {
+                gettingUserProfileData
+                    ? <Preloader/>
+                    : <div className={s.avatar}>
+                        <div className={s.leftField}>
+                            {
+                                uploadingData
+                                    ? <Preloader/>
+                                    : profile.photos.large
+                                        ? <img src={profile.photos.large} alt=""/>
+                                        : <img src={userPhoto} alt=""/>
+                            }
+                            {
+                                currentProfileAuthUser && <div className={s.photoUpdateButtonField}>
+                                    <label htmlFor="file-upload" className={s.customFileUpload}>Upload Avatar</label>
+                                    <input type="file"
+                                           onChange={uploadUserPhoto}
+                                           id="file-upload"
+                                           accept=".png,.jpg,.jpeg"/></div>
+                            }
                         </div>
-                    }
-                    <div>
-                        {
-                            profile.lookingForAJob
-                                ? <h2>Looking for a job</h2>
-                                : <h2>Not looking for a job</h2>
-                        }
+                        <div className={s.rightField}>
+                            <div className={s.fullName}>
+                                {profile.fullName}
+                            </div>
+                            <ProfileStatus
+                                status={status}
+                                updateStatus={updateStatus}
+                                currentProfileAuthUser={currentProfileAuthUser}/>
+                            <div>
+                                <h3>{profile.userId}</h3>
+                            </div>
+                            {
+                                <div>
+                                <span className={s.contactsList}
+                                      onClick={onClickToggleContactsVisible}>Contacts {!contactsHidden ? "- - -" : "+++"}</span>
+                                    {!contactsHidden ? <div className={s.contacts}>{contacts}</div> : <></>}
+                                </div>
+                            }
+                            <div>
+                                {
+                                    profile.lookingForAJob
+                                        ? <h2>Looking for a job</h2>
+                                        : <h2>Not looking for a job</h2>
+                                }
+                            </div>
+                            <div>
+                                {
+                                    profile.aboutMe
+                                        ? <div> {profile.aboutMe} </div>
+                                        : <div> {""} </div>
+                                }
+                            </div>
+                            <div>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        {
-                            profile.aboutMe
-                                ? <div> {profile.aboutMe} </div>
-                                : <div> {""} </div>
-                        }
-                    </div>
-                    <div>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     )
 }

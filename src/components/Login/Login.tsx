@@ -8,6 +8,7 @@ import * as React from "react"
 import {Navigate} from "react-router-dom"
 import {FC} from "react"
 import {AppStateType} from "../../redux/redux-store"
+import Preloader from "../common/Preloader/Preloader"
 
 type FormValues = {
     serverResponse?: string[]
@@ -19,10 +20,11 @@ type FormValues = {
 
 type LoginFormPropsType = {
     captcha: string
+    isFetching: boolean
     logIn: (formData: FormValues, setError: UseFormSetError<FormValues>) => void
 }
 
-const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha}) => {
+const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
     const {
         register,
         handleSubmit,
@@ -45,6 +47,8 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha}) => {
             clearErrors("serverResponse")
         }
     }
+
+    if (isFetching) return <Preloader/>
 
     return (
         <form
@@ -126,7 +130,7 @@ const Login: FC<LoginPropsAndDispatchType> = ({auth, logIn}) => {
             !auth.isAuth
                 ? <div className={s.logFormInput}>
                     <h1>LOGIN</h1>
-                    <LoginForm logIn={logIn} captcha={auth.captcha}/>
+                    <LoginForm logIn={logIn} captcha={auth.captcha} isFetching={auth.isFetching}/>
                 </div>
                 : <Navigate to="/profile"/>
         }

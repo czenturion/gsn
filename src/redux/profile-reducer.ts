@@ -6,6 +6,7 @@ const SET_USER_STATUS = "gsn/profile/SET_USER_STATUS"
 const CURRENT_PROFILE_AUTH_USER = "gsn/profile/CURRENT_PROFILE_AUTH_USER"
 const DELETE_POST = "gsn/profile/DELETE_POST"
 const SAVE_PHOTO_SUCCESS = "gsn/profile/SAVE_PHOTO_SUCCESS"
+const GETTING_PROFILE_DATA = "gsn/profile/GETTING_PROFILE_DATA"
 const SET_UPLOADING_DATA = "gsn/profile/SET_UPLOADING_DATA"
 
 export type PostType = {
@@ -50,6 +51,7 @@ const initialState = {
     profile: null as ProfileType | null,
     status: "",
     currentProfileAuthUser: false,
+    gettingUserProfileData: false,
     uploadingData: false
 }
 
@@ -98,6 +100,12 @@ const profileReducer = (state = initialState, action: any): InitialStateType => 
                     ...state.profile,
                     photos: action.photos
                 } as ProfileType
+            }
+
+        case GETTING_PROFILE_DATA:
+            return {
+                ...state,
+                gettingUserProfileData: action.value
             }
 
         case SET_UPLOADING_DATA:
@@ -179,6 +187,16 @@ export const savePhotoSuccess = (photos: ProfilePhotosType): SavePhotoSuccessTyp
     photos
 })
 
+type GettingUserProfileDataType = {
+    type: typeof GETTING_PROFILE_DATA,
+    value: boolean
+}
+
+const gettingUserProfileData = (value: boolean): GettingUserProfileDataType => ({
+    type: GETTING_PROFILE_DATA,
+    value
+})
+
 type SetUploadingDataType = {
     type: typeof SET_UPLOADING_DATA
     value: boolean
@@ -192,10 +210,12 @@ export const setUploadingData = (value: boolean): SetUploadingDataType => ({
 
 // Redux-thunk
 export const getUserProfile = (userId: number) => async (dispatch: any) => {
+    dispatch(gettingUserProfileData(true))
 
     const res = await profileAPI.getUserProfile(userId)
 
     dispatch(setUserProfile(res))
+    dispatch(gettingUserProfileData(false))
 }
 
 export const getUserStatus = (userId: number) => async (dispatch: any) => {
