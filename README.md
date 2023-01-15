@@ -15,5 +15,3 @@
 ## Account to login and test:
  - Email: po4tafortest@gmail.com
  - Password: 1234test
- 
-## App runs at http://localhost:3000 , while this port isn't busy.
