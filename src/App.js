@@ -1,6 +1,6 @@
 import "./App.css"
 import Navbar from "./components/Navbar/Navbar"
-import {Routes, Route, BrowserRouter} from "react-router-dom"
+import {Routes, Route, HashRouter} from "react-router-dom"
 import UsersContainer from "./components/Users/UsersContainer"
 import ProfileContainer from "./components/Profile/ProfileContainer"
 import HeaderContainer from "./components/Header/HeaderContainer"
@@ -59,12 +59,12 @@ const mapStateToProps = (state) => ({
 
 const AppContainer = connect(mapStateToProps, {initializeApp})(App)
 
-const MainApp = (props) => {
-    return <BrowserRouter basename={process.env.PUBLIC_URL}>
+const MainApp = () => {
+    return <HashRouter basename="/">
         <Provider store={store}>
             <AppContainer/>
         </Provider>
-    </BrowserRouter>
+    </HashRouter>
 }
 
 export default MainApp
