@@ -9,12 +9,9 @@
 
 #
 
-## ### Run guide 
-Under development, to launch the app:
-- Code -> Download Zip
-- With installed node.js, execute in cmd next:
-  - ~/gsn npm install
-  - ~/gsn npm start
+## Project Link
+ - https://czenturion.github.io/gsn/
+
 ## Account to login and test:
  - Email: po4tafortest@gmail.com
  - Password: 1234test
