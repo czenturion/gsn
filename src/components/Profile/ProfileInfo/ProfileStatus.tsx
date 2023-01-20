@@ -26,7 +26,7 @@ const ProfileStatus: FC<PropsType> = ({status, currentProfileAuthUser, updateSta
     }
 
     const deactivateEditMode = () => {
-        // todo: check up for null value
+        // todo: find out about null value here
         updateStatus(String(localStatus))
         toggleEditMode(false)
     }

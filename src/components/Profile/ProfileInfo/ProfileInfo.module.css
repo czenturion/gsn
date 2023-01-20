@@ -34,6 +34,7 @@
 .rightField {
     grid-area: r;
     margin-left: 15px;
+    margin-bottom: 20px;
 }
 
 .profileLinksName {
@@ -43,10 +44,10 @@
 
 .statusSpan {
     height: 10px;
+    cursor: pointer;
 }
 
 .photoUpdateButtonField {
-    margin-top: 10px;
     display: flex;
     justify-content: center;
 }
@@ -57,8 +58,11 @@ input[type="file"] {
 
 .customFileUpload {
     font-size: 16px;
-    border: 2px solid black;
+    border: 1px solid #004ca6;
+    color: #004ca6;
     padding: 6px 12px;
+    margin-top: 10px;
+    margin-bottom: 20px;
     cursor: pointer;
     width: 100%;
     text-align: center;
@@ -72,4 +76,8 @@ input[type="file"] {
 .contactsList {
     cursor: pointer;
     font-weight: bolder;
+}
+
+.contact {
+    padding-left: 10px;
 }

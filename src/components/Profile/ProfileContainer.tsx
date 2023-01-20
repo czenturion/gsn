@@ -6,6 +6,7 @@ import {compose} from "redux"
 import {
     getUserProfile,
     getUserStatus,
+    updateProfile,
     savePhoto,
     setCurrentProfileAuthUser,
     updateStatus
@@ -13,6 +14,8 @@ import {
 import {withAuthRedirect} from "../../hoc/withAuthRedirect"
 import Profile from "./Profile"
 import {AppStateType} from "../../redux/redux-store"
+import {ProfileFormValues} from "./ProfileInfo/ProfileInfo"
+import {UseFormSetError} from "react-hook-form"
 
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
 
@@ -21,6 +24,7 @@ type MapDispatchToPropsType = {
     getUserStatus: (userId: number) => void
     updateStatus: (status: string) => void
     setCurrentProfileAuthUser: (value: boolean) => void
+    updateProfile: (profileData: ProfileFormValues, setError: UseFormSetError<ProfileFormValues>) => void
     savePhoto: (file: File) => void
 }
 
@@ -45,6 +49,7 @@ const ProfileContainer: FC<PropsType> = (props) => {
                  status={props.status}
                  updateStatus={props.updateStatus}
                  currentProfileAuthUser={props.currentProfileAuthUser}
+                 updateProfile={props.updateProfile}
                  savePhoto={props.savePhoto}
                  uploadingData={props.uploadingData}
                  gettingUserProfileData={props.gettingUserProfileData}/>
@@ -64,6 +69,7 @@ export default compose<React.Component>(
         {
             getUserProfile,
             getUserStatus,
+            updateProfile,
             updateStatus,
             setCurrentProfileAuthUser,
             savePhoto

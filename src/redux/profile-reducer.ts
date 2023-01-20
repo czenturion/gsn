@@ -224,6 +224,17 @@ export const getUserStatus = (userId: number) => async (dispatch: any) => {
     dispatch(setUserStatus(res))
 }
 
+export const updateProfile = (profileData: any, setError: any) => async (dispatch: any, getState: any) => {
+    const userId = await getState().auth.id
+    const res = await profileAPI.updateUserProfile(profileData)
+
+    if (res.resultCode === 0) {
+        dispatch(getUserProfile(userId))
+    } else {
+        setError("serverResponse", {type: "server", message: res.messages})
+    }
+}
+
 export const updateStatus = (status: string) => async (dispatch: any) => {
     const res = await profileAPI.updateUserStatus(status)
 
