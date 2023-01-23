@@ -14,17 +14,28 @@ import {
 import {withAuthRedirect} from "../../hoc/withAuthRedirect"
 import Profile from "./Profile"
 import {AppStateType} from "../../redux/redux-store"
-import {ProfileFormValues} from "./ProfileInfo/ProfileInfo"
 import {UseFormSetError} from "react-hook-form"
+import type {ProfileContactsType} from "../../redux/profile-reducer"
+
+export type ProfileFormValues = {
+    profileForm?: string[]
+    fullName: string
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    aboutMe: string
+    contacts: ProfileContactsType
+}
 
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>
+
+export type DisableEditModeType = () => void
 
 type MapDispatchToPropsType = {
     getUserProfile: (userId: number) => void
     getUserStatus: (userId: number) => void
     updateStatus: (status: string) => void
     setCurrentProfileAuthUser: (value: boolean) => void
-    updateProfile: (profileData: ProfileFormValues, setError: UseFormSetError<ProfileFormValues>) => void
+    updateProfile: (profileData: ProfileFormValues, setError: UseFormSetError<ProfileFormValues>, disableEditMode: DisableEditModeType) => void
     savePhoto: (file: File) => void
 }
 

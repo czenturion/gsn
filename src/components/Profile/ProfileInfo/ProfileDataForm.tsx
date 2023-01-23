@@ -1,27 +1,26 @@
 import {FC} from "react"
 import s from "./ProfileInfo.module.css"
 import * as React from "react"
-import type {ProfileDataType, ProfileFormValues} from "./ProfileInfo"
 import {useForm} from "react-hook-form"
 import type {SubmitHandler} from "react-hook-form"
+import type {ProfileDataType} from "./ProfileInfo"
+import type {ProfileFormValues} from "../ProfileContainer"
 
-const ProfileDataForm: FC<ProfileDataType> = ({profile, disableEditMod, updateProfile}) => {
+const ProfileDataForm: FC<ProfileDataType> = ({profile,  updateProfile, disableEditMode}) => {
     const {
         register,
         handleSubmit,
         setError,
+        clearErrors,
         formState: {
             errors
         }
     } = useForm<ProfileFormValues>({defaultValues: profile})
 
-    const onSubmit: SubmitHandler<ProfileFormValues> = (formValues) => {
-        if (updateProfile && disableEditMod) {
-            updateProfile(formValues, setError)
-            disableEditMod()
-        }
+    const onSubmit: SubmitHandler<ProfileFormValues> = async (formValues) => {
+        await updateProfile?.(formValues, setError, disableEditMode!)
     }
-    console.log(errors)
+
 
     return <form onSubmit={handleSubmit(onSubmit)}>
         <div>
@@ -31,8 +30,9 @@ const ProfileDataForm: FC<ProfileDataType> = ({profile, disableEditMod, updatePr
                 value={"Save"}/>
         </div>
         {
-            errors?.serverResponse?.message
-                ? <p style={{color: "red"}}>{errors.serverResponse.message[0]}</p>
+            errors && errors.profileForm && errors.profileForm.message
+                // @ts-ignore
+                ? <div style={{color: "red"}}>{errors.profileForm.message.map((e, index) => <p key={index}>{e}</p>)}</div>
                 : <></>
         }
         <div>
@@ -41,7 +41,7 @@ const ProfileDataForm: FC<ProfileDataType> = ({profile, disableEditMod, updatePr
         <div>
             <b>Contacts:</b> {Object.keys(profile.contacts).map(key => {
             // @ts-ignore
-            return <div className={s.contact} key={key}>{key}: <input type="text" {...register('contacts.' + key)}/></div>
+            return <div className={s.contact} key={key}>{key}: <input type="text" {...register('contacts.' + key)} placeholder="Valid url only" onChange={() => clearErrors()}/></div>
         })}
         </div>
         <div>

@@ -1,4 +1,5 @@
 import {profileAPI} from "../api/api"
+import {DisableEditModeType} from "../components/Profile/ProfileContainer"
 
 const ADD_POST = "gsn/profile/ADD-POST"
 const SET_USER_PROFILE = "gsn/profile/SET_USER_PROFILE"
@@ -224,14 +225,15 @@ export const getUserStatus = (userId: number) => async (dispatch: any) => {
     dispatch(setUserStatus(res))
 }
 
-export const updateProfile = (profileData: any, setError: any) => async (dispatch: any, getState: any) => {
+export const updateProfile = (profileData: any, setError: any, disableEditMode: DisableEditModeType) => async (dispatch: any, getState: any) => {
     const userId = await getState().auth.id
-    const res = await profileAPI.updateUserProfile(profileData)
+    const {resultCode, messages} = await profileAPI.updateUserProfile(profileData)
 
-    if (res.resultCode === 0) {
+    if (resultCode === 0) {
         dispatch(getUserProfile(userId))
+        disableEditMode()
     } else {
-        setError("serverResponse", {type: "server", message: res.messages})
+        setError("profileForm", {type: "server", messages})
     }
 }
 

@@ -1,10 +1,11 @@
 import s from "./Profile.module.css"
-import ProfileInfo, {ProfileFormValues} from "./ProfileInfo/ProfileInfo"
+import ProfileInfo from "./ProfileInfo/ProfileInfo"
 import MyPosts from "./MyPosts/MyPostsContainer"
 import * as React from "react"
 import {ProfileType} from "../../redux/profile-reducer"
 import {FC} from "react"
 import {UseFormSetError} from "react-hook-form"
+import type {ProfileFormValues, DisableEditModeType} from "./ProfileContainer"
 
 type PropsType = {
     profile: ProfileType | null
@@ -14,7 +15,7 @@ type PropsType = {
     uploadingData: boolean
     savePhoto: (file: File) => void
     updateStatus: (newStatus: string) => void
-    updateProfile: (profileData: ProfileFormValues, setError: UseFormSetError<ProfileFormValues>) => void
+    updateProfile: (profileData: ProfileFormValues, setError: UseFormSetError<ProfileFormValues>, disableEditMode: DisableEditModeType) => void
 }
 
 const Profile: FC<PropsType> = ({profile, status, updateStatus, currentProfileAuthUser, updateProfile, savePhoto, gettingUserProfileData, uploadingData}) => {

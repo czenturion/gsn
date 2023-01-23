@@ -5,9 +5,10 @@ import ProfileStatus from "./ProfileStatus"
 import {capitalize} from "../../../utils/helpers/helpers"
 import {FC, useState} from "react"
 import * as React from "react"
-import {ProfileContactsType, ProfileType} from "../../../redux/profile-reducer"
+import {ProfileType} from "../../../redux/profile-reducer"
 import ProfileDataForm from "./ProfileDataForm"
 import {UseFormSetError} from "react-hook-form"
+import type {ProfileFormValues, DisableEditModeType} from "../ProfileContainer"
 
 type PropsType = {
     profile: ProfileType | null
@@ -16,7 +17,7 @@ type PropsType = {
     gettingUserProfileData: boolean
     uploadingData: boolean
     savePhoto: (file: File) => void
-    updateProfile: (profileData: ProfileFormValues, setError: UseFormSetError<ProfileFormValues>) => void
+    updateProfile: (profileData: ProfileFormValues, setError: UseFormSetError<ProfileFormValues>, disableEditMode: DisableEditModeType) => void
     updateStatus: (newStatus: string) => void
 }
 
@@ -39,12 +40,6 @@ const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto,
     if (!profile) {
         return <Preloader/>
     }
-
-    const contactsParsedList = Object.keys(profile.contacts).map(key => {
-        // @ts-ignore
-        return <Contact contactTitle={key} contactValue={profile.contacts[key]} key={key}/>
-        }
-    )
 
     return (
         <div>
@@ -87,18 +82,13 @@ const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto,
                             {
                                 editMode
                                 ? <ProfileDataForm profile={profile}
-                                                   onClickToggleContactsVisible={onClickToggleContactsVisible}
-                                                   contactsHidden={contactsHidden}
-                                                   contactsParsedList={contactsParsedList}
                                                    updateProfile={updateProfile}
-                                                   disableEditMod={() => {
+                                                   disableEditMode={() => {
                                                        toggleEditMode(false)
-                                                       onClickToggleContactsVisible()
                                                    }}/>
                                 : <ProfileData profile={profile}
                                          onClickToggleContactsVisible={onClickToggleContactsVisible}
                                          contactsHidden={contactsHidden}
-                                         contactsParsedList={contactsParsedList}
                                          currentProfileAuthUser={currentProfileAuthUser}
                                          toggleEditMode={() => {
                                              toggleEditMode(true)
@@ -114,29 +104,17 @@ const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto,
 
 export type ProfileDataType = {
     profile: ProfileType
-    // todo: describe type contactsParsedList
-    contactsParsedList: any
-    contactsHidden: boolean
+    contactsHidden?: boolean
     currentProfileAuthUser?: boolean
-    onClickToggleContactsVisible: () => void
+    onClickToggleContactsVisible?: () => void
     toggleEditMode?: () => void
-    disableEditMod?: () => void
-    updateProfile?: (formValues: ProfileFormValues, setError: UseFormSetError<ProfileFormValues>) => void
-}
-
-export type ProfileFormValues = {
-    serverResponse: string[]
-    fullName: string
-    lookingForAJob: boolean
-    lookingForAJobDescription: string
-    aboutMe: string
-    contacts: ProfileContactsType
+    disableEditMode?: DisableEditModeType
+    updateProfile?: (formValues: ProfileFormValues, setError: UseFormSetError<ProfileFormValues>, disableEditMode: DisableEditModeType) => void
 }
 
 const ProfileData: FC<ProfileDataType> = ({profile,
                                               onClickToggleContactsVisible,
                                               contactsHidden,
-                                              contactsParsedList,
                                               currentProfileAuthUser,
                                               toggleEditMode}) => {
     return <div>
@@ -148,7 +126,9 @@ const ProfileData: FC<ProfileDataType> = ({profile,
                 <span className={s.contactsList} onClick={onClickToggleContactsVisible}>Contacts {!contactsHidden ? "- - -" : "+++"}</span>
                 {
                     !contactsHidden
-                        ? <div className={s.contacts}>{contactsParsedList}</div>
+                        ? <div className={s.contacts}>{Object.keys(profile.contacts).map(key => {
+                            // @ts-ignore
+                            return <Contact contactTitle={key} contactValue={profile.contacts[key]} key={key}/>})}</div>
                         : <></>
                 }
             </div>
