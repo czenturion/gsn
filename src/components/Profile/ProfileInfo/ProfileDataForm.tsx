@@ -15,12 +15,11 @@ const ProfileDataForm: FC<ProfileDataType> = ({profile,  updateProfile, disableE
         formState: {
             errors
         }
-    } = useForm<ProfileFormValues>({defaultValues: profile})
+    } = useForm<ProfileFormValues>({defaultValues: profile, criteriaMode: "all"})
 
     const onSubmit: SubmitHandler<ProfileFormValues> = async (formValues) => {
         await updateProfile?.(formValues, setError, disableEditMode!)
     }
-
 
     return <form onSubmit={handleSubmit(onSubmit)}>
         <div>
@@ -30,9 +29,9 @@ const ProfileDataForm: FC<ProfileDataType> = ({profile,  updateProfile, disableE
                 value={"Save"}/>
         </div>
         {
-            errors && errors.profileForm && errors.profileForm.message
+            errors
                 // @ts-ignore
-                ? <div style={{color: "red"}}>{errors.profileForm.message.map((e, index) => <p key={index}>{e}</p>)}</div>
+                ? <div style={{color: "red"}}>{errors?.profileForm?.messages?.map((e, index) => <p key={index}>{e}</p>)}</div>
                 : <></>
         }
         <div>
