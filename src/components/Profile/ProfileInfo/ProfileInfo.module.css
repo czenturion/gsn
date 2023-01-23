@@ -42,9 +42,14 @@
     font-weight: bold;
 }
 
+
 .statusSpan {
     height: 10px;
     cursor: pointer;
+}
+
+.statusSpan:hover {
+    background: #1e82f3;
 }
 
 .photoUpdateButtonField {
@@ -68,6 +73,18 @@ input[type="file"] {
     text-align: center;
 }
 
+.submit {
+    margin: 5px 0;
+    padding: 2px 30px;
+    cursor: pointer;
+    border-radius: 0;
+    border: 1px solid black;
+}
+
+.submit:hover {
+    outline: 2px solid black;
+}
+
 .customFileUpload:hover {
     color: white;
     background: #004ca6;
@@ -76,6 +93,10 @@ input[type="file"] {
 .contactsList {
     cursor: pointer;
     font-weight: bolder;
+}
+
+.contactsList:hover {
+    border-bottom:1px solid black;
 }
 
 .contact {

@@ -119,7 +119,7 @@ const ProfileData: FC<ProfileDataType> = ({profile,
                                               toggleEditMode}) => {
     return <div>
         {
-            currentProfileAuthUser && <div><button onClick={toggleEditMode}>Edit</button></div>
+            currentProfileAuthUser && <div><button className={s.submit} onClick={toggleEditMode}>Edit</button></div>
         }
         {
             <div>

@@ -42,7 +42,7 @@ const ProfileStatus: FC<PropsType> = ({status, currentProfileAuthUser, updateSta
     }, [status])
 
     return (
-        <div>
+        <div className={s.status}>
             {
                 editMode && currentProfileAuthUser
                     ? <input
