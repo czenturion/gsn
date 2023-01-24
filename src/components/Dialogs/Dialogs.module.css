@@ -39,7 +39,7 @@
 
 .messagesScroll {
     position: relative;
-    height: 70vh;
+    height: 75vh;
     overflow-y: scroll;
     padding-right: 10px;
 }
@@ -57,7 +57,6 @@
     box-shadow: 0 0 11px rgba(33,33,33,.2);
 }
 
-
 .messagesForm {
     display: flex;
     flex-direction: column;
@@ -65,10 +64,6 @@
 
 .messageField {
     width: 100%;
-}
-
-.messageField input {
-    padding-left: 5px;
 }
 
 .messageField input:focus {
@@ -84,7 +79,7 @@
 .messageField > input,
 .btnMessageSend > input {
     flex: 1; /* additionally, equal width */
-    padding: 1em 0 1em 0;
+    padding: 1em 0 1em 0.5em;
     border: 1px solid #424242;
     width: 100%;
 }
