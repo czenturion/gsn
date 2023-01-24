@@ -19,18 +19,16 @@ const initialState = {
         {
             id: 1, name: "Lora", ava: "https://cdn-icons-png.flaticon.com/512/2922/2922748.png",
             messages: [
-                {id: 1, sender: "u", message: "Hi darling!"},
-                {id: 2, sender: "u", message: "I love you so much"},
-                {id: 3, sender: "u", message: "How is going, dear?"},
-                {id: 4, sender: "u", message: "love"},
-                {id: 5, sender: "u", message: "dear"},
-                {id: 6, sender: "f", message: "Dear"},
-                {id: 7, sender: "f", message: "Hi cuty"},
-                {id: 8, sender: "f", message: "I so miss u"},
-                {id: 9, sender: "f", message: "Absolutely well, r u how?"},
-                {id: 10, sender: "u", message: "As well, love"},
-                {id: 11, sender: "u", message: "And i too missed u so much"},
-                {id: 12, sender: "u", message: "Beloved sun"}
+                {id: 1, sender: "u", message: "Hi!"},
+                {id: 2, sender: "u", message: "How is going?"},
+                {id: 3, sender: "u", message: "Where are you?"},
+                {id: 4, sender: "u", message: "Call me back"},
+                {id: 5, sender: "f", message: "Hello"},
+                {id: 6, sender: "f", message: "I were busy"},
+                {id: 7, sender: "f", message: "Gonna home"},
+                {id: 8, sender: "f", message: "Okay"},
+                {id: 9, sender: "u", message: "Dont forget to buy a milk"},
+                {id: 10, sender: "u", message: "And some fruits"}
             ]
         },
         {

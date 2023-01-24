@@ -5,6 +5,7 @@ import {useForm} from "react-hook-form"
 import type {SubmitHandler} from "react-hook-form"
 import type {ProfileDataType} from "./ProfileInfo"
 import type {ProfileFormValues} from "../ProfileContainer"
+import {capitalize} from "../../../utils/helpers/helpers";
 
 const ProfileDataForm: FC<ProfileDataType> = ({profile,  updateProfile, disableEditMode}) => {
     const {
@@ -40,7 +41,7 @@ const ProfileDataForm: FC<ProfileDataType> = ({profile,  updateProfile, disableE
         <div>
             <b>Contacts:</b> {Object.keys(profile.contacts).map(key => {
             // @ts-ignore
-            return <div className={s.contact} key={key}>{key}: <input type="text" {...register('contacts.' + key)} placeholder="Valid url only" onChange={() => clearErrors()}/></div>
+            return <div className={s.contact} key={key}>{capitalize(key)}: <input type="text" {...register('contacts.' + key)} placeholder="Valid url only" onChange={() => clearErrors()}/></div>
         })}
         </div>
         <div>
