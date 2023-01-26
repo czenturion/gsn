@@ -1,6 +1,6 @@
 import "./App.css"
 import Navbar from "./components/Navbar/Navbar"
-import {Routes, Route, HashRouter} from "react-router-dom"
+import {Routes, Route, HashRouter, Navigate} from "react-router-dom"
 import UsersContainer from "./components/Users/UsersContainer"
 import ProfileContainer from "./components/Profile/ProfileContainer"
 import HeaderContainer from "./components/Header/HeaderContainer"
@@ -10,12 +10,14 @@ import {initializeApp} from "./redux/app-reducer"
 import Preloader from "./components/common/Preloader/Preloader"
 import store from "./redux/redux-store"
 import * as React from "react"
+import {lazy, Suspense} from "react"
 
-const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'))
-const News = React.lazy(() => import('./components/News/News'))
-const Music = React.lazy(() => import('./components/Music/Music'))
-const Settings = React.lazy(() => import('./components/Settings/Settings'))
-const Login = React.lazy(() => import('./components/Login/Login'))
+const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'))
+const News = lazy(() => import('./components/News/News'))
+const Music = lazy(() => import('./components/Music/Music'))
+const Settings = lazy(() => import('./components/Settings/Settings'))
+const Login = lazy(() => import('./components/Login/Login'))
+const NotFound = lazy(() => import('./components/NotFound/NotFound'))
 
 
 class App extends Component {
@@ -32,9 +34,9 @@ class App extends Component {
                     <HeaderContainer/>
                     <Navbar/>
                     <div className="app-wrapper-content">
-                        <React.Suspense fallback={<Preloader/>}>
+                        <Suspense fallback={<Preloader/>}>
                             <Routes>
-                                <Route path="/" element={<ProfileContainer/>}/>
+                                <Route path="/" element={<Navigate to={"/profile"}/>}/>
                                 <Route path="/profile/:userId" element={<ProfileContainer/>}/>
                                 <Route path="/profile" element={<ProfileContainer/>}/>
                                 <Route path="/dialogs/*" element={<DialogsContainer/>}/>
@@ -43,8 +45,9 @@ class App extends Component {
                                 <Route path="/settings" element={<Settings/>}/>
                                 <Route path="/users" element={<UsersContainer/>}/>
                                 <Route path="/login" element={<Login/>}/>
+                                <Route path="*" element={<NotFound/>}/>
                             </Routes>
-                        </React.Suspense>
+                        </Suspense>
                     </div>
                 </div>
             )
