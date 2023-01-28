@@ -50,9 +50,10 @@ const ProfileStatus: FC<PropsType> = ({status, currentProfileAuthUser, updateSta
                         autoFocus={true}
                         defaultValue={String(status)}
                         onBlur={deactivateEditMode}
-                        onChange={onChangeStatus}/>
+                        onChange={onChangeStatus}
+                        maxLength={300}/>
                     : <span
-                        className={s.statusSpan}
+                        className={currentProfileAuthUser && s.statusSpan}
                         onClick={activateEditMode}>
                         {
                             localStatus

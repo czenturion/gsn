@@ -211,12 +211,17 @@ export const setUploadingData = (value: boolean): SetUploadingDataType => ({
 
 // Redux-thunk
 export const getUserProfile = (userId: number) => async (dispatch: any) => {
-    dispatch(gettingUserProfileData(true))
+    try {
 
-    const res = await profileAPI.getUserProfile(userId)
+        dispatch(gettingUserProfileData(true))
 
-    dispatch(setUserProfile(res))
-    dispatch(gettingUserProfileData(false))
+        const res = await profileAPI.getUserProfile(userId)
+
+        dispatch(setUserProfile(res))
+        dispatch(gettingUserProfileData(false))
+    } catch (error) {
+        alert(error)
+    }
 }
 
 export const getUserStatus = (userId: number) => async (dispatch: any) => {

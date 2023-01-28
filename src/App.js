@@ -1,16 +1,15 @@
 import "./App.css"
 import Navbar from "./components/Navbar/Navbar"
-import {Routes, Route, HashRouter, Navigate} from "react-router-dom"
+import {HashRouter, Navigate, Route, Routes} from "react-router-dom"
 import UsersContainer from "./components/Users/UsersContainer"
 import ProfileContainer from "./components/Profile/ProfileContainer"
 import HeaderContainer from "./components/Header/HeaderContainer"
-import {Component} from "react"
+import * as React from "react"
+import {Component, lazy, Suspense} from "react"
 import {connect, Provider} from "react-redux"
 import {initializeApp} from "./redux/app-reducer"
 import Preloader from "./components/common/Preloader/Preloader"
 import store from "./redux/redux-store"
-import * as React from "react"
-import {lazy, Suspense} from "react"
 
 const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'))
 const News = lazy(() => import('./components/News/News'))
@@ -21,8 +20,17 @@ const NotFound = lazy(() => import('./components/NotFound/NotFound'))
 
 
 class App extends Component {
+    catchAllUnhandledErrors = (promise) => {
+        alert(promise.reason.response.data.message)
+    }
+
     componentDidMount() {
         this.props.initializeApp()
+        window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors)
     }
 
     render() {
