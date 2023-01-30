@@ -32,7 +32,7 @@ const ProfileDataForm: FC<ProfileDataType> = ({profile,  updateProfile, disableE
         {
             errors
                 // @ts-ignore
-                ? <div style={{color: "red"}}>{errors?.profileForm?.messages?.map((e, index) => <p key={index}>{e}</p>)}</div>
+                ? <div style={{color: "red"}}>{errors?.profileForm?.message?.map((e, index) => <p key={index}>{e}</p>)}</div>
                 : <></>
         }
         <div>

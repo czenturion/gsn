@@ -19,6 +19,7 @@ const rootReducer = combineReducers({
 
 type RootReducerType = typeof rootReducer
 export type AppStateType = ReturnType<RootReducerType>
+export type GetStateType = () => AppStateType
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunkMiddleware)))
 

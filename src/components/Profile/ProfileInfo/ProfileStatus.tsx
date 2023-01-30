@@ -53,7 +53,7 @@ const ProfileStatus: FC<PropsType> = ({status, currentProfileAuthUser, updateSta
                         onChange={onChangeStatus}
                         maxLength={300}/>
                     : <span
-                        className={currentProfileAuthUser && s.statusSpan}
+                        className={currentProfileAuthUser ? s.statusSpan : undefined}
                         onClick={activateEditMode}>
                         {
                             localStatus

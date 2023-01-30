@@ -1,5 +1,7 @@
 import {usersAPI} from "../api/api"
 import {ProfilePhotosType} from "./profile-reducer"
+import {ThunkAction} from "redux-thunk"
+import {AppStateType} from "./redux-store"
 
 const SET_USERS = "gsn/users/SET_USERS"
 const SET_TOTAL_USERS_COUNT = "gsn/users/SET_TOTAL_USERS_COUNT"
@@ -28,7 +30,7 @@ const initialState = {
 
 type InitialStateType = typeof initialState
 
-const usersReducer = (state = initialState, action: any): InitialStateType => {
+const usersReducer = (state = initialState, action: ActionTypes): InitialStateType => {
 
     switch (action.type) {
 
@@ -82,29 +84,35 @@ const usersReducer = (state = initialState, action: any): InitialStateType => {
 }
 
 // Actions
+type ActionTypes = ToggleFollowType | SetUsersType | SetCurrentPageType | SetUsersTotalCountType |
+    SetIsFetchingType | SetIsFollowingType
+
 type ToggleFollowType = {
     type: typeof TOGGLE_FOLLOW
     userId: number
 }
-const toggleFollow = (userId: number): ToggleFollowType => ({type:
-    TOGGLE_FOLLOW,
-    userId})
-//
+const toggleFollow = (userId: number): ToggleFollowType => ({
+    type: TOGGLE_FOLLOW,
+    userId
+})
+
 type SetUsersType = {
     type: typeof SET_USERS
     users: UserType[]
 }
-const setUsers = (users: UserType[]): SetUsersType => ({type:
-    SET_USERS,
-    users})
-//
+const setUsers = (users: UserType[]): SetUsersType => ({
+    type: SET_USERS,
+    users
+})
+
 type SetCurrentPageType = {
     type: typeof SET_CURRENT_PAGE
     currentPage: number
 }
 export const setCurrentPage = (currentPage: number): SetCurrentPageType => ({
     type: SET_CURRENT_PAGE,
-    currentPage})
+    currentPage
+})
 
 type SetUsersTotalCountType = {
     type: typeof SET_TOTAL_USERS_COUNT
@@ -135,20 +143,23 @@ const setIsFollowing = (isFetching: boolean, userId: number): SetIsFollowingType
     userId
 })
 
-
 // Redux-thunk
-export const getUsers = (page: number, pageSize: number) => async (dispatch: any) => {
-    dispatch(setIsFetching(true))
-    dispatch(setCurrentPage(page))
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionTypes>
 
-    const res = await usersAPI.getUsers(page, pageSize)
+export const getUsers = (page: number,
+                         pageSize: number): ThunkType => async dispatch => {
+        dispatch(setIsFetching(true))
+        dispatch(setCurrentPage(page))
 
-    dispatch(setUsers(res.items))
-    dispatch(setUsersTotalCount(res.totalCount))
-    dispatch(setIsFetching(false))
-}
+        const res = await usersAPI.getUsers(page, pageSize)
 
-export const toggleUserFollow = (userId: number, followed: boolean) => async (dispatch: any) => {
+        dispatch(setUsers(res.items))
+        dispatch(setUsersTotalCount(res.totalCount))
+        dispatch(setIsFetching(false))
+    }
+
+export const toggleUserFollow = (userId: number,
+                                 followed: boolean): ThunkType => async dispatch => {
     dispatch(setIsFollowing(true, userId))
 
     followed

@@ -1,4 +1,6 @@
 import {getAuthUserData} from "./auth-reducer"
+import {ThunkAction} from "redux-thunk"
+import {AppStateType} from "./redux-store"
 
 const INITIALIZED_SUCCESS = "gsn/app/INITIALIZED_SUCCESS"
 
@@ -8,7 +10,7 @@ const initialState = {
 
 type InitialStateType = typeof initialState
 
-const appReducer = (state = initialState, action: any): InitialStateType => {
+const appReducer = (state = initialState, action: InitializedSuccessActionType): InitialStateType => {
 
     switch (action.type) {
         case INITIALIZED_SUCCESS:
@@ -32,7 +34,9 @@ const initializedSuccess = (): InitializedSuccessActionType => ({
 })
 
 // thunks
-export const initializeApp = () => async (dispatch: any) => {
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, InitializedSuccessActionType>
+
+export const initializeApp = (): ThunkType => async dispatch => {
     await dispatch(getAuthUserData())
     dispatch(initializedSuccess())
 }

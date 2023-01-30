@@ -1,4 +1,8 @@
 import {authAPI, securityAPI} from "../api/api"
+import {ThunkAction} from "redux-thunk"
+import {AppStateType} from "./redux-store"
+import {UseFormSetError} from "react-hook-form"
+import {FormValues} from "../components/Login/Login"
 
 const SET_USER_DATA = "gsn/auth/SET_USER_DATA"
 const TOGGLE_IS_FETCHING = "gsn/auth/TOGGLE_IS_FETCHING"
@@ -42,11 +46,13 @@ const authReducer = (state = initialState, action: any): InitialAuthStateType =>
 }
 
 // actions
+type ActionTypes = SetIsFetchingActionType | SetAuthUserDataActionType |
+    SetCaptchaActionType
+
 type SetIsFetchingActionType = {
     type: typeof TOGGLE_IS_FETCHING
     isFetching: boolean
 }
-
 const setIsFetching = (isFetching: boolean): SetIsFetchingActionType => ({
     type: TOGGLE_IS_FETCHING,
     isFetching
@@ -80,7 +86,9 @@ const setCaptcha = (captcha: string): SetCaptchaActionType => ({
 })
 
 // thunks
-export const getAuthUserData = () => async (dispatch: any) => {
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionTypes>
+
+export const getAuthUserData = (): ThunkType => async dispatch => {
     dispatch(setIsFetching(true))
     const res = await authAPI.me()
 
@@ -91,11 +99,11 @@ export const getAuthUserData = () => async (dispatch: any) => {
     dispatch(setIsFetching(false))
 }
 
-export const logIn = (logData: any, setError: any) => async (dispatch: any) => {
+export const logIn = (logData: FormValues, setError: UseFormSetError<FormValues>): ThunkType => async dispatch => {
     dispatch(setIsFetching(true))
     const {messages, resultCode} = await authAPI.login(logData)
     if (resultCode === 0) {
-        dispatch(getAuthUserData())
+        await dispatch(getAuthUserData())
         dispatch(setCaptcha(""))
     }
     if (resultCode === 1) {
@@ -109,7 +117,7 @@ export const logIn = (logData: any, setError: any) => async (dispatch: any) => {
     dispatch(setIsFetching(false))
 }
 
-export const logOut = () => async (dispatch: any) => {
+export const logOut = (): ThunkType => async dispatch => {
     dispatch(setIsFetching(true))
     const res = await authAPI.logout()
 

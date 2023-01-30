@@ -1,5 +1,8 @@
 import {profileAPI} from "../api/api"
-import {DisableEditModeType} from "../components/Profile/ProfileContainer"
+import {DisableEditModeType, ProfileFormValues} from "../components/Profile/ProfileContainer"
+import {AppStateType} from "./redux-store"
+import {ThunkAction} from "redux-thunk"
+import {UseFormSetError} from "react-hook-form"
 
 const ADD_POST = "gsn/profile/ADD-POST"
 const SET_USER_PROFILE = "gsn/profile/SET_USER_PROFILE"
@@ -123,11 +126,13 @@ const profileReducer = (state = initialState, action: any): InitialStateType => 
 
 // Actions
 // Отправка и обновление поста
+type ActionTypes = AddPostActionCreatorType | DeletePostType | SetUserProfileType | SetUserStatusType |
+    SetCurrentProfileAuthUser | SavePhotoSuccessType | GettingUserProfileDataType | SetUploadingDataType
+
 type AddPostActionCreatorType = {
     type: typeof ADD_POST
     post: string
 }
-
 export const addPostActionCreator = (post: string): AddPostActionCreatorType => ({
     type: ADD_POST,
     post
@@ -137,7 +142,6 @@ type DeletePostType = {
     type: typeof DELETE_POST
     postId: number
 }
-
 export const deletePost = (postId: number): DeletePostType => ({
     type: DELETE_POST,
     postId
@@ -147,7 +151,6 @@ type SetUserProfileType = {
     type: typeof SET_USER_PROFILE
     profile: ProfileType
 }
-
 export const setUserProfile = (profile: ProfileType): SetUserProfileType => ({
     type: SET_USER_PROFILE,
     profile
@@ -157,7 +160,6 @@ type SetUserStatusType = {
     type: typeof SET_USER_STATUS
     status: string
 }
-
 export const setUserStatus = (status: string): SetUserStatusType => ({
     type: SET_USER_STATUS,
     status
@@ -172,7 +174,6 @@ type SetCurrentProfileAuthUser = {
     type: typeof CURRENT_PROFILE_AUTH_USER
     currentProfileAuthUser: boolean
 }
-
 export const setCurrentProfileAuthUser = (value: boolean): SetCurrentProfileAuthUser => ({
     type: CURRENT_PROFILE_AUTH_USER,
     currentProfileAuthUser: value
@@ -182,7 +183,6 @@ type SavePhotoSuccessType = {
     type: typeof SAVE_PHOTO_SUCCESS
     photos: ProfilePhotosType
 }
-
 export const savePhotoSuccess = (photos: ProfilePhotosType): SavePhotoSuccessType => ({
     type: SAVE_PHOTO_SUCCESS,
     photos
@@ -192,7 +192,6 @@ type GettingUserProfileDataType = {
     type: typeof GETTING_PROFILE_DATA,
     value: boolean
 }
-
 const gettingUserProfileData = (value: boolean): GettingUserProfileDataType => ({
     type: GETTING_PROFILE_DATA,
     value
@@ -202,7 +201,6 @@ type SetUploadingDataType = {
     type: typeof SET_UPLOADING_DATA
     value: boolean
 }
-
 export const setUploadingData = (value: boolean): SetUploadingDataType => ({
     type: SET_UPLOADING_DATA,
     value
@@ -210,9 +208,10 @@ export const setUploadingData = (value: boolean): SetUploadingDataType => ({
 
 
 // Redux-thunk
-export const getUserProfile = (userId: number) => async (dispatch: any) => {
-    try {
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionTypes>
 
+export const getUserProfile = (userId: number): ThunkType => async dispatch => {
+    try {
         dispatch(gettingUserProfileData(true))
 
         const res = await profileAPI.getUserProfile(userId)
@@ -224,25 +223,27 @@ export const getUserProfile = (userId: number) => async (dispatch: any) => {
     }
 }
 
-export const getUserStatus = (userId: number) => async (dispatch: any) => {
+export const getUserStatus = (userId: number): ThunkType => async dispatch => {
     const res = await profileAPI.getUserStatus(userId)
 
     dispatch(setUserStatus(res))
 }
 
-export const updateProfile = (profileData: any, setError: any, disableEditMode: DisableEditModeType) => async (dispatch: any, getState: any) => {
-    const userId = await getState().auth.id
+export const updateProfile = (profileData: ProfileFormValues,
+                              setError: UseFormSetError<ProfileFormValues>,
+                              disableEditMode: DisableEditModeType): ThunkType => async (dispatch, getState) => {
+    const userId = getState().auth.id
     const {resultCode, messages} = await profileAPI.updateUserProfile(profileData)
 
     if (resultCode === 0) {
-        dispatch(getUserProfile(userId))
+        await dispatch(getUserProfile(+userId!))
         disableEditMode()
     } else {
-        setError("profileForm", {type: "server", messages})
+        setError("profileForm", {type: "server", message: messages})
     }
 }
 
-export const updateStatus = (status: string) => async (dispatch: any) => {
+export const updateStatus = (status: string): ThunkType => async dispatch => {
     const res = await profileAPI.updateUserStatus(status)
 
     if (res.resultCode === 0) {
@@ -250,11 +251,11 @@ export const updateStatus = (status: string) => async (dispatch: any) => {
     }
 }
 
-export const addPost = (post: string) => async (dispatch: any) => {
+export const addPost = (post: string): ThunkType => async dispatch => {
     await dispatch(addPostActionCreator(post))
 }
 
-export const savePhoto = (file: File) => async (dispatch: any) => {
+export const savePhoto = (file: File): ThunkType => async dispatch => {
     dispatch(setUploadingData(true))
     const res = await profileAPI.saveUserPhoto(file)
     if (res.resultCode === 0) {

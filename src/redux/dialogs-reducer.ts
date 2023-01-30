@@ -14,6 +14,7 @@ export type DialogsElementsType = {
 export type DialogsInitialStateType = {
     dialogs: DialogsElementsType[]
 }
+
 const initialState = {
     dialogs: [
         {
@@ -58,7 +59,7 @@ const initialState = {
     ]
 }
 
-const dialogsReducer = (state = initialState, action: any): DialogsInitialStateType => {
+const dialogsReducer = (state = initialState, action: MessageSendButtonActionCreatorActionType): DialogsInitialStateType => {
     switch (action.type) {
         case SEND_MESSAGE: {
             let stateCopy = {

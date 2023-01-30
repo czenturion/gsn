@@ -10,7 +10,7 @@ import {FC} from "react"
 import {AppStateType} from "../../redux/redux-store"
 import Preloader from "../common/Preloader/Preloader"
 
-type FormValues = {
+export type FormValues = {
     serverResponse?: string[]
     email: string
     password: string
