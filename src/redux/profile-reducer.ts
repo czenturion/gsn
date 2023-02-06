@@ -1,4 +1,4 @@
-import {profileAPI} from "../api/api"
+import {profileAPI, ResultCodesEnum} from "../api/api"
 import {DisableEditModeType, ProfileFormValues} from "../components/Profile/ProfileContainer"
 import {AppStateType} from "./redux-store"
 import {ThunkAction} from "redux-thunk"
@@ -61,7 +61,7 @@ const initialState = {
 
 type InitialStateType = typeof initialState
 
-const profileReducer = (state = initialState, action: any): InitialStateType => {
+const profileReducer = (state = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
         case ADD_POST:
             return {
@@ -210,6 +210,8 @@ export const setUploadingData = (value: boolean): SetUploadingDataType => ({
 // Redux-thunk
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionTypes>
 
+const {Success, Error, CaptchaIsRequired} = ResultCodesEnum
+
 export const getUserProfile = (userId: number): ThunkType => async dispatch => {
     try {
         dispatch(gettingUserProfileData(true))
@@ -235,7 +237,7 @@ export const updateProfile = (profileData: ProfileFormValues,
     const userId = getState().auth.id
     const {resultCode, messages} = await profileAPI.updateUserProfile(profileData)
 
-    if (resultCode === 0) {
+    if (resultCode === Success) {
         await dispatch(getUserProfile(+userId!))
         disableEditMode()
     } else {
@@ -246,7 +248,7 @@ export const updateProfile = (profileData: ProfileFormValues,
 export const updateStatus = (status: string): ThunkType => async dispatch => {
     const res = await profileAPI.updateUserStatus(status)
 
-    if (res.resultCode === 0) {
+    if (res.resultCode === Success) {
         dispatch(updateUserStatus(status))
     }
 }
@@ -258,7 +260,7 @@ export const addPost = (post: string): ThunkType => async dispatch => {
 export const savePhoto = (file: File): ThunkType => async dispatch => {
     dispatch(setUploadingData(true))
     const res = await profileAPI.saveUserPhoto(file)
-    if (res.resultCode === 0) {
+    if (res.resultCode === Success) {
         dispatch(savePhotoSuccess(res.data.photos))
     }
     dispatch(setUploadingData(false))

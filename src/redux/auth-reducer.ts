@@ -1,4 +1,4 @@
-import {authAPI, securityAPI} from "../api/api"
+import {authAPI, securityAPI, ResultCodesEnum} from "../api/api"
 import {ThunkAction} from "redux-thunk"
 import {AppStateType} from "./redux-store"
 import {UseFormSetError} from "react-hook-form"
@@ -19,7 +19,7 @@ const initialState = {
 
 export type InitialAuthStateType = typeof initialState
 
-const authReducer = (state = initialState, action: any): InitialAuthStateType => {
+const authReducer = (state = initialState, action: ActionTypes): InitialAuthStateType => {
 
     switch (action.type) {
         case SET_USER_DATA:
@@ -88,11 +88,13 @@ const setCaptcha = (captcha: string): SetCaptchaActionType => ({
 // thunks
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionTypes>
 
+const {Success, Error, CaptchaIsRequired} = ResultCodesEnum
+
 export const getAuthUserData = (): ThunkType => async dispatch => {
     dispatch(setIsFetching(true))
     const res = await authAPI.me()
 
-    if (res.resultCode === 0) {
+    if (res.resultCode === Success) {
         const {id, email, login} = res.data
         dispatch(setAuthUserData(id, email, login, true))
     }
@@ -102,14 +104,14 @@ export const getAuthUserData = (): ThunkType => async dispatch => {
 export const logIn = (logData: FormValues, setError: UseFormSetError<FormValues>): ThunkType => async dispatch => {
     dispatch(setIsFetching(true))
     const {messages, resultCode} = await authAPI.login(logData)
-    if (resultCode === 0) {
+    if (resultCode === Success) {
         await dispatch(getAuthUserData())
         dispatch(setCaptcha(""))
     }
-    if (resultCode === 1) {
+    if (resultCode === Error) {
         setError("serverResponse", {type: "server", message: messages[0]})
     }
-    if (resultCode === 10) {
+    if (resultCode === CaptchaIsRequired) {
         setError("serverResponse", {type: "server", message: messages[0]})
         const res = await securityAPI.getCaptchaUrl()
         dispatch(setCaptcha(res.url))
@@ -121,8 +123,8 @@ export const logOut = (): ThunkType => async dispatch => {
     dispatch(setIsFetching(true))
     const res = await authAPI.logout()
 
-    if (res.resultCode === 0) {
-        dispatch(setAuthUserData(null, null, null, false));
+    if (res.resultCode === Error) {
+        dispatch(setAuthUserData(null, null, null, false))
     }
     dispatch(setIsFetching(false))
 }
