@@ -210,7 +210,7 @@ export const setUploadingData = (value: boolean): SetUploadingDataType => ({
 // Redux-thunk
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionTypes>
 
-const {Success, Error, CaptchaIsRequired} = ResultCodesEnum
+const {Success} = ResultCodesEnum
 
 export const getUserProfile = (userId: number): ThunkType => async dispatch => {
     try {
@@ -241,7 +241,8 @@ export const updateProfile = (profileData: ProfileFormValues,
         await dispatch(getUserProfile(+userId!))
         disableEditMode()
     } else {
-        setError("profileForm", {type: "server", message: messages})
+        // check up this change
+        setError("profileForm", {type: "server", message: messages[0]})
     }
 }
 

@@ -11,17 +11,36 @@ const instance = axios.create({
     }
 })
 
+type DefaultResponseResultObject = {
+    resultCode: ResultCodesEnum
+    messages: string[]
+    data: {
+        userId: number
+    }
+}
+
+type GetUsersType = {
+    items: []
+    totalCount: number
+}
+
+type FollowUnfollowUserType = {
+    resultCode: ResultCodesEnum
+    messages: string[]
+    data: object
+}
+
 export const usersAPI = {
     getUsers(currentPage: number, pageSize: number) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
+        return instance.get<GetUsersType>(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => response.data)
     },
     followUser(id: number) {
-        return instance.post(`follow/${id}`)
+        return instance.post<FollowUnfollowUserType>(`follow/${id}`)
             .then(response => response.data)
     },
     unfollowUser(id: number) {
-        return instance.delete(`follow/${id}`)
+        return instance.delete<FollowUnfollowUserType>(`follow/${id}`)
             .then(response => response.data)
     }
 }
@@ -37,12 +56,11 @@ type GetUserProfileType = {
     resultCode: ResultCodesEnum
 }
 
-type DefaultResponseResultObject = {
-    resultCode: ResultCodesEnum
-    messages: string[]
+type SaveUserPhotoType = {
     data: {
-        userId: number
+        photos: ProfilePhotosType
     }
+    resultCode: ResultCodesEnum
 }
 
 export const profileAPI = {
@@ -65,7 +83,7 @@ export const profileAPI = {
     saveUserPhoto(file: any) {
         const formData = new FormData()
         formData.append("image", file)
-        return instance.put('profile/photo', formData, {
+        return instance.put<SaveUserPhotoType>('profile/photo', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }}).then(response => response.data)
