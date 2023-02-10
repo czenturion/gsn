@@ -1,7 +1,7 @@
-import {usersAPI} from "../api/api"
 import {ProfilePhotosType} from "./profile-reducer"
 import {ThunkAction} from "redux-thunk"
 import {AppStateType} from "./redux-store"
+import {usersAPI} from "../api/usersAPI"
 
 const SET_USERS = "gsn/users/SET_USERS"
 const SET_TOTAL_USERS_COUNT = "gsn/users/SET_TOTAL_USERS_COUNT"

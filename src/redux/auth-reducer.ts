@@ -1,8 +1,10 @@
-import {authAPI, securityAPI, ResultCodesEnum} from "../api/api"
+import {ResultCodesEnum} from "../api/api"
 import {ThunkAction} from "redux-thunk"
 import {AppStateType} from "./redux-store"
 import {UseFormSetError} from "react-hook-form"
 import {FormValues} from "../components/Login/Login"
+import {authAPI} from "../api/authAPI"
+import {securityAPI} from "../api/securityAPI"
 
 const SET_USER_DATA = "gsn/auth/SET_USER_DATA"
 const TOGGLE_IS_FETCHING = "gsn/auth/TOGGLE_IS_FETCHING"

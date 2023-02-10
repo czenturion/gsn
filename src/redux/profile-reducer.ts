@@ -1,8 +1,9 @@
-import {profileAPI, ResultCodesEnum} from "../api/api"
+import {ResultCodesEnum} from "../api/api"
 import {DisableEditModeType, ProfileFormValues} from "../components/Profile/ProfileContainer"
 import {AppStateType} from "./redux-store"
 import {ThunkAction} from "redux-thunk"
 import {UseFormSetError} from "react-hook-form"
+import {profileAPI} from "../api/profileAPI"
 
 const ADD_POST = "gsn/profile/ADD-POST"
 const SET_USER_PROFILE = "gsn/profile/SET_USER_PROFILE"
