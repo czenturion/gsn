@@ -76,7 +76,7 @@ const MyPosts: FC<PropsType> = (props) => {
             <div>
                 {
                     props.postsElements
-                        ? props.postsElements.map(post => <Post message={post.message}
+                        ? props.postsElements.reverse().map(post => <Post message={post.message}
                                                                 likesCount={post.likesCount}
                                                                 key={post.id}/>)
                         : <></>
