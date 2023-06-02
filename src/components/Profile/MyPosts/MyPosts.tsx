@@ -3,7 +3,6 @@ import {FC} from "react"
 import {SubmitHandler, useForm} from "react-hook-form"
 import Post from "./Post/Post"
 import {PostType} from "../../../redux/profile-reducer"
-import {Button, createStyles, makeStyles, TextField, Theme} from "@material-ui/core"
 
 type PropsType = {
     addPost: (post: string) => void
@@ -13,23 +12,6 @@ type PropsType = {
 type FormValues = {
     post: string
 }
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        form: {
-            display: "flex"
-        },
-        input: {
-            height: 45
-        },
-        submit: {
-            height: 45,
-            width: "40%",
-            marginLeft: theme.spacing(1),
-            backgroundColor: "#1e82f3"
-        }
-    })
-)
 
 const AddPostForm: FC<PropsType> = ({addPost}) => {
     const {
@@ -43,27 +25,15 @@ const AddPostForm: FC<PropsType> = ({addPost}) => {
         reset()
     }
 
-    const classes = useStyles()
-
     return (
-        <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
-            <TextField
-                type="text"
-                variant="outlined"
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <textarea
                 autoComplete="off"
-                InputProps={{
-                    className: classes.input
-                }}
-                fullWidth
                 placeholder="Enter a new post..."
                 {...register("post",
                     {required: true})}/>
-            <Button
-                className={classes.submit}
-                fullWidth
-                variant="contained"
-                color="primary"
-                type={"submit"}>SEND</Button>
+            <button
+                type={"submit"}>SEND</button>
 
         </form>
     )
