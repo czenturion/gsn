@@ -8,6 +8,7 @@
     "@types/react-dom": "^18.0.6",
     "@types/react-redux": "^7.1.24",
     "@types/react-scroll": "^1.8.6",
+    "antd": "^5.5.2",
     "axios": "^0.26.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -50,6 +51,7 @@
   },
   "devDependencies": {
     "@redux-devtools/extension": "^3.2.5",
+    "@testing-library/jest-dom": "^5.16.5",
     "gh-pages": "^4.0.0",
     "react-test-renderer": "^17.0.2"
   },
