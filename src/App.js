@@ -1,22 +1,19 @@
 import "./App.css"
-import Navbar from "./components/Navbar/Navbar"
-import { HashRouter, Navigate, NavLink, Route, Routes } from "react-router-dom"
+import {HashRouter, Navigate, NavLink, Route, Routes} from "react-router-dom"
 import UsersContainer from "./components/Users/UsersContainer"
 import ProfileContainer from "./components/Profile/ProfileContainer"
-import HeaderContainer from "./components/Header/HeaderContainer"
 import * as React from "react"
-import { Component, lazy, Suspense, useEffect, useState } from "react"
-import { connect, Provider } from "react-redux"
-import { initializeApp } from "./redux/app-reducer"
+import {lazy, Suspense, useEffect} from "react"
+import {connect, Provider} from "react-redux"
+import {initializeApp} from "./redux/app-reducer"
 import Preloader from "./components/common/Preloader/Preloader"
 import store from "./redux/redux-store"
 import "antd/dist/reset.css"
-import { Breadcrumb, Layout, Menu, SubMenu, theme } from "antd"
-import { logOut } from "./redux/auth-reducer"
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from "@ant-design/icons"
-import s from "./components/Header/Header.module.css"
+import {Avatar, Breadcrumb, Col, Layout, Menu, Row, theme, Typography} from "antd"
+import {logOut} from "./redux/auth-reducer"
 
 const { Header, Content, Sider } = Layout
+const { Text, Link } = Typography
 
 const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'))
 const News = lazy(() => import('./components/News/News'))
@@ -26,14 +23,14 @@ const Login = lazy(() => import('./components/Login/Login'))
 const NotFound = lazy(() => import('./components/NotFound/NotFound'))
 
 
-const App = ({ initializeApp, initialized, login, logOut }) => {
+const App = ({ initializeApp, initialized, isAuth, logOut }) => {
 
     const {
         token: { colorBgContainer },
-    } = theme.useToken();
+    } = theme.useToken()
 
-    const catchAllUnhandledErrors = ( promise ) => {
-        alert(promise.reason.response.data.message)
+    const catchAllUnhandledErrors = ( reason ) => {
+        alert(reason.response.data.message)
     }
 
     useEffect(() => {
@@ -42,35 +39,47 @@ const App = ({ initializeApp, initialized, login, logOut }) => {
         return () => {
             window.removeEventListener("unhandledrejection", catchAllUnhandledErrors)
         }
-    }, [] )
+    }, [])
 
     if ( !initialized ) {
         return <Preloader />
     } else {
         return (
             <Layout>
-                <Header style={{ display: 'flex', alignItems: 'center' }}>
-                    <div style={{ color: 'white' }}>
-                        { login }
-                    </div>
-                    <Menu theme="dark" mode="horizontal">
-                        <Menu.Item key="head1">
-                            <span onClick={ logOut }>Log Out</span>
-                        </Menu.Item>
-                    </Menu>
+                <Header style={{display: 'flex', alignItems: 'center'}}>
+                    <div className="logo"/>
+                    {
+                        isAuth
+                            ? <Row style={{width: "100%"}}>
+                                <Col span={22}>
+                                </Col>
+                                <Col span={2} style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+                                    <Avatar style={{ backgroundColor: 'gray' }}>USER</Avatar>
+                                    <Menu theme="dark" mode="horizontal" style={{width: "40px"}}>
+                                        <Menu.Item key="1">
+                                            <span onClick={() => logOut()}>Log out</span>
+                                        </Menu.Item>
+                                        <Menu.Item key="2">
+                                            <NavLink to="/settings">Settings</NavLink>
+                                        </Menu.Item>
+                                    </Menu>
+                                </Col>
+                            </Row>
+                            : <></>
+                    }
                 </Header>
                 <Layout>
-                    <Sider width={ 200 } style={{ background: colorBgContainer }}>
+                    <Sider width={200} style={{ background: colorBgContainer }}>
                         <Menu
                             mode="inline"
                             defaultOpenKeys={['sub1']}
-                            style={{ height: '100%', borderRight: 0 }}
+                            style={{height: '100%',borderRight: 0}}
                         >
                             <Menu.SubMenu key="sub1" title="My Profile">
                                 <Menu.Item key="1">
                                     <NavLink to="/profile" style={({ isActive }) => ({
                                         color: isActive ? 'blue' : 'black'
-                                    })}><UserOutlined></UserOutlined> Profile</NavLink>
+                                    })}>Profile</NavLink>
                                 </Menu.Item>
                                 <Menu.Item key="2">
                                     <NavLink to="/dialogs" style={({ isActive }) => ({
@@ -89,13 +98,8 @@ const App = ({ initializeApp, initialized, login, logOut }) => {
                                         color: isActive ? 'blue' : 'black'
                                     })}>Find users</NavLink>
                                 </Menu.Item>
-                                <Menu.Item key="5">
-                                    <NavLink to="/settings" style={({ isActive }) => ({
-                                        color: isActive ? 'blue' : 'black'
-                                    })}>Settings</NavLink>
-                                </Menu.Item>
                             </Menu.SubMenu>
-                            <Menu.Item key="6">
+                            <Menu.Item key="5">
                                 <NavLink to="/news" style={({ isActive }) => ({
                                     color: isActive ? 'blue' : 'black'
                                 })}>News</NavLink>
@@ -104,15 +108,15 @@ const App = ({ initializeApp, initialized, login, logOut }) => {
                     </Sider>
                     <Layout style={{padding: '0 24px 24px'}}>
                         <Breadcrumb style={{margin: '16px 0'}}>
-                            <Breadcrumb.Item>Home</Breadcrumb.Item>
-                            <Breadcrumb.Item>List</Breadcrumb.Item>
-                            <Breadcrumb.Item>App</Breadcrumb.Item>
+                            {/*<Breadcrumb.Item>Home</Breadcrumb.Item>*/}
+                            {/*<Breadcrumb.Item>List</Breadcrumb.Item>*/}
+                            {/*<Breadcrumb.Item>App</Breadcrumb.Item>*/}
                         </Breadcrumb>
                         <Content
                             style={{
                                 padding: 24,
                                 margin: 0,
-                                minHeight: 580,
+                                minHeight: 510,
                                 background: colorBgContainer,
                             }}
                         >
@@ -142,7 +146,7 @@ const App = ({ initializeApp, initialized, login, logOut }) => {
 const mapStateToProps = (state) => ({
     initialized: state.app.initialized,
     authIsFetching: state.auth.isFetching,
-    login: state.auth.login
+    isAuth: state.auth.isAuth
 })
 
 const AppContainer = connect(mapStateToProps, {initializeApp, logOut})(App)

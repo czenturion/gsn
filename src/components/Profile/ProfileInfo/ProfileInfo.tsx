@@ -43,12 +43,6 @@ const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto,
 
     return (
         <div>
-            <div className={s.backgroundPic}>
-                <img
-                    src="https://www.metoffice.gov.uk/binaries/content/gallery/metofficegovuk/hero-images/advice/maps-satellite-images/satellite-image-of-globe.jpg"
-                    alt=""
-                />
-            </div>
             {
                 gettingUserProfileData
                     ? <Preloader/>
