@@ -9,11 +9,11 @@ import {initializeApp} from "./redux/app-reducer"
 import Preloader from "./components/common/Preloader/Preloader"
 import store from "./redux/redux-store"
 import "antd/dist/reset.css"
-import {Avatar, Breadcrumb, Col, Layout, Menu, Row, theme, Typography} from "antd"
+import {Breadcrumb, Layout, Menu, theme} from "antd"
 import {logOut} from "./redux/auth-reducer"
+import AppHeader from "./components/Header/Header";
 
-const { Header, Content, Sider } = Layout
-const { Text, Link } = Typography
+const { Content, Sider } = Layout
 
 const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'))
 const News = lazy(() => import('./components/News/News'))
@@ -23,7 +23,7 @@ const Login = lazy(() => import('./components/Login/Login'))
 const NotFound = lazy(() => import('./components/NotFound/NotFound'))
 
 
-const App = ({ initializeApp, initialized, isAuth, logOut }) => {
+const App = ({ initializeApp, initialized, isAuth, login, logOut }) => {
 
     const {
         token: { colorBgContainer },
@@ -46,28 +46,7 @@ const App = ({ initializeApp, initialized, isAuth, logOut }) => {
     } else {
         return (
             <Layout>
-                <Header style={{display: 'flex', alignItems: 'center'}}>
-                    <div className="logo"/>
-                    {
-                        isAuth
-                            ? <Row style={{width: "100%"}}>
-                                <Col span={22}>
-                                </Col>
-                                <Col span={2} style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
-                                    <Avatar style={{ backgroundColor: 'gray' }}>USER</Avatar>
-                                    <Menu theme="dark" mode="horizontal" style={{width: "40px"}}>
-                                        <Menu.Item key="1">
-                                            <span onClick={() => logOut()}>Log out</span>
-                                        </Menu.Item>
-                                        <Menu.Item key="2">
-                                            <NavLink to="/settings">Settings</NavLink>
-                                        </Menu.Item>
-                                    </Menu>
-                                </Col>
-                            </Row>
-                            : <></>
-                    }
-                </Header>
+                <AppHeader isAuth={isAuth} logOut={logOut} login={login}/>
                 <Layout>
                     <Sider width={200} style={{ background: colorBgContainer }}>
                         <Menu
@@ -77,32 +56,22 @@ const App = ({ initializeApp, initialized, isAuth, logOut }) => {
                         >
                             <Menu.SubMenu key="sub1" title="My Profile">
                                 <Menu.Item key="1">
-                                    <NavLink to="/profile" style={({ isActive }) => ({
-                                        color: isActive ? 'blue' : 'black'
-                                    })}>Profile</NavLink>
+                                    <NavLink to="/profile">Profile</NavLink>
                                 </Menu.Item>
                                 <Menu.Item key="2">
-                                    <NavLink to="/dialogs" style={({ isActive }) => ({
-                                        color: isActive ? 'blue' : 'black'
-                                    })}>Messages</NavLink>
+                                    <NavLink to="/dialogs">Messages</NavLink>
                                 </Menu.Item>
                                 <Menu.Item key="3">
-                                    <NavLink to="/music" style={({ isActive }) => ({
-                                        color: isActive ? 'blue' : 'black'
-                                    })}>Music</NavLink>
+                                    <NavLink to="/music">Music</NavLink>
                                 </Menu.Item>
                             </Menu.SubMenu>
                             <Menu.SubMenu key="sub2" title="Developers">
                                 <Menu.Item key="4">
-                                    <NavLink to="/users" style={({ isActive }) => ({
-                                        color: isActive ? 'blue' : 'black'
-                                    })}>Find users</NavLink>
+                                    <NavLink to="/users">Find users</NavLink>
                                 </Menu.Item>
                             </Menu.SubMenu>
                             <Menu.Item key="5">
-                                <NavLink to="/news" style={({ isActive }) => ({
-                                    color: isActive ? 'blue' : 'black'
-                                })}>News</NavLink>
+                                <NavLink to="/news">News</NavLink>
                             </Menu.Item>
                         </Menu>
                     </Sider>
@@ -116,7 +85,7 @@ const App = ({ initializeApp, initialized, isAuth, logOut }) => {
                             style={{
                                 padding: 24,
                                 margin: 0,
-                                minHeight: 510,
+                                minHeight: 540,
                                 background: colorBgContainer,
                             }}
                         >
@@ -146,7 +115,8 @@ const App = ({ initializeApp, initialized, isAuth, logOut }) => {
 const mapStateToProps = (state) => ({
     initialized: state.app.initialized,
     authIsFetching: state.auth.isFetching,
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    login: state.auth.login
 })
 
 const AppContainer = connect(mapStateToProps, {initializeApp, logOut})(App)
