@@ -1,6 +1,6 @@
-import {NavLink} from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import * as React from "react"
-import {Avatar, Col, Menu, Row, Layout} from "antd"
+import { Avatar, Col, Menu, Row, Layout } from "antd"
 
 const { Header } = Layout
 
@@ -10,7 +10,7 @@ type PropsType = {
 	logOut: () => void
 }
 
-const AppHeader: React.FC<PropsType> = ({isAuth, login, logOut}) => {
+export const AppHeader: React.FC<PropsType> = ({ isAuth, login, logOut }) => {
 	return (
 		<Header style={{display: 'flex', alignItems: 'center'}}>
 			<div className="logo"/>
@@ -19,11 +19,19 @@ const AppHeader: React.FC<PropsType> = ({isAuth, login, logOut}) => {
 					? <Row style={{width: "100%"}}>
 						<Col span={22}>
 						</Col>
-						<Col span={2} style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
-							<Avatar style={{ backgroundColor: 'gray'}}>USER</Avatar>
+						<Col span={2}
+							 style={{
+								 display: "flex",
+								 alignItems: "center",
+								 justifyContent: "space-between"
+							 }}
+						>
+							<Avatar style={{ backgroundColor: 'gray'}}>
+								{ login }
+							</Avatar>
 							<Menu theme="dark" mode="horizontal" style={{width: "40px"}}>
-								<Menu.Item key="1">
-									<span onClick={() => logOut()}>Log out</span>
+								<Menu.Item key="1" onClick={logOut}>
+									<span>Log out</span>
 								</Menu.Item>
 								<Menu.Item key="2">
 									<NavLink to="/settings">Settings</NavLink>
@@ -36,5 +44,3 @@ const AppHeader: React.FC<PropsType> = ({isAuth, login, logOut}) => {
 		</Header>
 	)
 }
-
-export default AppHeader

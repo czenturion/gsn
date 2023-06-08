@@ -125,9 +125,10 @@ export const logOut = (): ThunkType => async dispatch => {
     dispatch(setIsFetching(true))
     const res = await authAPI.logout()
 
-    if (res.resultCode === Error) {
+    if (res.resultCode === Success) {
         dispatch(setAuthUserData(null, null, null, false))
     }
+
     dispatch(setIsFetching(false))
 }
 

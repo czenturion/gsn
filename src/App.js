@@ -1,17 +1,16 @@
 import "./App.css"
-import {HashRouter, Navigate, NavLink, Route, Routes} from "react-router-dom"
+import { HashRouter, Navigate, NavLink, Route, Routes } from "react-router-dom"
 import UsersContainer from "./components/Users/UsersContainer"
 import ProfileContainer from "./components/Profile/ProfileContainer"
 import * as React from "react"
-import {lazy, Suspense, useEffect} from "react"
-import {connect, Provider} from "react-redux"
-import {initializeApp} from "./redux/app-reducer"
+import { lazy, Suspense, useEffect } from "react"
+import { connect, Provider } from "react-redux"
+import { initializeApp } from "./redux/app-reducer"
 import Preloader from "./components/common/Preloader/Preloader"
 import store from "./redux/redux-store"
 import "antd/dist/reset.css"
-import {Breadcrumb, Layout, Menu, theme} from "antd"
-import {logOut} from "./redux/auth-reducer"
-import AppHeader from "./components/Header/Header";
+import { Breadcrumb, Layout, Menu, theme } from "antd"
+import HeaderContainer from "./components/Header/HeaderContainer"
 
 const { Content, Sider } = Layout
 
@@ -23,7 +22,7 @@ const Login = lazy(() => import('./components/Login/Login'))
 const NotFound = lazy(() => import('./components/NotFound/NotFound'))
 
 
-const App = ({ initializeApp, initialized, isAuth, login, logOut }) => {
+const App = ({ initializeApp, initialized, authIsFetching }) => {
 
     const {
         token: { colorBgContainer },
@@ -46,7 +45,7 @@ const App = ({ initializeApp, initialized, isAuth, login, logOut }) => {
     } else {
         return (
             <Layout>
-                <AppHeader isAuth={isAuth} logOut={logOut} login={login}/>
+                <HeaderContainer />
                 <Layout>
                     <Sider width={200} style={{ background: colorBgContainer }}>
                         <Menu
@@ -89,20 +88,24 @@ const App = ({ initializeApp, initialized, isAuth, login, logOut }) => {
                                 background: colorBgContainer,
                             }}
                         >
-                            <Suspense fallback={<Preloader/>}>
-                                <Routes>
-                                    <Route path="/" element={<Navigate to={"/profile"}/>}/>
-                                    <Route path="/profile/:userId" element={<ProfileContainer/>}/>
-                                    <Route path="/profile" element={<ProfileContainer/>}/>
-                                    <Route path="/dialogs/*" element={<DialogsContainer/>}/>
-                                    <Route path="/news" element={<News/>}/>
-                                    <Route path="/music" element={<Music/>}/>
-                                    <Route path="/settings" element={<Settings/>}/>
-                                    <Route path="/users" element={<UsersContainer/>}/>
-                                    <Route path="/login" element={<Login/>}/>
-                                    <Route path="*" element={<NotFound/>}/>
-                                </Routes>
-                            </Suspense>
+                            {
+                                authIsFetching
+                                    ? <Preloader />
+                                    : <Suspense fallback={<Preloader/>}>
+                                        <Routes>
+                                            <Route path="/" element={<Navigate to={"/profile"}/>}/>
+                                            <Route path="/profile/:userId" element={<ProfileContainer/>}/>
+                                            <Route path="/profile" element={<ProfileContainer/>}/>
+                                            <Route path="/dialogs/*" element={<DialogsContainer/>}/>
+                                            <Route path="/news" element={<News/>}/>
+                                            <Route path="/music" element={<Music/>}/>
+                                            <Route path="/settings" element={<Settings/>}/>
+                                            <Route path="/users" element={<UsersContainer/>}/>
+                                            <Route path="/login" element={<Login/>}/>
+                                            <Route path="*" element={<NotFound/>}/>
+                                        </Routes>
+                                    </Suspense>
+                            }
                         </Content>
                     </Layout>
                 </Layout>
@@ -114,12 +117,10 @@ const App = ({ initializeApp, initialized, isAuth, login, logOut }) => {
 
 const mapStateToProps = (state) => ({
     initialized: state.app.initialized,
-    authIsFetching: state.auth.isFetching,
-    isAuth: state.auth.isAuth,
-    login: state.auth.login
+    authIsFetching: state.auth.isFetching
 })
 
-const AppContainer = connect(mapStateToProps, {initializeApp, logOut})(App)
+const AppContainer = connect(mapStateToProps, {initializeApp})(App)
 
 const MainApp = () => {
     return <HashRouter basename="/">
