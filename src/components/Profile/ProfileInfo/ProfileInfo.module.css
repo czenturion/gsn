@@ -22,6 +22,7 @@
 .leftField img {
     width: 100%;
     min-width: 150px;
+    border-radius: 5px;
 }
 
 .fullName {
@@ -53,6 +54,7 @@
 }
 
 .photoUpdateButtonField {
+    margin-top: 10px;
     display: flex;
     justify-content: center;
 }

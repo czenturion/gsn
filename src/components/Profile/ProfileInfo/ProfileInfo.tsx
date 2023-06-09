@@ -9,6 +9,10 @@ import {ProfileType} from "../../../redux/profile-reducer"
 import ProfileDataForm from "./ProfileDataForm"
 import {UseFormSetError} from "react-hook-form"
 import type {ProfileFormValues, DisableEditModeType} from "../ProfileContainer"
+import {Button, Card, message, Upload, UploadProps} from "antd"
+import {UploadOutlined} from "@ant-design/icons"
+
+const { Meta } = Card
 
 type PropsType = {
     profile: ProfileType | null
@@ -36,11 +40,26 @@ const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto,
         }
     }
 
+    const props: UploadProps = {
+        onChange(info) {
+            if (info.file.status !== 'uploading') {
+                console.log(info.file[0])
+            }
+            if (info.file.status === 'done') {
+                message.success(`${info.file.name} file uploaded successfully`)
+            } else if (info.file.status === 'error') {
+                message.error(`${info.file.name} file upload failed.`)
+            }
+        }
+    }
+
     // this check should be because TS warns about profile might be null
     if (!profile) {
         return <Preloader/>
     }
 
+    // @ts-ignore
+    // @ts-ignore
     return (
         <div>
             {
@@ -57,14 +76,18 @@ const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto,
                             }
                             {
                                 currentProfileAuthUser && <div className={s.photoUpdateButtonField}>
-                                    <label htmlFor="file-upload" className={s.customFileUpload}>Upload Avatar</label>
-                                    <input type="file"
-                                           onChange={uploadUserPhoto}
-                                           id="file-upload"
-                                           accept=".png,.jpg,.jpeg"/></div>
+                                    <Upload {...props} customRequest={savePhoto}>
+                                        <Button icon={<UploadOutlined rev={undefined} />}>Upload avatar</Button>
+                                    </Upload>
+                                    {/*<label htmlFor="file-upload" className={s.customFileUpload}>Upload Avatar</label>*/}
+                                    {/*<input type="file"*/}
+                                    {/*       onChange={uploadUserPhoto}*/}
+                                    {/*       id="file-upload"*/}
+                                    {/*       accept=".png,.jpg,.jpeg"/>*/}
+                                </div>
                             }
                         </div>
-                        <div className={s.rightField}>
+                        <Card className={s.rightField}>
                             <div className={s.fullName}>
                                 {profile.fullName + " " + profile.userId}
                             </div>
@@ -89,7 +112,7 @@ const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto,
                                              onClickToggleContactsVisible()
                                          }}/>
                             }
-                        </div>
+                        </Card>
                     </div>
             }
         </div>

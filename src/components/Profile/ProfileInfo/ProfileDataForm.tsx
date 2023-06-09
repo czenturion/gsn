@@ -7,7 +7,7 @@ import type {ProfileDataType} from "./ProfileInfo"
 import type {ProfileFormValues} from "../ProfileContainer"
 import {capitalize} from "../../../utils/helpers/helpers";
 
-const ProfileDataForm: FC<ProfileDataType> = ({profile,  updateProfile, disableEditMode}) => {
+const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disableEditMode }) => {
     const {
         register,
         handleSubmit,

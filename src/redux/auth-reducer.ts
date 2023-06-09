@@ -127,6 +127,8 @@ export const logOut = (): ThunkType => async dispatch => {
 
     if (res.resultCode === Success) {
         dispatch(setAuthUserData(null, null, null, false))
+    } else {
+        console.log(res)
     }
 
     dispatch(setIsFetching(false))

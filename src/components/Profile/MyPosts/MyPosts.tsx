@@ -1,8 +1,8 @@
 import * as React from "react"
-import {FC} from "react"
-import {SubmitHandler, useForm} from "react-hook-form"
+import { FC } from "react"
+import { SubmitHandler, useForm } from "react-hook-form"
 import Post from "./Post/Post"
-import {PostType} from "../../../redux/profile-reducer"
+import { PostType } from "../../../redux/profile-reducer"
 
 type PropsType = {
     addPost: (post: string) => void
@@ -13,7 +13,7 @@ type FormValues = {
     post: string
 }
 
-const AddPostForm: FC<PropsType> = ({addPost}) => {
+const AddPostForm: FC<PropsType> = ({ addPost }) => {
     const {
         register,
         handleSubmit,
@@ -41,7 +41,7 @@ const AddPostForm: FC<PropsType> = ({addPost}) => {
 
 const MyPosts: FC<PropsType> = (props) => {
     return (
-        <div>
+        <div style={{marginTop: "25px"}}>
             <AddPostForm addPost={props.addPost}/>
             <div>
                 {
