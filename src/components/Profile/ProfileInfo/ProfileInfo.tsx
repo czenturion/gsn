@@ -11,6 +11,7 @@ import {UseFormSetError} from "react-hook-form"
 import type {ProfileFormValues, DisableEditModeType} from "../ProfileContainer"
 import {Button, Card, message, Upload, UploadProps} from "antd"
 import {UploadOutlined} from "@ant-design/icons"
+import axios from "axios";
 
 const { Meta } = Card
 
@@ -33,17 +34,17 @@ const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto,
         toggleContactsVisible(!contactsHidden)
     }
 
-    const uploadUserPhoto = (event: { target: HTMLInputElement }) => {
-        const target = event.target
-        if (target.files!.length > 0) {
-            savePhoto(target.files![0])
+    const uploadUserPhoto = (info: any) => {
+        if (info.file.status === 'done' && info.fileList.length === 1) {
+            savePhoto(info.file);
         }
     }
+
 
     const props: UploadProps = {
         onChange(info) {
             if (info.file.status !== 'uploading') {
-                console.log(info.file[0])
+                console.log(info.file, info.fileList)
             }
             if (info.file.status === 'done') {
                 message.success(`${info.file.name} file uploaded successfully`)
@@ -76,14 +77,9 @@ const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto,
                             }
                             {
                                 currentProfileAuthUser && <div className={s.photoUpdateButtonField}>
-                                    <Upload {...props} customRequest={savePhoto}>
-                                        <Button icon={<UploadOutlined rev={undefined} />}>Upload avatar</Button>
+                                    <Upload>
+                                        <Button icon={<UploadOutlined rev={undefined}/>}>Upload avatar</Button>
                                     </Upload>
-                                    {/*<label htmlFor="file-upload" className={s.customFileUpload}>Upload Avatar</label>*/}
-                                    {/*<input type="file"*/}
-                                    {/*       onChange={uploadUserPhoto}*/}
-                                    {/*       id="file-upload"*/}
-                                    {/*       accept=".png,.jpg,.jpeg"/>*/}
                                 </div>
                             }
                         </div>
@@ -172,3 +168,22 @@ const Contact: FC<ContactType> = ({contactTitle, contactValue}) => {
 }
 
 export default ProfileInfo
+
+// <Upload
+// name="photo"
+// action="/api/upload"
+// beforeUpload={beforeUpload}
+// customRequest={(options) => {
+//     const { onSuccess, file } = options;
+//     const formData = new FormData();
+//     formData.append('photo', file);
+//     axios.post('/api/upload', formData).then(() => {
+//         onSuccess(null, file);
+//         if (fileList.length === 1) {
+//             savePhoto(file);
+//         }
+//     });
+// }}
+// >
+// <Button icon={<UploadOutlined />}>Upload Photo</Button>
+// </Upload>
