@@ -1,19 +1,20 @@
 import "./App.css"
-import { HashRouter, Navigate, NavLink, Route, Routes } from "react-router-dom"
+import {HashRouter, Navigate, Route, Routes} from "react-router-dom"
 import UsersContainer from "./components/Users/UsersContainer"
 import ProfileContainer from "./components/Profile/ProfileContainer"
 import * as React from "react"
-import { lazy, Suspense, useEffect } from "react"
-import { connect, Provider } from "react-redux"
-import { initializeApp } from "./redux/app-reducer"
+import {lazy, Suspense, useEffect} from "react"
+import {connect, Provider} from "react-redux"
+import {initializeApp} from "./redux/app-reducer"
 import Preloader from "./components/common/Preloader/Preloader"
 import store from "./redux/redux-store"
 import "antd/dist/reset.css"
-import { Breadcrumb, Layout, Menu, theme } from "antd"
-import HeaderContainer from "./components/Header/HeaderContainer"
-import Navbar from "./components/Navbar/Navbar";
+import {Breadcrumb, Layout, theme} from "antd"
+import AppHeader from "./components/Header/AppHeader"
+import Navbar from "./components/Navbar/Navbar"
+import {logOut} from "./redux/auth-reducer"
 
-const { Content, Sider } = Layout
+const { Content } = Layout
 
 const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'))
 const News = lazy(() => import('./components/News/News'))
@@ -46,7 +47,7 @@ const App = ({ initializeApp, initialized, authIsFetching }) => {
     } else {
         return (
             <Layout>
-                <HeaderContainer />
+                <AppHeader logOut={logOut}/>
                 <Layout>
                     <Navbar colorBgContainer={colorBgContainer} />
                     <Layout style={{padding: '0 24px 24px'}}>

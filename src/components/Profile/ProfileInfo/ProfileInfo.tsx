@@ -21,7 +21,7 @@ type PropsType = {
     currentProfileAuthUser: boolean
     gettingUserProfileData: boolean
     uploadingData: boolean
-    savePhoto: (file: File) => void
+    savePhoto: (file: any) => void
     updateProfile: (profileData: ProfileFormValues, setError: UseFormSetError<ProfileFormValues>, disableEditMode: DisableEditModeType) => void
     updateStatus: (newStatus: string) => void
 }
@@ -77,7 +77,7 @@ const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto,
                             }
                             {
                                 currentProfileAuthUser && <div className={s.photoUpdateButtonField}>
-                                    <Upload>
+                                    <Upload maxCount={1} customRequest={savePhoto}>
                                         <Button icon={<UploadOutlined rev={undefined}/>}>Upload avatar</Button>
                                     </Upload>
                                 </div>

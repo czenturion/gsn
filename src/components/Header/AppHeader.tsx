@@ -1,16 +1,20 @@
 import { NavLink } from "react-router-dom"
 import * as React from "react"
 import { Avatar, Col, Menu, Row, Layout } from "antd"
+import { selectIsAuth, selectLogin } from "../../redux/auth-selectors"
+import { useSelector } from "react-redux"
 
 const { Header } = Layout
 
 type PropsType = {
-	login: string | null
-	isAuth: boolean
 	logOut: () => void
 }
 
-export const AppHeader: React.FC<PropsType> = ({ isAuth, login, logOut }) => {
+export const AppHeader: React.FC<PropsType> = ({ logOut }) => {
+
+	const isAuth = useSelector(selectIsAuth)
+	const login = useSelector(selectLogin)
+
 	return (
 		<Header style={{display: 'flex', alignItems: 'center'}}>
 			<div className="logo"/>
@@ -26,8 +30,8 @@ export const AppHeader: React.FC<PropsType> = ({ isAuth, login, logOut }) => {
 								 justifyContent: "space-between"
 							 }}
 						>
-							<Avatar style={{ backgroundColor: 'gray'}}>
-								{ login }
+							<Avatar style={{backgroundColor: 'gray'}}>
+								{login}
 							</Avatar>
 							<Menu theme="dark" mode="horizontal" style={{width: "40px"}}>
 								<Menu.Item key="1" onClick={logOut}>
