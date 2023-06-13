@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI Emoji', serif;
+}
+
+.app-wrapper {
+    display: grid;
+    max-width: 900px;
+    min-height: 100vh;
+    margin: 0 auto;
+
+    grid-template-areas:
+		"h h"
+		"n c";
+
+    grid-template-rows: 50px 1fr;
+    grid-template-columns: 2fr 10fr;
+    grid-gap: 10px;
+}
+
+.app-wrapper-content {
+    grid-area: c;
+    height: 101%;
+}
+

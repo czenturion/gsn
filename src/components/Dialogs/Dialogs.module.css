@@ -1,0 +1,105 @@
+.dialogs {
+    display: grid;
+    grid-template-columns: 3fr 9fr;
+    height: 100%;
+}
+
+.dialogsItems,
+.messages {
+    padding: 10px;
+}
+
+
+.dialogElement {
+    padding: 20px;
+    border-bottom: 1px solid #b9b9b9;
+}
+
+.dialogElement img {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    margin-right: 8px;
+}
+
+.dialogElement a {
+    display: flex;
+    color: black;
+    text-decoration: none;
+}
+
+.dialogElement .text {
+    padding-top: 4px;
+}
+
+.messages {
+    border-left: 1px solid #b9b9b9;
+    border-right: 1px solid #b9b9b9;
+}
+
+.messagesScroll {
+    position: relative;
+    height: 75vh;
+    overflow-y: scroll;
+    padding-right: 10px;
+}
+
+.messagesScrollRef {
+    height: 30px;
+}
+
+
+.sendMessageField {
+    display: flex;
+}
+
+.sendMessageField:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+}
+
+.messagesForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.messageField {
+    width: 100%;
+}
+
+.messageField input:focus {
+    outline: none
+}
+
+.btnMessageSend {
+    width: 30%;
+    border: 1px solid #424242;
+    border-left: none;
+}
+
+.messageField > input,
+.btnMessageSend > input {
+    flex: 1; /* additionally, equal width */
+    padding: 1em 0 1em 0.5em;
+    border: 1px solid #424242;
+    width: 100%;
+}
+
+.btnMessageSend input {
+    border: none;
+    background-color: #1e82f3;
+    color: white;
+    text-transform: uppercase;
+}
+
+.btnMessageSend input:hover {
+    background-color: #004ca6;
+}
+
+.error,
+.error p {
+    margin: 0;
+    color: red;
+    height: 20px;
+}
+
+

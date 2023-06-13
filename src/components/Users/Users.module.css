@@ -1,0 +1,82 @@
+.pages,
+.spinner {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+.pages span {
+    padding-left: 5px;
+    cursor: pointer;
+}
+
+.selectedPage {
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.leftField {
+    width: 90px;
+    flex-direction: column;
+}
+
+.avaDiv {
+    text-align: center;
+}
+
+.ava {
+    border-radius: 50px;
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
+.leftFieldBtn {
+    margin-top: 2px;
+    width: 100%;
+    text-align: center;
+}
+
+.leftFieldBtn button {
+    cursor: pointer;
+}
+
+.userDiv {
+    padding-bottom: 15px;
+    display: flex;
+}
+
+.userInfo {
+    width: 60%;
+    height: 80px;
+    padding-top: 5px;
+    margin-left: 7px;
+    border-radius: 5px;
+    border: solid gray 2px;
+}
+
+.userInfoItems {
+    display: flex;
+}
+
+.userPersonalInfo {
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+.status {
+    padding-top: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

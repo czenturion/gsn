@@ -1,0 +1,22 @@
+
+.item a {
+	color: black;
+	text-decoration: none;
+}
+
+
+.friend {
+	display: block;
+	margin: 0 auto;
+	font-size: 10px;
+}
+
+.friend p {
+	margin-top: 0;
+	text-align: center;
+}
+
+.name {
+	width: 30px;
+	word-wrap: break-word;
+}

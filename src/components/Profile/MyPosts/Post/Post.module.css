@@ -1,0 +1,23 @@
+.item img {
+	width: 50px;
+	height: 50px;
+	border-radius: 50px;
+	margin-right: 1rem;
+}
+
+.item {
+	display: flex;
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+
+.item .message {
+	width: 60%;
+}
+
+.buttonLike:hover {
+	cursor: pointer;
+	color: white;
+	background: #004ca6;
+	border-radius: 3px;
+}
