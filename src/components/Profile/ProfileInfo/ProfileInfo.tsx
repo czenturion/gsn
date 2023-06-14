@@ -35,23 +35,7 @@ const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto,
     }
 
     const uploadUserPhoto = (info: any) => {
-        if (info.file.status === 'done' && info.fileList.length === 1) {
-            savePhoto(info.file);
-        }
-    }
-
-
-    const props: UploadProps = {
-        onChange(info) {
-            if (info.file.status !== 'uploading') {
-                console.log(info.file, info.fileList)
-            }
-            if (info.file.status === 'done') {
-                message.success(`${info.file.name} file uploaded successfully`)
-            } else if (info.file.status === 'error') {
-                message.error(`${info.file.name} file upload failed.`)
-            }
-        }
+        savePhoto(info.file)
     }
 
     // this check should be because TS warns about profile might be null
@@ -59,8 +43,6 @@ const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto,
         return <Preloader/>
     }
 
-    // @ts-ignore
-    // @ts-ignore
     return (
         <div>
             {
@@ -77,7 +59,8 @@ const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto,
                             }
                             {
                                 currentProfileAuthUser && <div className={s.photoUpdateButtonField}>
-                                    <Upload maxCount={1} customRequest={savePhoto}>
+
+                                    <Upload maxCount={1} customRequest={uploadUserPhoto} showUploadList={false}>
                                         <Button icon={<UploadOutlined rev={undefined}/>}>Upload avatar</Button>
                                     </Upload>
                                 </div>
