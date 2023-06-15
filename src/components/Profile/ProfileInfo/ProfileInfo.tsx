@@ -2,18 +2,16 @@ import s from "./ProfileInfo.module.css"
 import Preloader from "../../common/Preloader/Preloader"
 import userPhoto from "../../../assets/images/astroIco.jpg"
 import ProfileStatus from "./ProfileStatus"
-import {capitalize} from "../../../utils/helpers/helpers"
-import {FC, useState} from "react"
+import { capitalize } from "../../../utils/helpers/helpers"
 import * as React from "react"
-import {ProfileType} from "../../../redux/profile-reducer"
+import { FC, useState } from "react"
+import { ProfileType } from "../../../redux/profile-reducer"
 import ProfileDataForm from "./ProfileDataForm"
-import {UseFormSetError} from "react-hook-form"
-import type {ProfileFormValues, DisableEditModeType} from "../ProfileContainer"
-import {Button, Card, message, Upload, UploadProps} from "antd"
-import {UploadOutlined} from "@ant-design/icons"
-import axios from "axios";
+import { UseFormSetError } from "react-hook-form"
+import {Button, Card, message, Upload} from "antd"
+import { UploadOutlined } from "@ant-design/icons"
+import type { DisableEditModeType, ProfileFormValues } from "../ProfileContainer"
 
-const { Meta } = Card
 
 type PropsType = {
     profile: ProfileType | null
@@ -26,9 +24,19 @@ type PropsType = {
     updateStatus: (newStatus: string) => void
 }
 
-const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto, status, updateProfile, updateStatus, gettingUserProfileData, uploadingData}) => {
+const ProfileInfo: FC<PropsType> = ({
+                                        profile,
+                                        currentProfileAuthUser,
+                                        savePhoto,
+                                        status,
+                                        updateProfile,
+                                        updateStatus,
+                                        gettingUserProfileData,
+                                        uploadingData }) => {
+
     const [contactsHidden, toggleContactsVisible] = useState(true)
     const [editMode, toggleEditMode] = useState(false)
+    const allowedTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
 
     const onClickToggleContactsVisible = () => {
         toggleContactsVisible(!contactsHidden)
@@ -36,6 +44,14 @@ const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto,
 
     const uploadUserPhoto = (info: any) => {
         savePhoto(info.file)
+    }
+
+    const beforeUpload = (file: any) => {
+        const isAllowedType = allowedTypes.includes(file.type);
+        if (!isAllowedType) {
+            message.error(`Only ${allowedTypes.join(', ')} files are allowed!`);
+        }
+        return isAllowedType;
     }
 
     // this check should be because TS warns about profile might be null
@@ -60,8 +76,15 @@ const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto,
                             {
                                 currentProfileAuthUser && <div className={s.photoUpdateButtonField}>
 
-                                    <Upload maxCount={1} customRequest={uploadUserPhoto} showUploadList={false}>
-                                        <Button icon={<UploadOutlined rev={undefined}/>}>Upload avatar</Button>
+                                    <Upload
+                                        maxCount={1}
+                                        beforeUpload={beforeUpload}
+                                        customRequest={uploadUserPhoto}
+                                        showUploadList={false}
+                                    >
+                                        <Button icon={<UploadOutlined rev={undefined}/>}>
+                                            Upload avatar
+                                        </Button>
                                     </Upload>
                                 </div>
                             }
@@ -70,6 +93,7 @@ const ProfileInfo: FC<PropsType> = ({profile, currentProfileAuthUser, savePhoto,
                             <div className={s.fullName}>
                                 {profile.fullName + " " + profile.userId}
                             </div>
+                            <br/>
                             <ProfileStatus
                                 status={status}
                                 updateStatus={updateStatus}
@@ -108,17 +132,21 @@ export type ProfileDataType = {
     updateProfile?: (formValues: ProfileFormValues, setError: UseFormSetError<ProfileFormValues>, disableEditMode: DisableEditModeType) => void
 }
 
-const ProfileData: FC<ProfileDataType> = ({profile,
+const ProfileData: FC<ProfileDataType> = ({ profile,
                                               onClickToggleContactsVisible,
                                               contactsHidden,
                                               currentProfileAuthUser,
-                                              toggleEditMode}) => {
+                                              toggleEditMode }) => {
     return <div>
         {
-            currentProfileAuthUser && <div><button className={s.submit} onClick={toggleEditMode}>Edit</button></div>
+            currentProfileAuthUser && <div>
+                <br/>
+                    <Button style={{width: "100px"}} onClick={toggleEditMode}>Edit</Button>
+            </div>
         }
         {
             <div>
+                <br/>
                 <span className={s.contactsList} onClick={onClickToggleContactsVisible}>Contacts {!contactsHidden ? "- - -" : "+++"}</span>
                 {
                     !contactsHidden
@@ -152,21 +180,3 @@ const Contact: FC<ContactType> = ({contactTitle, contactValue}) => {
 
 export default ProfileInfo
 
-// <Upload
-// name="photo"
-// action="/api/upload"
-// beforeUpload={beforeUpload}
-// customRequest={(options) => {
-//     const { onSuccess, file } = options;
-//     const formData = new FormData();
-//     formData.append('photo', file);
-//     axios.post('/api/upload', formData).then(() => {
-//         onSuccess(null, file);
-//         if (fileList.length === 1) {
-//             savePhoto(file);
-//         }
-//     });
-// }}
-// >
-// <Button icon={<UploadOutlined />}>Upload Photo</Button>
-// </Upload>
