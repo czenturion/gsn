@@ -8,7 +8,7 @@ import { FC, useState } from "react"
 import { ProfileType } from "../../../redux/profile-reducer"
 import ProfileDataForm from "./ProfileDataForm"
 import { UseFormSetError } from "react-hook-form"
-import {Button, Card, message, Upload} from "antd"
+import {Button, Card, Collapse, message, Upload} from "antd"
 import { UploadOutlined } from "@ant-design/icons"
 import type { DisableEditModeType, ProfileFormValues } from "../ProfileContainer"
 
@@ -137,26 +137,42 @@ const ProfileData: FC<ProfileDataType> = ({ profile,
                                               contactsHidden,
                                               currentProfileAuthUser,
                                               toggleEditMode }) => {
+
+    const profileItems = [
+        {
+            key: 1,
+            label: "Contacts",
+            children: <>
+                {
+                    Object.keys(profile.contacts).map(key => {
+                        // @ts-ignore
+                        return <Contact contactTitle={key} contactValue={profile.contacts[key]} key={key}/>
+                    })
+                }
+            </>
+        },
+        {
+            key: 2,
+            label: "About Me",
+            children: <p>{profile.aboutMe}</p>
+        },
+        {
+            key: 3,
+            label: "About skills",
+            children: <p>{profile.lookingForAJobDescription}</p>
+        }
+    ]
+
     return <div>
+        <br/>
         {
             currentProfileAuthUser && <div>
-                <br/>
                     <Button style={{width: "100px"}} onClick={toggleEditMode}>Edit</Button>
             </div>
         }
-        {
-            <div>
-                <br/>
-                <span className={s.contactsList} onClick={onClickToggleContactsVisible}>Contacts {!contactsHidden ? "- - -" : "+++"}</span>
-                {
-                    !contactsHidden
-                        ? <div className={s.contacts}>{Object.keys(profile.contacts).map(key => {
-                            // @ts-ignore
-                            return <Contact contactTitle={key} contactValue={profile.contacts[key]} key={key}/>})}</div>
-                        : <></>
-                }
-            </div>
-        }
+        <br/>
+        <Collapse accordion items={profileItems} />
+        <br/>
         <div>
             {
                 profile.lookingForAJob
@@ -164,8 +180,6 @@ const ProfileData: FC<ProfileDataType> = ({ profile,
                     : <h2>Not looking for a job</h2>
             }
         </div>
-        <div><b>About Me:</b> {profile.aboutMe}</div>
-        <div><b>About skills</b>: {profile.lookingForAJobDescription}</div>
     </div>
 }
 
@@ -175,7 +189,7 @@ type ContactType = {
 }
 
 const Contact: FC<ContactType> = ({contactTitle, contactValue}) => {
-  return <div className={s.contact}><b>{capitalize(contactTitle)}</b>: {contactValue}</div>
+  return <div className={s.contact}><b>{capitalize(contactTitle)}</b>: <a href={contactValue} target="_blank">{contactValue}</a></div>
 }
 
 export default ProfileInfo

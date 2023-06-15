@@ -6,7 +6,7 @@ import type {SubmitHandler} from "react-hook-form"
 import type {ProfileDataType} from "./ProfileInfo"
 import type {ProfileFormValues} from "../ProfileContainer"
 import {capitalize} from "../../../utils/helpers/helpers";
-import {Button, Input} from "antd";
+import {Button, Input, Space} from "antd";
 
 const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disableEditMode }) => {
     const {
@@ -24,14 +24,14 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
     }
 
     return <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-            <br/>
+        <br/>
+        <Space>
             <Input
                 type={"submit"}
                 value={"Save"}
                 style={{width: "100px", marginRight: "10px"}}/>
             <Button onClick={disableEditMode}>Exit edit mod</Button>
-        </div>
+        </Space>
         {
             errors
                 // @ts-ignore
