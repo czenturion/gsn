@@ -11,6 +11,10 @@ import { UseFormSetError } from "react-hook-form"
 import {Button, Card, Collapse, message, Upload} from "antd"
 import { UploadOutlined } from "@ant-design/icons"
 import type { DisableEditModeType, ProfileFormValues } from "../ProfileContainer"
+import { Typography } from 'antd'
+
+const { Title } = Typography
+
 
 
 type PropsType = {
@@ -20,7 +24,10 @@ type PropsType = {
     gettingUserProfileData: boolean
     uploadingData: boolean
     savePhoto: (file: any) => void
-    updateProfile: (profileData: ProfileFormValues, setError: UseFormSetError<ProfileFormValues>, disableEditMode: DisableEditModeType) => void
+    updateProfile: (
+        profileData: ProfileFormValues,
+        setError: UseFormSetError<ProfileFormValues>,
+        disableEditMode: DisableEditModeType) => void
     updateStatus: (newStatus: string) => void
 }
 
@@ -32,15 +39,12 @@ const ProfileInfo: FC<PropsType> = ({
                                         updateProfile,
                                         updateStatus,
                                         gettingUserProfileData,
-                                        uploadingData }) => {
+                                        uploadingData
+                                    }) => {
 
-    const [contactsHidden, toggleContactsVisible] = useState(true)
     const [editMode, toggleEditMode] = useState(false)
     const allowedTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
 
-    const onClickToggleContactsVisible = () => {
-        toggleContactsVisible(!contactsHidden)
-    }
 
     const uploadUserPhoto = (info: any) => {
         savePhoto(info.file)
@@ -90,9 +94,9 @@ const ProfileInfo: FC<PropsType> = ({
                             }
                         </div>
                         <Card className={s.rightField}>
-                            <div className={s.fullName}>
+                            <Title level={2}>
                                 {profile.fullName + " " + profile.userId}
-                            </div>
+                            </Title>
                             <br/>
                             <ProfileStatus
                                 status={status}
@@ -101,19 +105,18 @@ const ProfileInfo: FC<PropsType> = ({
 
                             {
                                 editMode
-                                ? <ProfileDataForm profile={profile}
-                                                   updateProfile={updateProfile}
-                                                   disableEditMode={() => {
-                                                       toggleEditMode(false)
-                                                   }}/>
-                                : <ProfileData profile={profile}
-                                         onClickToggleContactsVisible={onClickToggleContactsVisible}
-                                         contactsHidden={contactsHidden}
-                                         currentProfileAuthUser={currentProfileAuthUser}
-                                         toggleEditMode={() => {
-                                             toggleEditMode(true)
-                                             onClickToggleContactsVisible()
-                                         }}/>
+                                ? <ProfileDataForm
+                                        profile={profile}
+                                        updateProfile={updateProfile}
+                                        disableEditMode={() => {
+                                            toggleEditMode(false)
+                                        }}/>
+                                : <ProfileData
+                                        profile={profile}
+                                        currentProfileAuthUser={currentProfileAuthUser}
+                                        toggleEditMode={() => {
+                                            toggleEditMode(true)
+                                        }}/>
                             }
                         </Card>
                     </div>
@@ -124,19 +127,17 @@ const ProfileInfo: FC<PropsType> = ({
 
 export type ProfileDataType = {
     profile: ProfileType
-    contactsHidden?: boolean
     currentProfileAuthUser?: boolean
-    onClickToggleContactsVisible?: () => void
     toggleEditMode?: () => void
     disableEditMode?: DisableEditModeType
     updateProfile?: (formValues: ProfileFormValues, setError: UseFormSetError<ProfileFormValues>, disableEditMode: DisableEditModeType) => void
 }
 
-const ProfileData: FC<ProfileDataType> = ({ profile,
-                                              onClickToggleContactsVisible,
-                                              contactsHidden,
+const ProfileData: FC<ProfileDataType> = ({
+                                              profile,
                                               currentProfileAuthUser,
-                                              toggleEditMode }) => {
+                                              toggleEditMode
+                                          }) => {
 
     const profileItems = [
         {

@@ -1,6 +1,9 @@
 import * as React from "react"
-import {ChangeEvent, FC, useEffect, useState} from "react"
+import { ChangeEvent, FC, useEffect, useState } from "react"
 import s from "./ProfileInfo.module.css"
+import {Input, Typography} from 'antd'
+
+const { Title } = Typography
 
 type PropsType = {
     status: string | null
@@ -45,24 +48,26 @@ const ProfileStatus: FC<PropsType> = ({status, currentProfileAuthUser, updateSta
         <div className={s.status}>
             {
                 editMode && currentProfileAuthUser
-                    ? <input
+                    ? <Input
                         type="text"
                         autoFocus={true}
                         defaultValue={String(status)}
                         onBlur={deactivateEditMode}
                         onChange={onChangeStatus}
                         maxLength={300}/>
-                    : <span
-                        className={currentProfileAuthUser ? s.statusSpan : undefined}
-                        onClick={activateEditMode}>
-                        {
-                            localStatus
-                                ? localStatus
-                                : currentProfileAuthUser
-                                    ? "Set status."
-                                    : "Status unset."
-                        }
-                    </span>
+                    : <Title level={4}>
+                        <span
+                            className={currentProfileAuthUser ? s.statusSpan : undefined}
+                            onClick={activateEditMode}>
+                            {
+                                localStatus
+                                    ? localStatus
+                                    : currentProfileAuthUser
+                                        ? "Set status."
+                                        : "Status unset."
+                            }
+                        </span>
+                    </Title>
             }
         </div>
     )

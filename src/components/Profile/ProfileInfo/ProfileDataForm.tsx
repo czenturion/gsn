@@ -57,6 +57,7 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         <div>
             <b>About skills:</b> <input type="text" {...register("lookingForAJobDescription")} placeholder="What about your skills?"/>
         </div>
+
     </form>
 }
 

@@ -4,23 +4,12 @@
     font-family: 'Segoe UI Emoji', serif;
 }
 
-.app-wrapper {
-    display: grid;
-    max-width: 900px;
-    min-height: 100vh;
-    margin: 0 auto;
-
-    grid-template-areas:
-		"h h"
-		"n c";
-
-    grid-template-rows: 50px 1fr;
-    grid-template-columns: 2fr 10fr;
-    grid-gap: 10px;
+body {
+    background-color: #f5f5f5;
 }
 
-.app-wrapper-content {
-    grid-area: c;
-    height: 101%;
+.app-wrapper {
+    max-width: 1440px;
+    margin:0 auto;
 }
 
