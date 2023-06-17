@@ -2,20 +2,18 @@ import s from "./ProfileInfo.module.css"
 import Preloader from "../../common/Preloader/Preloader"
 import userPhoto from "../../../assets/images/astroIco.jpg"
 import ProfileStatus from "./ProfileStatus"
-import { capitalize } from "../../../utils/helpers/helpers"
+import {capitalize} from "../../../utils/helpers/helpers"
 import * as React from "react"
-import { FC, useState } from "react"
-import { ProfileType } from "../../../redux/profile-reducer"
+import {FC, useState} from "react"
+import {ProfileType} from "../../../redux/profile-reducer"
 import ProfileDataForm from "./ProfileDataForm"
-import { UseFormSetError } from "react-hook-form"
+import {UseFormSetError} from "react-hook-form"
 import {Button, Card, Collapse, message, Upload} from "antd"
-import { UploadOutlined } from "@ant-design/icons"
-import type { DisableEditModeType, ProfileFormValues } from "../ProfileContainer"
-import { Typography } from 'antd'
+import {UploadOutlined} from "@ant-design/icons"
+import type {DisableEditModeType, ProfileFormValues} from "../ProfileContainer"
+import {Typography} from 'antd'
 
-const { Title } = Typography
-
-
+const {Title} = Typography
 
 type PropsType = {
     profile: ProfileType | null
@@ -105,13 +103,13 @@ const ProfileInfo: FC<PropsType> = ({
 
                             {
                                 editMode
-                                ? <ProfileDataForm
+                                    ? <ProfileDataForm
                                         profile={profile}
                                         updateProfile={updateProfile}
                                         disableEditMode={() => {
                                             toggleEditMode(false)
                                         }}/>
-                                : <ProfileData
+                                    : <ProfileData
                                         profile={profile}
                                         currentProfileAuthUser={currentProfileAuthUser}
                                         toggleEditMode={() => {
@@ -168,11 +166,11 @@ const ProfileData: FC<ProfileDataType> = ({
         <br/>
         {
             currentProfileAuthUser && <div>
-                    <Button style={{width: "100px"}} onClick={toggleEditMode}>Edit</Button>
+                <Button style={{width: "100px"}} onClick={toggleEditMode}>Edit</Button>
             </div>
         }
         <br/>
-        <Collapse accordion items={profileItems} />
+        <Collapse accordion items={profileItems}/>
         <br/>
         <div>
             {
@@ -190,7 +188,8 @@ type ContactType = {
 }
 
 const Contact: FC<ContactType> = ({contactTitle, contactValue}) => {
-  return <div className={s.contact}><b>{capitalize(contactTitle)}</b>: <a href={contactValue} target="_blank">{contactValue}</a></div>
+    return <div className={s.contact}><b>{capitalize(contactTitle)}</b>: <a href={contactValue}
+                                                                            target="_blank">{contactValue}</a></div>
 }
 
 export default ProfileInfo

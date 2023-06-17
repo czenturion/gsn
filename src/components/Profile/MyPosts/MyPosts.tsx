@@ -4,6 +4,7 @@ import {SubmitHandler, useForm} from "react-hook-form"
 import {Form, Input, Button, Row, Col} from "antd"
 import Post from "./Post/Post"
 import {PostType} from "../../../redux/profile-reducer"
+import TextArea from "antd/es/input/TextArea";
 
 type PropsType = {
     addPost: (post: string) => void
@@ -37,13 +38,13 @@ const AddPostForm: FC<PropsType> = ({addPost}) => {
             form={form}
         >
             <Row>
-                <Col span={12}>
+                <Col span={18}>
                     <Form.Item
                         name="post"
                         rules={[{required: true, message: "Please enter a new post"}]}
                         initialValue={""}
                     >
-                        <Input
+                        <TextArea
                             placeholder="Enter a new post..."
                             onChange={getChangeHandlerWithEvent("post")}
                         />

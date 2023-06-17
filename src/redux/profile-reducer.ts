@@ -48,10 +48,10 @@ export type ProfileType = {
 
 const initialState = {
     posts: [
-        {id: 1, message: "Hey body, whats wrong???", likesCount: 20},
-        {id: 2, message: "Explain me that, what are you want", likesCount: 15},
-        {id: 3, message: "I am gaining a power!", likesCount: 50},
-        {id: 4, message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", likesCount: 33}
+        {id: 1, message: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus qui quod reiciendis sequi! A, ad adipisci eaque earum illo libero magnam nam nemo non optio perspiciatis sint unde voluptatem voluptatibus.", likesCount: 20},
+        {id: 2, message: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus qui quod reiciendis sequi! A, ad adipisci eaque earum illo libero magnam nam nemo non optio perspiciatis sint unde voluptatem voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus qui quod reiciendis sequi! A, ad adipisci eaque earum illo libero magnam nam nemo non optio perspiciatis sint unde voluptatem voluptatibus.", likesCount: 15},
+        {id: 3, message: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus qui quod reiciendis sequi! A, ad adipisci eaque earum illo libero magnam nam nemo non optio perspiciatis sint unde voluptatem voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus qui quod reiciendis sequi! A, ad adipisci eaque earum illo libero magnam nam nemo non optio perspiciatis sint unde voluptatem voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus qui quod reiciendis sequi! A, ad adipisci eaque earum illo libero magnam nam nemo non optio perspiciatis sint unde voluptatem voluptatibus.", likesCount: 50},
+        {id: 4, message: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus qui quod reiciendis sequi! A, ad adipisci eaque earum illo libero magnam nam nemo non optio perspiciatis sint unde voluptatem voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus qui quod reiciendis sequi! A, ad adipisci eaque earum illo libero magnam nam nemo non optio perspiciatis sint unde voluptatem voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus qui quod reiciendis sequi! A, ad adipisci eaque earum illo libero magnam nam nemo non optio perspiciatis sint unde voluptatem voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus qui quod reiciendis sequi! A, ad adipisci eaque earum illo libero magnam nam nemo non optio perspiciatis sint unde voluptatem voluptatibus.", likesCount: 33}
     ] as PostType[],
     profile: null as ProfileType | null,
     status: "",
