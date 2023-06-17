@@ -1,7 +1,8 @@
 import s from "./Post.module.css"
 import * as React from "react"
-import {Avatar, Button, Card, Col, Row, Typography} from "antd"
+import {Avatar, Button, Card, Col, Row, Spin, Typography} from "antd"
 import {LikeOutlined} from "@ant-design/icons"
+import {useState} from "react"
 
 type PropsType = {
     message: string
@@ -11,9 +12,19 @@ type PropsType = {
 const {Text} = Typography
 
 const Post: React.FC<PropsType> = (props) => {
+    const [likesCount, setLikesCount] = useState(props.likesCount)
+    const [disabled, setDisabled] = useState(false)
+
+    const onClick = () => {
+        setLikesCount(likesCount + 1)
+        setDisabled(true)
+    }
+
     return (
         <Card style={{
-            marginTop: "20px"
+            marginTop: "20px",
+            display: "flex",
+            justifyContent: "space-between"
         }}>
             <Row>
                 <Col span={2}>
@@ -21,25 +32,31 @@ const Post: React.FC<PropsType> = (props) => {
                         src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png"
                         size={45}/>
                 </Col>
-                <Col span={18}>
+                <Col span={16}>
                     <Text style={{
                         marginLeft: "10px"
                     }}>
                         {props.message}
                     </Text>
                 </Col>
-                <Col span={2}></Col>
                 <Col span={2}>
                     <div style={{
                         display: "flex",
                         alignItems: "center",
-                        textAlign: "center"
+                        textAlign: "center",
+                        marginLeft: "50px"
                     }}>
-                        <div>
-                            {props.likesCount}
+                        <div style={{
+                            display: "flex",
+                            flexDirection: "column"
+                        }}>
+                            {likesCount}
                             <LikeOutlined size={20}/>
                         </div>
-                        <Button style={{
+                        <Button
+                            onClick={onClick}
+                            disabled={disabled}
+                            style={{
                             marginLeft: "10px"
                         }}>
                             Like

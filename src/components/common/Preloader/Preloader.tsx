@@ -1,10 +1,11 @@
-import s from "../../Users/Users.module.css"
-import spinner from "../../../assets/images/spinner.gif"
 import * as React from "react"
+import {Spin} from "antd"
 
 
 const Preloader = () => {
-    return <div className={s.spinner}><img src={spinner} alt={"spinner"}/></div>
+    return <Spin tip="Loading" size="large" style={{marginTop: "30%"}}>
+        <div className="content" />
+    </Spin>
 }
 
 export default Preloader
