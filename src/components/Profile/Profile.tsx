@@ -1,4 +1,3 @@
-import s from "./Profile.module.css"
 import ProfileInfo from "./ProfileInfo/ProfileInfo"
 import MyPosts from "./MyPosts/MyPostsContainer"
 import * as React from "react"
@@ -20,7 +19,7 @@ type PropsType = {
 
 const Profile: FC<PropsType> = ({profile, status, updateStatus, currentProfileAuthUser, updateProfile, savePhoto, gettingUserProfileData, uploadingData}) => {
     return (
-        <div className={s.profile}>
+        <div>
             <ProfileInfo
                 profile={profile}
                 status={status}

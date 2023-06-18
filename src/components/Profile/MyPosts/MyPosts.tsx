@@ -1,10 +1,10 @@
 import * as React from "react"
 import {FC, useEffect} from "react"
 import {SubmitHandler, useForm} from "react-hook-form"
-import {Form, Input, Button, Row, Col} from "antd"
+import {Button, Col, Form, Row} from "antd"
 import Post from "./Post/Post"
 import {PostType} from "../../../redux/profile-reducer"
-import TextArea from "antd/es/input/TextArea";
+import TextArea from "antd/es/input/TextArea"
 
 type PropsType = {
     addPost: (post: string) => void
