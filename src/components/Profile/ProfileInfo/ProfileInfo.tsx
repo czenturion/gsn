@@ -13,7 +13,7 @@ import {UploadOutlined} from "@ant-design/icons"
 import type {DisableEditModeType, ProfileFormValues} from "../ProfileContainer"
 import {Typography} from 'antd'
 
-const {Title} = Typography
+const {Title, Text} = Typography
 
 type PropsType = {
     profile: ProfileType | null
@@ -172,13 +172,13 @@ const ProfileData: FC<ProfileDataType> = ({
         <br/>
         <Collapse accordion items={profileItems}/>
         <br/>
-        <div>
+        <Text>
             {
                 profile.lookingForAJob
-                    ? <h2>Looking for a job</h2>
-                    : <h2>Not looking for a job</h2>
+                    ? "Looking for a job"
+                    : "Not looking for a job"
             }
-        </div>
+        </Text>
     </div>
 }
 

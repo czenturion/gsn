@@ -1,64 +1,193 @@
-import {FC} from "react"
-import s from "./ProfileInfo.module.css"
 import * as React from "react"
-import {useForm} from "react-hook-form"
+import {FC, useEffect} from "react"
 import type {SubmitHandler} from "react-hook-form"
+import {useForm} from "react-hook-form"
 import type {ProfileDataType} from "./ProfileInfo"
 import type {ProfileFormValues} from "../ProfileContainer"
-import {capitalize} from "../../../utils/helpers/helpers";
-import {Button, Input, Space} from "antd";
+import {Button, Checkbox, Form, Input, Space, Typography} from "antd"
+
+const {Title} = Typography
+const {Item} = Form
 
 const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disableEditMode }) => {
     const {
         register,
         handleSubmit,
         setError,
-        clearErrors,
+        setValue,
         formState: {
             errors
         }
     } = useForm<ProfileFormValues>({defaultValues: profile, criteriaMode: "all"})
+    const [form] = Form.useForm()
+    const contacts = profile.contacts
 
-    const onSubmit: SubmitHandler<ProfileFormValues> = async (formValues) => {
-        await updateProfile?.(formValues, setError, disableEditMode!)
+    const  initialValues = {
+        "fullName": profile.fullName,
+        "facebook": contacts.facebook,
+        "website": contacts.website,
+        "vk": contacts.vk,
+        "twitter": contacts.twitter,
+        "instagram": contacts.instagram,
+        "youtube": contacts.youtube,
+        "github": contacts.github,
+        "mainLink": contacts.mainLink,
+        "lookingForAJob": profile.lookingForAJob,
+        "lookingForAJobDescription": profile.lookingForAJobDescription,
+        "aboutMe": profile.aboutMe
     }
 
-    return <form onSubmit={handleSubmit(onSubmit)}>
+    const rules: any = [{ type: 'url', warningOnly: true }]
+
+    const onSubmit: SubmitHandler<ProfileFormValues> = (formValues) => {
+        // updateProfile?.(formValues, setError, disableEditMode!)
+        console.log(formValues)
+    }
+
+    const getChangeHandlerWithEvent = (name: any) => (event: any) => {
+        setValue(name, event.target.value)
+    }
+
+    useEffect(() => {
+        register("fullName")
+        register("contacts.facebook")
+        register("contacts.website")
+        register("contacts.vk")
+        register("contacts.twitter")
+        register("contacts.instagram")
+        register("contacts.youtube")
+        register("contacts.github")
+        register("contacts.mainLink")
+        register("lookingForAJob")
+        register("lookingForAJobDescription")
+        register("aboutMe")
+    })
+
+    return <Form
+        onFinish={handleSubmit(onSubmit)}
+        form={form}
+        initialValues={initialValues}
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 14 }}
+    >
         <br/>
         <Space>
-            <Input
-                type={"submit"}
-                value={"Save"}
-                style={{width: "100px", marginRight: "10px"}}/>
+            <Button
+                type="primary"
+                htmlType="submit"
+                style={{width: "100px", marginRight: "10px"}}
+            >
+                Save
+            </Button>
             <Button onClick={disableEditMode}>Exit edit mod</Button>
         </Space>
-        {
-            errors
-                // @ts-ignore
-                ? <div style={{color: "red"}}>{errors?.profileForm?.message?.map((e, index) => <p key={index}>{e}</p>)}</div>
-                : <></>
-        }
         <br/>
-        <div>
-            <b>Full name: </b><input type="text" {...register("fullName")} placeholder="Your Full name"/>
-        </div>
-        <div>
-            <b>Contacts:</b> {Object.keys(profile.contacts).map(key => {
-            // @ts-ignore
-            return <div className={s.contact} key={key}>{capitalize(key)}: <input type="text" {...register('contacts.' + key)} placeholder="Valid url only" onChange={() => clearErrors()}/></div>
-        })}
-        </div>
-        <div>
-            <b>Do you looking for a job?</b> <input type="checkbox" {...register("lookingForAJob")}/>
-        </div>
-        <div>
-            <b>About Me:</b> <input type="text" {...register("aboutMe")} placeholder="What about you?"/>
-        </div>
-        <div>
-            <b>About skills:</b> <input type="text" {...register("lookingForAJobDescription")} placeholder="What about your skills?"/>
-        </div>
-
-    </form>
+        <br/>
+        <Item name="fullName"
+              label="Full name:"
+        >
+            <Input
+                type="text"
+                placeholder="Your Full name"
+            />
+        </Item>
+        <Title level={3}
+               style={{marginLeft: "80px"}}
+        >
+            Contacts:
+        </Title>
+        <Item name="facebook"
+              label="Facebook"
+              rules={rules}
+        >
+            <Input
+                type="text"
+                placeholder="Valid url only"/>
+        </Item>
+        <Item name="website"
+              label="Website"
+              rules={rules}
+        >
+            <Input
+                type="text"
+                placeholder="Valid url only"
+                onChange={getChangeHandlerWithEvent("website")}
+            />
+        </Item>
+        <Item name="vk"
+              label="Vk"
+              rules={rules}
+        >
+            <Input
+                type="text"
+                placeholder="Valid url only"/>
+        </Item>
+        <Item name="twitter"
+              label="Twitter"
+              rules={rules}
+        >
+            <Input
+                type="text"
+                placeholder="Valid url only"/>
+        </Item>
+        <Item name="instagram"
+              label="Instagram"
+              rules={rules}
+        >
+            <Input
+                type="text"
+                placeholder="Valid url only"/>
+        </Item>
+        <Item name="youtube"
+              label="Youtube"
+              rules={rules}
+        >
+            <Input
+                type="text"
+                placeholder="Valid url only"/>
+        </Item>
+        <Item name="github"
+              label="Github"
+              rules={rules}
+        >
+            <Input
+                type="text"
+                placeholder="Valid url only"/>
+        </Item>
+        <Item name="mainLink"
+              label="Mainlink"
+              rules={rules}
+        >
+            <Input
+                type="text"
+                placeholder="Valid url only"/>
+        </Item>
+        <Item name="lookingForAJob"
+              valuePropName="checked"
+              label="Looking for a job?"
+              style={{marginLeft: "100px"}}
+        >
+            <Checkbox style={{marginLeft: "20px"}}/>
+        </Item>
+        <Item name="aboutMe"
+              label="What about you?"
+        >
+            <Input
+                type="text"
+                name="aboutMe"
+                placeholder="Valid url only"
+            />
+        </Item>
+        <Item name="lookingForAJobDescription"
+              label="What about your skills?"
+        >
+            <Input
+                type="text"
+                name="aboutMe"
+                placeholder="Valid url only"
+            />
+        </Item>
+    </Form>
 }
 
 export default ProfileDataForm
