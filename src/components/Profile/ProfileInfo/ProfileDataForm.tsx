@@ -1,7 +1,7 @@
 import * as React from "react"
 import {FC, useEffect} from "react"
 import type {SubmitHandler} from "react-hook-form"
-import {useForm} from "react-hook-form"
+import {useForm, Controller} from "react-hook-form"
 import type {ProfileDataType} from "./ProfileInfo"
 import type {ProfileFormValues} from "../ProfileContainer"
 import {Button, Checkbox, Form, Input, Space, Typography} from "antd"
@@ -15,10 +15,15 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         handleSubmit,
         setError,
         setValue,
+        control,
         formState: {
             errors
         }
-    } = useForm<ProfileFormValues>({defaultValues: profile, criteriaMode: "all"})
+    } = useForm<ProfileFormValues>({
+        defaultValues: {
+            fullName: profile.fullName
+        }
+    })
     const [form] = Form.useForm()
     const contacts = profile.contacts
 
@@ -42,10 +47,6 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
     const onSubmit: SubmitHandler<ProfileFormValues> = (formValues) => {
         // updateProfile?.(formValues, setError, disableEditMode!)
         console.log(formValues)
-    }
-
-    const getChangeHandlerWithEvent = (name: any) => (event: any) => {
-        setValue(name, event.target.value)
     }
 
     useEffect(() => {
@@ -83,12 +84,20 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         </Space>
         <br/>
         <br/>
-        <Item name="fullName"
-              label="Full name:"
+        <Item
+            name="fullName"
+            label="Full name:"
         >
-            <Input
-                type="text"
-                placeholder="Your Full name"
+            <Controller
+                name="fullName"
+                control={control}
+                render={({field}) =>
+                    <Input
+                        type="text"
+                        placeholder="Your Full name"
+                        {...field}
+                    />
+                }
             />
         </Item>
         <Title level={3}
@@ -102,7 +111,8 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         >
             <Input
                 type="text"
-                placeholder="Valid url only"/>
+                placeholder="Valid url only"
+            />
         </Item>
         <Item name="website"
               label="Website"
@@ -111,7 +121,6 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
             <Input
                 type="text"
                 placeholder="Valid url only"
-                onChange={getChangeHandlerWithEvent("website")}
             />
         </Item>
         <Item name="vk"

@@ -18,7 +18,7 @@ import {UseFormSetError} from "react-hook-form"
 import type {ProfileContactsType} from "../../redux/profile-reducer"
 
 export type ProfileFormValues = {
-    profileForm?: string[]
+    profileForm?: string[] // for setError
     fullName: string
     lookingForAJob: boolean
     lookingForAJobDescription: string

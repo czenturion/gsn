@@ -22,9 +22,7 @@ const Post: React.FC<PropsType> = (props) => {
 
     return (
         <Card style={{
-            marginTop: "20px",
-            display: "flex",
-            justifyContent: "space-between"
+            marginTop: "20px"
         }}>
             <Row>
                 <Col span={2}>
