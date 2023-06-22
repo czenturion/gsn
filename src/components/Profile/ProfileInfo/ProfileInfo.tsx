@@ -92,7 +92,10 @@ const ProfileInfo: FC<PropsType> = ({
                             }
                         </div>
                         <Card className={s.rightField}>
-                            <Title level={2}>
+                            <Title
+                                level={2}
+                                style={{margin: 0}}
+                            >
                                 {profile.fullName + " " + profile.userId}
                             </Title>
                             <br/>

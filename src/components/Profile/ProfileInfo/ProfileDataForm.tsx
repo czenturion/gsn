@@ -10,6 +10,9 @@ const {Title} = Typography
 const {Item} = Form
 
 const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disableEditMode }) => {
+    const contacts = profile.contacts
+    const rules: any = [{ type: 'url', warningOnly: true }]
+
     const {
         register,
         handleSubmit,
@@ -21,53 +24,29 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         }
     } = useForm<ProfileFormValues>({
         defaultValues: {
-            fullName: profile.fullName
+            fullName: profile.fullName,
+            contacts: {
+                facebook: contacts.facebook,
+                website: contacts.website,
+                vk: contacts.vk,
+                twitter: contacts.twitter,
+                instagram: contacts.instagram,
+                youtube: contacts.youtube,
+                github: contacts.github,
+                mainLink: contacts.mainLink
+            },
+            lookingForAJob: profile.lookingForAJob,
+            lookingForAJobDescription: profile.lookingForAJobDescription,
+            aboutMe: profile.aboutMe
         }
     })
-    const [form] = Form.useForm()
-    const contacts = profile.contacts
-
-    const  initialValues = {
-        "fullName": profile.fullName,
-        "facebook": contacts.facebook,
-        "website": contacts.website,
-        "vk": contacts.vk,
-        "twitter": contacts.twitter,
-        "instagram": contacts.instagram,
-        "youtube": contacts.youtube,
-        "github": contacts.github,
-        "mainLink": contacts.mainLink,
-        "lookingForAJob": profile.lookingForAJob,
-        "lookingForAJobDescription": profile.lookingForAJobDescription,
-        "aboutMe": profile.aboutMe
-    }
-
-    const rules: any = [{ type: 'url', warningOnly: true }]
 
     const onSubmit: SubmitHandler<ProfileFormValues> = (formValues) => {
-        // updateProfile?.(formValues, setError, disableEditMode!)
-        console.log(formValues)
+        updateProfile?.(formValues, setError, disableEditMode!)
     }
-
-    useEffect(() => {
-        register("fullName")
-        register("contacts.facebook")
-        register("contacts.website")
-        register("contacts.vk")
-        register("contacts.twitter")
-        register("contacts.instagram")
-        register("contacts.youtube")
-        register("contacts.github")
-        register("contacts.mainLink")
-        register("lookingForAJob")
-        register("lookingForAJobDescription")
-        register("aboutMe")
-    })
 
     return <Form
         onFinish={handleSubmit(onSubmit)}
-        form={form}
-        initialValues={initialValues}
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 14 }}
     >
@@ -85,7 +64,6 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         <br/>
         <br/>
         <Item
-            name="fullName"
             label="Full name:"
         >
             <Controller
@@ -100,100 +78,182 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
                 }
             />
         </Item>
-        <Title level={3}
-               style={{marginLeft: "80px"}}
+        <Title
+            level={3}
+            style={{
+                textAlign: "center"
+            }}
         >
             Contacts:
         </Title>
-        <Item name="facebook"
-              label="Facebook"
-              rules={rules}
+        <Item
+            label="Facebook"
+            rules={rules}
         >
-            <Input
-                type="text"
-                placeholder="Valid url only"
+            <Controller
+                name="contacts.facebook"
+                control={control}
+                render={({field}) =>
+                    <Input
+                        type="text"
+                        placeholder="Valid url only"
+                        {...field}
+                    />
+                }
             />
         </Item>
-        <Item name="website"
-              label="Website"
-              rules={rules}
+        <Item
+            label="Website"
+            rules={rules}
         >
-            <Input
-                type="text"
-                placeholder="Valid url only"
+            <Controller
+                name="contacts.website"
+                control={control}
+                render={({field}) =>
+                    <Input
+                        type="text"
+                        placeholder="Valid url only"
+                        {...field}
+                    />
+                }
             />
         </Item>
-        <Item name="vk"
-              label="Vk"
-              rules={rules}
+        <Item
+            label="Vk"
+            rules={rules}
         >
-            <Input
-                type="text"
-                placeholder="Valid url only"/>
+            <Controller
+                name="contacts.vk"
+                control={control}
+                render={({field}) =>
+                    <Input
+                        type="text"
+                        placeholder="Valid url only"
+                        {...field}
+                    />
+                }
+            />
         </Item>
-        <Item name="twitter"
-              label="Twitter"
-              rules={rules}
+        <Item
+            label="Twitter"
+            rules={rules}
         >
-            <Input
-                type="text"
-                placeholder="Valid url only"/>
+            <Controller
+                name="contacts.twitter"
+                control={control}
+                render={({field}) =>
+                    <Input
+                        type="text"
+                        placeholder="Valid url only"
+                        {...field}
+                    />
+                }
+            />
         </Item>
-        <Item name="instagram"
-              label="Instagram"
-              rules={rules}
+        <Item
+            label="Instagram"
+            rules={rules}
         >
-            <Input
-                type="text"
-                placeholder="Valid url only"/>
+            <Controller
+                name="contacts.instagram"
+                control={control}
+                render={({field}) =>
+                    <Input
+                        type="text"
+                        placeholder="Valid url only"
+                        {...field}
+                    />
+                }
+            />
         </Item>
-        <Item name="youtube"
-              label="Youtube"
-              rules={rules}
+        <Item
+            label="Youtube"
         >
-            <Input
-                type="text"
-                placeholder="Valid url only"/>
+            <Controller
+                name="contacts.youtube"
+                control={control}
+                rules={rules}
+                render={({field}) =>
+                    <Input
+                        type="text"
+                        placeholder="Valid url only"
+                        {...field}
+                    />
+                }
+            />
         </Item>
-        <Item name="github"
-              label="Github"
-              rules={rules}
+        <Item
+            label="Github"
+            rules={rules}
         >
-            <Input
-                type="text"
-                placeholder="Valid url only"/>
+            <Controller
+                name="contacts.github"
+                control={control}
+                render={({field}) =>
+                    <Input
+                        type="text"
+                        placeholder="Valid url only"
+                        {...field}
+                    />
+                }
+            />
         </Item>
-        <Item name="mainLink"
-              label="Mainlink"
-              rules={rules}
+        <Item
+            label="Mainlink"
+            rules={rules}
         >
-            <Input
-                type="text"
-                placeholder="Valid url only"/>
+            <Controller
+                name="contacts.mainLink"
+                control={control}
+                render={({field}) =>
+                    <Input
+                        type="text"
+                        placeholder="Valid url only"
+                        {...field}
+                    />
+                }
+            />
         </Item>
-        <Item name="lookingForAJob"
-              valuePropName="checked"
-              label="Looking for a job?"
-              style={{marginLeft: "100px"}}
+        <Item
+            label="Looking for a job?"
         >
-            <Checkbox style={{marginLeft: "20px"}}/>
+            <Controller
+                name="lookingForAJob"
+                control={control}
+                render={({field}) =>
+                    <Checkbox
+                        defaultChecked={profile.lookingForAJob}
+                        {...field}
+                    />
+                }
+            />
         </Item>
-        <Item name="aboutMe"
-              label="What about you?"
+        <Item
+            label="What about you?"
         >
-            <Input
-                type="text"
+            <Controller
                 name="aboutMe"
-                placeholder="Valid url only"
+                control={control}
+                render={({field}) =>
+                    <Input
+                        type="text"
+                        {...field}
+                    />
+                }
             />
         </Item>
-        <Item name="lookingForAJobDescription"
-              label="What about your skills?"
+        <Item
+            label="What about your skills?"
         >
-            <Input
-                type="text"
-                name="aboutMe"
-                placeholder="Valid url only"
+            <Controller
+                name="lookingForAJobDescription"
+                control={control}
+                render={({field}) =>
+                    <Input
+                        type="text"
+                        {...field}
+                    />
+                }
             />
         </Item>
     </Form>

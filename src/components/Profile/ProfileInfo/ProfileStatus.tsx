@@ -54,8 +54,11 @@ const ProfileStatus: FC<PropsType> = ({status, currentProfileAuthUser, updateSta
                         defaultValue={String(status)}
                         onBlur={deactivateEditMode}
                         onChange={onChangeStatus}
-                        maxLength={300}/>
-                    : <Title level={4}>
+                        maxLength={100}/>
+                    : <Title
+                        level={4}
+                        style={{margin: 0}}
+                    >
                         <span
                             className={currentProfileAuthUser ? s.statusSpan : undefined}
                             onClick={activateEditMode}>

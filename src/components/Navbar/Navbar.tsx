@@ -14,10 +14,6 @@ const Navbar: React.FC<PropsType> = ({ colorBgContainer }) => {
             <Menu
                 mode="inline"
                 defaultOpenKeys={['sub1']}
-                style={{
-                    height: '100%',
-                    borderRight: 0
-                }}
             >
                 <Menu.SubMenu key="sub1" title="My Profile">
                     <Menu.Item key="1">
