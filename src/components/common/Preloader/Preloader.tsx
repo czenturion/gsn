@@ -2,8 +2,8 @@ import * as React from "react"
 import {Spin} from "antd"
 
 
-const Preloader = () => {
-    return <Spin tip="Loading" size="large" style={{marginTop: "30%"}}>
+const Preloader = (props: any) => {
+    return <Spin tip="Loading" {...props}>
         <div className="content" />
     </Spin>
 }

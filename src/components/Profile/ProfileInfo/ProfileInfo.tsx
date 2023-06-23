@@ -70,13 +70,13 @@ const ProfileInfo: FC<PropsType> = ({
                         <div className={s.leftField}>
                             {
                                 uploadingData
-                                    ? <Preloader/>
+                                    ? <Preloader size="large" style={{marginTop: "150px"}}/>
                                     : profile.photos.large
                                         ? <img src={profile.photos.large} alt=""/>
                                         : <img src={userPhoto} alt=""/>
                             }
                             {
-                                currentProfileAuthUser && <div className={s.photoUpdateButtonField}>
+                                currentProfileAuthUser && !uploadingData ? <div className={s.photoUpdateButtonField}>
 
                                     <Upload
                                         maxCount={1}
@@ -89,6 +89,7 @@ const ProfileInfo: FC<PropsType> = ({
                                         </Button>
                                     </Upload>
                                 </div>
+                                    : <></>
                             }
                         </div>
                         <Card className={s.rightField}>

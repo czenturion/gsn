@@ -43,7 +43,7 @@ const App = ({ initializeApp, initialized, authIsFetching, logOut }) => {
     }, [])
 
     if ( !initialized ) {
-        return <Preloader />
+        return <Preloader size="large" style={{margin: "200px 300px 0 0"}}/>
     } else {
         return (
             <Layout className="app-wrapper">
@@ -61,7 +61,7 @@ const App = ({ initializeApp, initialized, authIsFetching, logOut }) => {
                         >
                             {
                                 authIsFetching
-                                    ? <Preloader />
+                                    ? <Preloader/>
                                     : <Suspense fallback={<Preloader/>}>
                                         <Routes>
                                             <Route path="/" element={<Navigate to={"/profile"}/>}/>
