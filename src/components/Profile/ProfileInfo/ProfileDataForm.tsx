@@ -48,7 +48,7 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
     return <Form
         onFinish={handleSubmit(onSubmit)}
         labelCol={{ span: 8 }}
-        wrapperCol={{ span: 14 }}
+        wrapperCol={{ span: 12 }}
     >
         <br/>
         <Space>
