@@ -5,6 +5,8 @@ import {useForm, Controller} from "react-hook-form"
 import type {ProfileDataType} from "./ProfileInfo"
 import type {ProfileFormValues} from "../ProfileContainer"
 import {Button, Checkbox, Form, Input, Space, Typography} from "antd"
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
 
 const {Title} = Typography
 const {Item} = Form
@@ -12,16 +14,14 @@ const {Item} = Form
 const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disableEditMode }) => {
     const contacts = profile.contacts
     const rules: any = [{ type: 'url', warningOnly: true }]
+    const [form] = Form.useForm()
 
     const {
-        register,
         handleSubmit,
         setError,
-        setValue,
         control,
-        formState: {
-            errors
-        }
+        formState,
+        clearErrors
     } = useForm<ProfileFormValues>({
         defaultValues: {
             fullName: profile.fullName,
@@ -45,10 +45,22 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         updateProfile?.(formValues, setError, disableEditMode!)
     }
 
+    useEffect(() => {
+        console.log(formState.errors)
+    }, [formState.errors])
+
+    const onFocus = (data: any) => {
+        console.log(data)
+        if (formState) {
+            clearErrors("profileForm")
+        }
+    }
+
     return <Form
         onFinish={handleSubmit(onSubmit)}
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 12 }}
+        wrapperCol={{ span: 18 }}
+        layout="vertical"
+        form={form}
     >
         <br/>
         <Space>
@@ -80,15 +92,14 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         </Item>
         <Title
             level={3}
-            style={{
-                textAlign: "center"
-            }}
         >
             Contacts:
         </Title>
         <Item
             label="Facebook"
             rules={rules}
+            validateStatus={formState.errors?.profileForm?.message?.includes("Facebook") ? "error" : ""}
+            help={formState.errors?.profileForm?.message?.includes("Facebook") ? "Not valid url" : ""}
         >
             <Controller
                 name="contacts.facebook"
@@ -98,6 +109,7 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
                         type="text"
                         placeholder="Valid url only"
                         {...field}
+                        onFocus={onFocus}
                     />
                 }
             />
@@ -105,6 +117,8 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         <Item
             label="Website"
             rules={rules}
+            validateStatus={formState.errors?.profileForm?.message?.includes("Website") ? "error" : ""}
+            help={formState.errors?.profileForm?.message?.includes("Website") ? "Not valid url" : ""}
         >
             <Controller
                 name="contacts.website"
@@ -114,6 +128,7 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
                         type="text"
                         placeholder="Valid url only"
                         {...field}
+                        onFocus={onFocus}
                     />
                 }
             />
@@ -121,6 +136,7 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         <Item
             label="Vk"
             rules={rules}
+            validateStatus={formState.errors?.profileForm?.message?.includes("Vk") ? "error" : ""}
         >
             <Controller
                 name="contacts.vk"
@@ -130,6 +146,7 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
                         type="text"
                         placeholder="Valid url only"
                         {...field}
+                        onFocus={onFocus}
                     />
                 }
             />
