@@ -137,6 +137,7 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
             label="Vk"
             rules={rules}
             validateStatus={formState.errors?.profileForm?.message?.includes("Vk") ? "error" : ""}
+            help={formState.errors?.profileForm?.message?.includes("Vk") ? "Not valid url" : ""}
         >
             <Controller
                 name="contacts.vk"
@@ -154,6 +155,8 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         <Item
             label="Twitter"
             rules={rules}
+            validateStatus={formState.errors?.profileForm?.message?.includes("Twitter") ? "error" : ""}
+            help={formState.errors?.profileForm?.message?.includes("Twitter") ? "Not valid url" : ""}
         >
             <Controller
                 name="contacts.twitter"
@@ -163,6 +166,7 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
                         type="text"
                         placeholder="Valid url only"
                         {...field}
+                        onFocus={onFocus}
                     />
                 }
             />
@@ -170,6 +174,8 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         <Item
             label="Instagram"
             rules={rules}
+            validateStatus={formState.errors?.profileForm?.message?.includes("Instagram") ? "error" : ""}
+            help={formState.errors?.profileForm?.message?.includes("Instagram") ? "Not valid url" : ""}
         >
             <Controller
                 name="contacts.instagram"
@@ -179,12 +185,15 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
                         type="text"
                         placeholder="Valid url only"
                         {...field}
+                        onFocus={onFocus}
                     />
                 }
             />
         </Item>
         <Item
             label="Youtube"
+            validateStatus={formState.errors?.profileForm?.message?.includes("Youtube") ? "error" : ""}
+            help={formState.errors?.profileForm?.message?.includes("Youtube") ? "Not valid url" : ""}
         >
             <Controller
                 name="contacts.youtube"
@@ -195,6 +204,7 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
                         type="text"
                         placeholder="Valid url only"
                         {...field}
+                        onFocus={onFocus}
                     />
                 }
             />
@@ -202,6 +212,8 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         <Item
             label="Github"
             rules={rules}
+            validateStatus={formState.errors?.profileForm?.message?.includes("Github") ? "error" : ""}
+            help={formState.errors?.profileForm?.message?.includes("Github") ? "Not valid url" : ""}
         >
             <Controller
                 name="contacts.github"
@@ -211,6 +223,7 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
                         type="text"
                         placeholder="Valid url only"
                         {...field}
+                        onFocus={onFocus}
                     />
                 }
             />
@@ -218,6 +231,8 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         <Item
             label="Mainlink"
             rules={rules}
+            validateStatus={formState.errors?.profileForm?.message?.includes("Mainlink") ? "error" : ""}
+            help={formState.errors?.profileForm?.message?.includes("Mainlink") ? "Not valid url" : ""}
         >
             <Controller
                 name="contacts.mainLink"
@@ -227,6 +242,7 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
                         type="text"
                         placeholder="Valid url only"
                         {...field}
+                        onFocus={onFocus}
                     />
                 }
             />
