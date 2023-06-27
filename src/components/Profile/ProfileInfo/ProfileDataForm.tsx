@@ -5,15 +5,12 @@ import {useForm, Controller} from "react-hook-form"
 import type {ProfileDataType} from "./ProfileInfo"
 import type {ProfileFormValues} from "../ProfileContainer"
 import {Button, Checkbox, Form, Input, Space, Typography} from "antd"
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 
 const {Title} = Typography
 const {Item} = Form
 
 const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disableEditMode }) => {
     const contacts = profile.contacts
-    const rules: any = [{ type: 'url', warningOnly: true }]
     const [form] = Form.useForm()
 
     const {
@@ -45,12 +42,8 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         updateProfile?.(formValues, setError, disableEditMode!)
     }
 
-    useEffect(() => {
-        console.log(formState.errors)
-    }, [formState.errors])
 
     const onFocus = (data: any) => {
-        console.log(data)
         if (formState) {
             clearErrors("profileForm")
         }
@@ -97,7 +90,6 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         </Title>
         <Item
             label="Facebook"
-            rules={rules}
             validateStatus={formState.errors?.profileForm?.message?.includes("Facebook") ? "error" : ""}
             help={formState.errors?.profileForm?.message?.includes("Facebook") ? "Not valid url" : ""}
         >
@@ -116,7 +108,6 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         </Item>
         <Item
             label="Website"
-            rules={rules}
             validateStatus={formState.errors?.profileForm?.message?.includes("Website") ? "error" : ""}
             help={formState.errors?.profileForm?.message?.includes("Website") ? "Not valid url" : ""}
         >
@@ -135,7 +126,6 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         </Item>
         <Item
             label="Vk"
-            rules={rules}
             validateStatus={formState.errors?.profileForm?.message?.includes("Vk") ? "error" : ""}
             help={formState.errors?.profileForm?.message?.includes("Vk") ? "Not valid url" : ""}
         >
@@ -154,7 +144,6 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         </Item>
         <Item
             label="Twitter"
-            rules={rules}
             validateStatus={formState.errors?.profileForm?.message?.includes("Twitter") ? "error" : ""}
             help={formState.errors?.profileForm?.message?.includes("Twitter") ? "Not valid url" : ""}
         >
@@ -173,7 +162,6 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         </Item>
         <Item
             label="Instagram"
-            rules={rules}
             validateStatus={formState.errors?.profileForm?.message?.includes("Instagram") ? "error" : ""}
             help={formState.errors?.profileForm?.message?.includes("Instagram") ? "Not valid url" : ""}
         >
@@ -198,7 +186,6 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
             <Controller
                 name="contacts.youtube"
                 control={control}
-                rules={rules}
                 render={({field}) =>
                     <Input
                         type="text"
@@ -211,7 +198,6 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         </Item>
         <Item
             label="Github"
-            rules={rules}
             validateStatus={formState.errors?.profileForm?.message?.includes("Github") ? "error" : ""}
             help={formState.errors?.profileForm?.message?.includes("Github") ? "Not valid url" : ""}
         >
@@ -230,7 +216,6 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         </Item>
         <Item
             label="Mainlink"
-            rules={rules}
             validateStatus={formState.errors?.profileForm?.message?.includes("Mainlink") ? "error" : ""}
             help={formState.errors?.profileForm?.message?.includes("Mainlink") ? "Not valid url" : ""}
         >
