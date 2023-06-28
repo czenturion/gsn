@@ -61,8 +61,8 @@ const App = ({ initializeApp, initialized, authIsFetching, logOut }) => {
                         >
                             {
                                 authIsFetching
-                                    ? <Preloader/>
-                                    : <Suspense fallback={<Preloader/>}>
+                                    ? <Preloader size="large" style={{padding: "200px 0"}}/>
+                                    : <Suspense fallback={<Preloader size="large" style={{padding: "200px 0"}}/>}>
                                         <Routes>
                                             <Route path="/" element={<Navigate to={"/profile"}/>}/>
                                             <Route path="/profile/:userId" element={<ProfileContainer/>}/>

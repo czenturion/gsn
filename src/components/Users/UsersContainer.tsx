@@ -57,7 +57,7 @@ class UsersComponent extends React.Component<PropsType> {
         return <>
             {
                 this.props.isFetching
-                    ? <Preloader/>
+                    ? <Preloader size="large" style={{padding: "200px 0"}}/>
                     : <Users slicedPages={slicedPages}
                              currentPage={this.props.currentPage}
                              onPageChanged={this.onPageChanged}
