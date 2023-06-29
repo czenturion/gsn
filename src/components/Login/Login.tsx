@@ -1,4 +1,4 @@
-import {useForm, UseFormSetError} from "react-hook-form"
+import {useForm, UseFormSetError, Controller} from "react-hook-form"
 import type {SubmitHandler} from "react-hook-form"
 import {InitialAuthStateType, logIn} from "../../redux/auth-reducer"
 import {connect} from "react-redux"
@@ -9,6 +9,10 @@ import {Navigate} from "react-router-dom"
 import {FC} from "react"
 import {AppStateType} from "../../redux/redux-store"
 import Preloader from "../common/Preloader/Preloader"
+import {Button, Checkbox, Form, Input} from "antd"
+import {Typography} from "antd"
+
+const {Title} = Typography
 
 export type FormValues = {
     serverResponse?: string[]
@@ -31,12 +35,21 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
         reset,
         setError,
         clearErrors,
+        control,
         formState: {
             errors
         }
-    } = useForm<FormValues>()
+    } = useForm<FormValues>({
+        defaultValues: {
+            email: "",
+            password: "",
+            captcha: "",
+            rememberMe: false
+        }
+    })
 
     const onSubmit: SubmitHandler<FormValues> = (formData) => {
+        console.log(formData)
         logIn(formData, setError)
         reset()
         return <Navigate to="/profile/"/>
@@ -51,40 +64,48 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
     if (isFetching) return <Preloader/>
 
     return (
-        <form
-            className={s.logForm}
-            onSubmit={handleSubmit(onSubmit)}>
-            <div>
-                <input
-                    className={s.logInput}
-                    style={errors?.email && ErrorBorderOutline(errors)}
-                    {...register(
-                        "email",
-                        {
-                            required: true,
-                            onChange: clearErrorsForm
-                        })}
-                    placeholder={"Email"}/>
-            </div>
-            <div>
-                <input
-                    className={s.logInput}
-                    style={errors?.password && ErrorBorderOutline(errors)}
-                    {...register(
-                        "password",
-                        {
-                            required: true,
-                            onChange: clearErrorsForm
-                        })}
-                    placeholder={"Password"}
-                    type={"password"}/>
-            </div>
-            <div className={s.rememberMe}>
-                <input
-                    {...register("rememberMe")}
-                    type={"checkbox"}/>
-                <p>Remember me</p>
-            </div>
+        <Form
+            style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "16px",
+                textAlign: "center"
+            }}
+            onFinish={handleSubmit(onSubmit)}>
+            <Controller
+                name={"email"}
+                control={control}
+                render={({field}) =>
+                    <Input
+                        placeholder={"Email"}
+                        {...field}
+                        onFocus={clearErrorsForm}
+                    />
+                }
+            />
+            <Controller
+                name={"password"}
+                control={control}
+                render={({field}) =>
+                    <Input
+                        placeholder={"Password"}
+                        {...field}
+                        onFocus={clearErrorsForm}
+                    />
+                }
+            />
+            <Controller
+                name="rememberMe"
+                control={control}
+
+                render={({field}) =>
+                    <Checkbox
+                        {...field}
+                    >
+                        Remember Me
+                    </Checkbox>
+                }
+            />
             <div>
                 {
                     captcha
@@ -99,9 +120,13 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                 }
             </div>
             <div>
-                <input
-                    className={s.submit}
-                    type={"submit"}/>
+                <Button
+                    type="primary"
+                    htmlType="submit"
+                    style={{width: "100%"}}
+                >
+                    Login
+                </Button>
             </div>
             <div>
                 {
@@ -110,7 +135,7 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                         : <div className={s.errorEmptyString}/>
                 }
             </div>
-        </form>
+        </Form>
     )
 }
 
@@ -129,7 +154,7 @@ const Login: FC<LoginPropsAndDispatchType> = ({auth, logIn}) => {
         {
             !auth.isAuth
                 ? <div className={s.logFormInput}>
-                    <h1>LOGIN</h1>
+                    <Title level={4}>LOGIN</Title>
                     <LoginForm logIn={logIn} captcha={auth.captcha} isFetching={auth.isFetching}/>
                 </div>
                 : <Navigate to="/profile"/>
