@@ -6,13 +6,14 @@ import s from "./Login.module.css"
 import {ErrorBorderOutline} from "../common/FormsControls/Errors"
 import * as React from "react"
 import {Navigate} from "react-router-dom"
-import {FC} from "react"
+import {FC, useEffect} from "react"
 import {AppStateType} from "../../redux/redux-store"
 import Preloader from "../common/Preloader/Preloader"
 import {Button, Checkbox, Form, Input} from "antd"
 import {Typography} from "antd"
 
 const {Title} = Typography
+const {Item} = Form
 
 export type FormValues = {
     serverResponse?: string[]
@@ -49,11 +50,18 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
     })
 
     const onSubmit: SubmitHandler<FormValues> = (formData) => {
-        console.log(formData)
         logIn(formData, setError)
-        reset()
         return <Navigate to="/profile/"/>
     }
+
+    useEffect(() => {
+        console.log(errors, "form errors")
+        if (errors.serverResponse) {
+            console.log(errors.serverResponse, "++++")
+        }
+    }, [errors])
+
+
 
     const clearErrorsForm = () => {
         if (errors && errors.serverResponse && errors.serverResponse.message!.length > 0) {
@@ -72,28 +80,36 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                 textAlign: "center"
             }}
             onFinish={handleSubmit(onSubmit)}>
-            <Controller
-                name={"email"}
-                control={control}
-                render={({field}) =>
-                    <Input
-                        placeholder={"Email"}
-                        {...field}
-                        onFocus={clearErrorsForm}
-                    />
-                }
-            />
-            <Controller
-                name={"password"}
-                control={control}
-                render={({field}) =>
-                    <Input
-                        placeholder={"Password"}
-                        {...field}
-                        onFocus={clearErrorsForm}
-                    />
-                }
-            />
+            <Item
+                validateStatus={errors?.serverResponse?.message ? "error" : ""}
+                help={errors?.serverResponse?.message ? "Email is wrong" : ""}>
+                <Controller
+                    name={"email"}
+                    control={control}
+                    render={({field}) =>
+                        <Input
+                            placeholder={"Email"}
+                            {...field}
+                            onFocus={clearErrorsForm}
+                        />
+                    }
+                />
+            </Item>
+            <Item
+                validateStatus={errors?.serverResponse?.message ? "error" : ""}
+                help={errors?.serverResponse?.message ? "Password is wrong" : ""}>
+                <Controller
+                    name={"password"}
+                    control={control}
+                    render={({field}) =>
+                        <Input
+                            placeholder={"Password"}
+                            {...field}
+                            onFocus={clearErrorsForm}
+                        />
+                    }
+                />
+            </Item>
             <Controller
                 name="rememberMe"
                 control={control}
