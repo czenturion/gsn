@@ -3,7 +3,6 @@ import type {SubmitHandler} from "react-hook-form"
 import {InitialAuthStateType, logIn} from "../../redux/auth-reducer"
 import {connect} from "react-redux"
 import s from "./Login.module.css"
-import {ErrorBorderOutline} from "../common/FormsControls/Errors"
 import * as React from "react"
 import {Navigate} from "react-router-dom"
 import {FC, useEffect} from "react"
@@ -80,9 +79,7 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                 textAlign: "center"
             }}
             onFinish={handleSubmit(onSubmit)}>
-            <Item
-                validateStatus={errors?.serverResponse?.message ? "error" : ""}
-                help={errors?.serverResponse?.message ? "Email is wrong" : ""}>
+            <Item>
                 <Controller
                     name={"email"}
                     control={control}
@@ -95,9 +92,7 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                     }
                 />
             </Item>
-            <Item
-                validateStatus={errors?.serverResponse?.message ? "error" : ""}
-                help={errors?.serverResponse?.message ? "Password is wrong" : ""}>
+            <Item>
                 <Controller
                     name={"password"}
                     control={control}
@@ -110,47 +105,44 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                     }
                 />
             </Item>
-            <Controller
-                name="rememberMe"
-                control={control}
-
-                render={({field}) =>
-                    <Checkbox
-                        {...field}
-                    >
-                        Remember Me
-                    </Checkbox>
-                }
-            />
-            <div>
-                {
-                    captcha
-                        ? <div className={s.captcha}>
-                            <img src={captcha} alt="captcha"/>
-                            <input
-                                type="text"
-                                {...register("captcha",
-                                    {required: true})}/>
-                        </div>
-                        : <></>
-                }
-            </div>
-            <div>
-                <Button
-                    type="primary"
-                    htmlType="submit"
-                    style={{width: "100%"}}
-                >
-                    Login
-                </Button>
-            </div>
-            <div>
-                {
-                    errors?.serverResponse?.message
-                        ? <p style={{color: "red"}}>{errors.serverResponse.message}</p>
-                        : <div className={s.errorEmptyString}/>
-                }
-            </div>
+            {
+                errors?.serverResponse?.message
+                    ? <p style={{color: "red"}}>{errors.serverResponse.message}</p>
+                    : <></>
+            }
+            <Item
+                validateStatus={errors?.serverResponse?.message ? "error" : ""}
+                help={errors?.serverResponse?.message ? "Email or Password is wrong" : ""}>
+                <Controller
+                    name="rememberMe"
+                    control={control}
+                    render={({field}) =>
+                        <Checkbox
+                            {...field}
+                        >
+                            Remember Me
+                        </Checkbox>
+                    }
+                />
+            </Item>
+            <Button
+                type="primary"
+                htmlType="submit"
+                style={{width: "100%"}}
+            >
+                Login
+            </Button>
+            {
+                captcha
+                    ? <div className={s.captcha}>
+                        <img src={captcha} alt="captcha"/>
+                        <input
+                            type="text"
+                            {...register("captcha",
+                                {required: true})}/>
+                    </div>
+                    : <></>
+            }
         </Form>
     )
 }
@@ -170,7 +162,9 @@ const Login: FC<LoginPropsAndDispatchType> = ({auth, logIn}) => {
         {
             !auth.isAuth
                 ? <div className={s.logFormInput}>
-                    <Title level={4}>LOGIN</Title>
+                    <Title level={3}>LOGIN</Title>
+                    <br/>
+                    <br/>
                     <LoginForm logIn={logIn} captcha={auth.captcha} isFetching={auth.isFetching}/>
                 </div>
                 : <Navigate to="/profile"/>
