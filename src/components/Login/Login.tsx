@@ -50,7 +50,7 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
 
     const onSubmit: SubmitHandler<FormValues> = (formData) => {
         logIn(formData, setError)
-        return <Navigate to="/profile/"/>
+        // return <Navigate to="/profile/"/>
     }
 
     useEffect(() => {
