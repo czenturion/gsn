@@ -10,6 +10,7 @@ import {AppStateType} from "../../redux/redux-store"
 import Preloader from "../common/Preloader/Preloader"
 import {Button, Checkbox, Form, Input} from "antd"
 import {Typography} from "antd"
+import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons";
 
 const {Title} = Typography
 const {Item} = Form
@@ -48,6 +49,8 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
         }
     })
 
+    const [form] = Form.useForm()
+
     const onSubmit: SubmitHandler<FormValues> = (formData) => {
         logIn(formData, setError)
         // return <Navigate to="/profile/"/>
@@ -78,7 +81,9 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                 gap: "16px",
                 textAlign: "center"
             }}
-            onFinish={handleSubmit(onSubmit)}>
+            onFinish={handleSubmit(onSubmit)}
+            form={form}
+        >
             <Item>
                 <Controller
                     name={"email"}
@@ -97,7 +102,8 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                     name={"password"}
                     control={control}
                     render={({field}) =>
-                        <Input
+                        <Input.Password
+                            iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                             placeholder={"Password"}
                             {...field}
                             onFocus={clearErrorsForm}
@@ -136,10 +142,9 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                 captcha
                     ? <div className={s.captcha}>
                         <img src={captcha} alt="captcha"/>
-                        <input
+                        <Input
                             type="text"
-                            {...register("captcha",
-                                {required: true})}/>
+                        />
                     </div>
                     : <></>
             }
