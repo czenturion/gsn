@@ -68,4 +68,5 @@ export default connect<
     LoginPropsType,
     LoginDispatchType,
     {},
-    AppStateType>(mapStateToProps, {logIn})(Login)
+    AppStateType
+    >(mapStateToProps, {logIn})(Login)

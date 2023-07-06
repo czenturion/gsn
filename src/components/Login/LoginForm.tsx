@@ -1,12 +1,10 @@
 import {FC, useEffect} from "react"
 import {Controller, SubmitHandler, useForm, UseFormSetError} from "react-hook-form"
-import {Button, Checkbox, Form, Input, Typography} from "antd"
+import {Button, Checkbox, Form, Input} from "antd"
 import Preloader from "../common/Preloader/Preloader"
 import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons"
-import s from "./Login.module.css"
 import * as React from "react"
 
-const {Title} = Typography
 const {Item} = Form
 
 
@@ -45,6 +43,7 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
     })
 
     const [form] = Form.useForm()
+    const rules = {required: true}
 
     const onSubmit: SubmitHandler<FormValues> = (formData) => {
         logIn(formData, setError)
@@ -74,6 +73,7 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                 display: "flex",
                 flexDirection: "column",
                 gap: "16px",
+                width: "200px"
             }}
             onFinish={handleSubmit(onSubmit)}
             form={form}
@@ -84,7 +84,7 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                 <Controller
                     name={"email"}
                     control={control}
-                    rules={{ required: true }}
+                    rules={rules}
                     render={({field}) =>
                         <Input
                             placeholder={"Email"}
@@ -96,7 +96,7 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
             </Item>
             <Item>
                 <Controller
-                    rules={{ required: true}}
+                    rules={rules}
                     name={"password"}
                     control={control}
                     render={({field}) =>
@@ -125,23 +125,32 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                     }
                 />
             </Item>
+            {
+                captcha
+                    ? <Item>
+                        <img src={captcha} alt="captcha"/>
+                        <Controller
+                            rules={rules}
+                            name="captcha"
+                            control={control}
+                            render={({field}) =>
+                                <Input
+                                    {...field}
+                                />
+                            }
+                        />
+                    </Item>
+                    : <></>
+            }
             <Button
                 type="primary"
                 htmlType="submit"
-                style={{width: "100%"}}
+                style={{
+                    width: "100%"
+                }}
             >
                 Login
             </Button>
-            {
-                captcha
-                    ? <div className={s.captcha}>
-                        <img src={captcha} alt="captcha"/>
-                        <Input
-                            type="text"
-                        />
-                    </div>
-                    : <></>
-            }
         </Form>
     )
 }
