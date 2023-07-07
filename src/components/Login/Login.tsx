@@ -29,7 +29,7 @@ type LoginDispatchType = {
 type LoginPropsAndDispatchType = LoginPropsType & LoginDispatchType
 
 const Login: FC<LoginPropsAndDispatchType> = ({auth, logIn}) => {
-    return <>
+    return <div>
         {
             !auth.isAuth
                 ? <div
@@ -56,7 +56,7 @@ const Login: FC<LoginPropsAndDispatchType> = ({auth, logIn}) => {
                 </div>
                 : <Navigate to="/profile"/>
         }
-    </>
+    </div>
 }
 
 let mapStateToProps = (state: AppStateType): LoginPropsType => ({

@@ -1,11 +1,12 @@
 import {FC, useEffect} from "react"
 import {Controller, SubmitHandler, useForm, UseFormSetError} from "react-hook-form"
-import {Button, Checkbox, Form, Input} from "antd"
+import {Button, Checkbox, Form, Input, Typography} from "antd"
 import Preloader from "../common/Preloader/Preloader"
 import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons"
 import * as React from "react"
 
 const {Item} = Form
+const {Text} = Typography
 
 
 type LoginFormPropsType = {
@@ -50,22 +51,11 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
         // return <Navigate to="/profile/"/>
     }
 
-    useEffect(() => {
-        console.log(errors, "form errors")
-        if (errors.serverResponse) {
-            console.log(errors.serverResponse, "++++")
-        }
-    }, [errors])
-
-
-
     const clearErrorsForm = () => {
         if (errors && errors.serverResponse && errors.serverResponse.message!.length > 0) {
             clearErrors("serverResponse")
         }
     }
-
-    if (isFetching) return <Preloader/>
 
     return (
         <Form
@@ -94,7 +84,9 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                     }
                 />
             </Item>
-            <Item>
+            <Item
+                validateStatus={errors?.serverResponse?.message ? "error" : ""}
+            >
                 <Controller
                     rules={rules}
                     name={"password"}
@@ -109,10 +101,12 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                     }
                 />
             </Item>
-            <Item
-                // validateStatus={errors?.serverResponse?.message ? "error" : ""}
-                // help={errors?.serverResponse?.message ? "Email or Password is wrong" : ""}
-            >
+            {
+                errors?.serverResponse?.message
+                    ? <Text type="danger">{errors?.serverResponse?.message}</Text>
+                    : ""
+            }
+            <Item>
                 <Controller
                     name="rememberMe"
                     control={control}
