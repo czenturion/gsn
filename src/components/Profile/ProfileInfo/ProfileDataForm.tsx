@@ -38,8 +38,7 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
         }
     })
 
-    const onSubmit: SubmitHandler<ProfileFormValues> = (formValues, e) => {
-        e!.preventDefault()
+    const onSubmit: SubmitHandler<ProfileFormValues> = (formValues) => {
         updateProfile?.(formValues, setError, disableEditMode!)
     }
 

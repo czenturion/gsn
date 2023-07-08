@@ -1,9 +1,10 @@
-import {FC, useEffect} from "react"
+import {FC, useEffect, useState} from "react"
 import {Controller, SubmitHandler, useForm, UseFormSetError} from "react-hook-form"
 import {Button, Checkbox, Form, Input, Typography} from "antd"
 import Preloader from "../common/Preloader/Preloader"
 import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons"
 import * as React from "react"
+import s from "./Login.module.css"
 
 const {Item} = Form
 const {Text} = Typography
@@ -25,9 +26,7 @@ export type FormValues = {
 
 const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
     const {
-        register,
         handleSubmit,
-        reset,
         setError,
         clearErrors,
         control,
@@ -48,7 +47,6 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
 
     const onSubmit: SubmitHandler<FormValues> = (formData) => {
         logIn(formData, setError)
-        // return <Navigate to="/profile/"/>
     }
 
     const clearErrorsForm = () => {
@@ -101,11 +99,13 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                     }
                 />
             </Item>
-            {
-                errors?.serverResponse?.message
-                    ? <Text type="danger">{errors?.serverResponse?.message}</Text>
-                    : ""
-            }
+            <Text
+                className={s.error}
+            >
+                {
+                    errors?.serverResponse?.message
+                }
+            </Text>
             <Item>
                 <Controller
                     name="rememberMe"

@@ -110,7 +110,6 @@ export const logIn = (logData: FormValues, setError: UseFormSetError<FormValues>
         dispatch(setCaptcha(""))
     }
     if (resultCode === Error) {
-        console.log("auth error")
         setError("serverResponse", {type: "server", message: messages[0]})
     }
     if (resultCode === CaptchaIsRequired) {
