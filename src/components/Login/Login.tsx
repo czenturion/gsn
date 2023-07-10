@@ -6,7 +6,7 @@ import {FC} from "react"
 import {Navigate} from "react-router-dom"
 import {AppStateType} from "../../redux/redux-store"
 import {Form, Typography} from "antd"
-import LoginForm from "./LoginForm";
+import LoginForm from "./LoginForm"
 
 const {Title} = Typography
 
@@ -23,7 +23,11 @@ type LoginPropsType = {
 }
 
 type LoginDispatchType = {
-    logIn: (formData: FormValues, setError: UseFormSetError<FormValues>) => void
+    logIn: (
+        formData: FormValues,
+        setError: UseFormSetError<FormValues>,
+        setIsLoading: (value: boolean) => void
+    ) => void
 }
 
 type LoginPropsAndDispatchType = LoginPropsType & LoginDispatchType

@@ -103,7 +103,11 @@ export const getAuthUserData = (): ThunkType => async dispatch => {
     dispatch(setIsFetching(false))
 }
 
-export const logIn = (logData: FormValues, setError: UseFormSetError<FormValues>): ThunkType => async dispatch => {
+export const logIn = (
+    logData: FormValues,
+    setError: UseFormSetError<FormValues>,
+    setIsLoading: (value: boolean) => void): ThunkType => async dispatch => {
+    setIsLoading(true)
     const {messages, resultCode} = await authAPI.login(logData)
     if (resultCode === Success) {
         await dispatch(getAuthUserData())
@@ -117,6 +121,7 @@ export const logIn = (logData: FormValues, setError: UseFormSetError<FormValues>
         const res = await securityAPI.getCaptchaUrl()
         dispatch(setCaptcha(res.url))
     }
+    setIsLoading(false)
 }
 
 export const logOut = (): ThunkType => async dispatch => {

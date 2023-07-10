@@ -2,7 +2,7 @@ import {FC, useEffect, useState} from "react"
 import {Controller, SubmitHandler, useForm, UseFormSetError} from "react-hook-form"
 import {Button, Checkbox, Form, Input, Typography} from "antd"
 import Preloader from "../common/Preloader/Preloader"
-import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons"
+import {EyeInvisibleOutlined, EyeTwoTone, LoadingOutlined} from "@ant-design/icons"
 import * as React from "react"
 import s from "./Login.module.css"
 
@@ -13,7 +13,11 @@ const {Text} = Typography
 type LoginFormPropsType = {
     captcha: string
     isFetching: boolean
-    logIn: (formData: FormValues, setError: UseFormSetError<FormValues>) => void
+    logIn: (
+        formData: FormValues,
+        setError: UseFormSetError<FormValues>,
+        setIsLoading: (value: boolean) => void
+    ) => void
 }
 
 export type FormValues = {
@@ -44,9 +48,10 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
 
     const [form] = Form.useForm()
     const rules = {required: true}
+    const [isLoading, setIsLoading] = useState(false)
 
     const onSubmit: SubmitHandler<FormValues> = (formData) => {
-        logIn(formData, setError)
+        logIn(formData, setError, setIsLoading)
     }
 
     const clearErrorsForm = () => {
@@ -139,11 +144,17 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
             <Button
                 type="primary"
                 htmlType="submit"
+
                 style={{
                     width: "100%"
                 }}
+                disabled={isLoading}
             >
-                Login
+                {
+                    isLoading
+                        ? <LoadingOutlined style={{ fontSize: 14 }} spin />
+                        : "Login"
+                }
             </Button>
         </Form>
     )
