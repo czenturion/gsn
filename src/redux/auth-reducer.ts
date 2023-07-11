@@ -106,9 +106,13 @@ export const getAuthUserData = (): ThunkType => async dispatch => {
 export const logIn = (
     logData: FormValues,
     setError: UseFormSetError<FormValues>,
-    setIsLoading: (value: boolean) => void): ThunkType => async dispatch => {
+    setIsLoading: (value: boolean) => void
+): ThunkType => async dispatch => {
+
     setIsLoading(true)
+
     const {messages, resultCode} = await authAPI.login(logData)
+
     if (resultCode === Success) {
         await dispatch(getAuthUserData())
         dispatch(setCaptcha(""))
@@ -126,6 +130,7 @@ export const logIn = (
 
 export const logOut = (): ThunkType => async dispatch => {
     dispatch(setIsFetching(true))
+
     const res = await authAPI.logout()
 
     if (res.resultCode === Success) {

@@ -89,6 +89,9 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
             </Item>
             <Item
                 validateStatus={errors?.serverResponse?.message ? "error" : ""}
+                style={{
+                    marginBottom: 0
+                }}
             >
                 <Controller
                     rules={rules}
@@ -111,7 +114,11 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                     errors?.serverResponse?.message
                 }
             </Text>
-            <Item>
+            <Item
+                style={{
+                    marginBottom: 0
+                }}
+            >
                 <Controller
                     name="rememberMe"
                     control={control}
@@ -126,7 +133,11 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
             </Item>
             {
                 captcha
-                    ? <Item>
+                    ? <Item
+                        style={{
+                            marginBottom: 0
+                        }}
+                    >
                         <img src={captcha} alt="captcha"/>
                         <Controller
                             rules={rules}
