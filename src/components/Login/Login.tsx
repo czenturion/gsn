@@ -46,12 +46,12 @@ const Login: FC<LoginPropsAndDispatchType> = ({auth, logIn}) => {
                 >
                     <Title
                         level={3}
-                        style={{marginTop: "60px"}}
+                        style={{
+                            margin: "30px 0 30px"
+                        }}
                     >
                         LOGIN
                     </Title>
-                    <br/>
-                    <br/>
                     <LoginForm
                         logIn={logIn}
                         captcha={auth.captcha}

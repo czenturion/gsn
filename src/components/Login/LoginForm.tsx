@@ -1,6 +1,6 @@
 import {FC, useEffect, useState} from "react"
 import {Controller, SubmitHandler, useForm, UseFormSetError} from "react-hook-form"
-import {Button, Checkbox, Form, Input, Typography} from "antd"
+import {Button, Checkbox, Form, Image, Input, Typography} from "antd"
 import Preloader from "../common/Preloader/Preloader"
 import {EyeInvisibleOutlined, EyeTwoTone, LoadingOutlined} from "@ant-design/icons"
 import * as React from "react"
@@ -135,16 +135,22 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                 captcha
                     ? <Item
                         style={{
-                            marginBottom: 0
+                            margin: 0
                         }}
                     >
-                        <img src={captcha} alt="captcha"/>
+                        <Image
+                            src={captcha}
+                            alt="captcha"
+                        />
                         <Controller
                             rules={rules}
                             name="captcha"
                             control={control}
                             render={({field}) =>
                                 <Input
+                                    style={{
+                                        marginTop: "16px"
+                                    }}
                                     {...field}
                                 />
                             }
@@ -157,7 +163,8 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                 htmlType="submit"
 
                 style={{
-                    width: "100%"
+                    width: "100%",
+                    marginBottom: "15px"
                 }}
                 disabled={isLoading}
             >

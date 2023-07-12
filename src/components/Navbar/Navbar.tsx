@@ -10,7 +10,13 @@ type PropsType = {
 
 const Navbar: React.FC<PropsType> = ({ colorBgContainer }) => {
     return (
-        <Sider width={200} style={{ background: colorBgContainer }}>
+        <Sider
+            width={200}
+            style={{
+                background: colorBgContainer,
+                height: "92vh"
+            }}
+        >
             <Menu
                 mode="inline"
                 defaultOpenKeys={['sub1']}

@@ -1,12 +1,4 @@
 .error {
     color: red;
-    transition: opacity 0.3s ease-in-out;
 }
 
-.visible {
-    opacity: 1;
-}
-
-.hidden {
-    opacity: 0;
-}
