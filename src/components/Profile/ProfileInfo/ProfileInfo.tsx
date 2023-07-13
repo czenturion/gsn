@@ -8,7 +8,7 @@ import {FC, useState} from "react"
 import {ProfileType} from "../../../redux/profile-reducer"
 import ProfileDataForm from "./ProfileDataForm"
 import {UseFormSetError} from "react-hook-form"
-import {Button, Card, Collapse, message, Upload} from "antd"
+import {Button, Card, Collapse, Image, message, Upload} from "antd"
 import {UploadOutlined} from "@ant-design/icons"
 import type {DisableEditModeType, ProfileFormValues} from "../ProfileContainer"
 import {Typography} from 'antd'
@@ -72,8 +72,13 @@ const ProfileInfo: FC<PropsType> = ({
                                 uploadingData
                                     ? <Preloader size="large" style={{marginTop: "150px"}}/>
                                     : profile.photos.large
-                                        ? <img src={profile.photos.large} alt=""/>
-                                        : <img src={userPhoto} alt=""/>
+                                        ? <div><Image
+                                            src={
+                                                profile.photos.large
+                                            }
+                                            alt=""
+                                        /></div>
+                                        : <Image src={userPhoto} alt=""/>
                             }
                             {
                                 currentProfileAuthUser && !uploadingData ? <div className={s.photoUpdateButtonField}>

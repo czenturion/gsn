@@ -107,13 +107,6 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                     }
                 />
             </Item>
-            <Text
-                className={s.error}
-            >
-                {
-                    errors?.serverResponse?.message
-                }
-            </Text>
             <Item
                 style={{
                     marginBottom: 0
@@ -131,16 +124,27 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
                     }
                 />
             </Item>
+            <Text
+                className={s.error}
+            >
+                {
+                    errors?.serverResponse?.message
+                }
+            </Text>
             {
                 captcha
                     ? <Item
                         style={{
-                            margin: 0
+                            margin: 0,
+                            display: "flex"
                         }}
                     >
                         <Image
                             src={captcha}
                             alt="captcha"
+                            style={{
+                                display: "flex"
+                            }}
                         />
                         <Controller
                             rules={rules}
@@ -161,7 +165,6 @@ const LoginForm: FC<LoginFormPropsType> = ({logIn, captcha, isFetching}) => {
             <Button
                 type="primary"
                 htmlType="submit"
-
                 style={{
                     width: "100%",
                     marginBottom: "15px"
