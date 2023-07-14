@@ -8,7 +8,6 @@ import {
 import * as React from "react"
 import Users from "./Users"
 import Preloader from "../common/Preloader/Preloader"
-import {Carousel} from "../common/Paginator/Carousel"
 import {compose} from "redux"
 import {withAuthRedirect} from "../../hoc/withAuthRedirect"
 import {
@@ -51,19 +50,23 @@ class UsersComponent extends React.Component<PropsType> {
 
     render() {
 
-        // [totalPagesCount].slice(currentPage ± 5)
-        let slicedPages = Carousel(this.props.totalUsersCount, this.props.pageSize, this.props.currentPage)
+        let pagesData = {
+            totalUsersCount: this.props.totalUsersCount,
+            pageSize: this.props.pageSize,
+            currentPage: this.props.currentPage
+        }
 
         return <>
             {
                 this.props.isFetching
                     ? <Preloader size="large" style={{padding: "200px 0"}}/>
-                    : <Users slicedPages={slicedPages}
-                             currentPage={this.props.currentPage}
-                             onPageChanged={this.onPageChanged}
-                             users={this.props.users}
-                             toggleUserFollow={this.props.toggleUserFollow}
-                             followingInProgress={this.props.followingInProgress}/>
+                    : <Users
+                        onPageChanged={this.onPageChanged}
+                        users={this.props.users}
+                        toggleUserFollow={this.props.toggleUserFollow}
+                        followingInProgress={this.props.followingInProgress}
+                        pagesData={pagesData}
+                    />
             }
         </>
     }

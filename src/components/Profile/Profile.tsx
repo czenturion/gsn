@@ -14,10 +14,21 @@ type PropsType = {
     uploadingData: boolean
     savePhoto: (file: File) => void
     updateStatus: (newStatus: string) => void
-    updateProfile: (profileData: ProfileFormValues, setError: UseFormSetError<ProfileFormValues>, disableEditMode: DisableEditModeType) => void
+    updateProfile: (
+        profileData: ProfileFormValues,
+        setError: UseFormSetError<ProfileFormValues>,
+        disableEditMode: DisableEditModeType
+    ) => void
 }
 
-const Profile: FC<PropsType> = ({profile, status, updateStatus, currentProfileAuthUser, updateProfile, savePhoto, gettingUserProfileData, uploadingData}) => {
+const Profile: FC<PropsType> = ({
+                                    profile,
+                                    status, updateStatus,
+                                    currentProfileAuthUser,
+                                    updateProfile,
+                                    savePhoto,
+                                    gettingUserProfileData,
+                                    uploadingData}) => {
     return (
         <div>
             <ProfileInfo

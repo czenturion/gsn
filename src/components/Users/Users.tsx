@@ -2,32 +2,44 @@ import s from "./Users.module.css"
 import * as React from "react"
 import {UsersShortcut} from "./UsersShortcut"
 import {UserType} from "../../redux/users-reducer"
+import {Pagination} from "antd"
 
 type PropsType = {
     users: UserType[]
-    currentPage: number
-    slicedPages: number[]
     followingInProgress: number[]
     onPageChanged: (pageNumber: number) => void
     toggleUserFollow: (userId: number, followed: boolean) => void
+    pagesData: {
+        totalUsersCount: number
+        pageSize: number
+        currentPage: number
+    }
 }
 
 const Users: React.FC<PropsType> = ({
-                                        slicedPages,
-                                        currentPage,
                                         onPageChanged,
                                         users,
                                         followingInProgress,
-                                        toggleUserFollow }) => {
+                                        toggleUserFollow,
+                                        pagesData
+                                    }) => {
+
+    const onChange = (pageNumber: number) => {
+        onPageChanged(pageNumber)
+    }
+
     return <div>
-        <div className={s.pages}>
-            {
-                slicedPages.map(p => {
-                    return <span className={currentPage === p ? s.selectedPage : ""}
-                                 onClick={() => onPageChanged(p)}
-                                 key={p}>{p}</span>
-                })
-            }
+        <div
+            style={{
+                marginBottom: "16px"
+            }}
+        >
+            <Pagination
+                defaultCurrent={pagesData.currentPage}
+                total={pagesData.totalUsersCount}
+                onChange={onChange}
+                showSizeChanger={false}
+            />
         </div>
         {
             users.map(u => <UsersShortcut user={u} key={u.id}

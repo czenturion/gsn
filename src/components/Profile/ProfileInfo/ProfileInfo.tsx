@@ -197,8 +197,10 @@ type ContactType = {
 }
 
 const Contact: FC<ContactType> = ({contactTitle, contactValue}) => {
-    return <div className={s.contact}><b>{capitalize(contactTitle)}</b>: <a href={contactValue}
-                                                                            target="_blank">{contactValue}</a></div>
+    return <div className={s.contact}>
+            <b>{capitalize(contactTitle)}</b>:
+            <a href={contactValue} target="_blank" rel="noreferrer">{contactValue}</a>
+    </div>
 }
 
 export default ProfileInfo
