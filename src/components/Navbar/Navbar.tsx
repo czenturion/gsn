@@ -15,7 +15,7 @@ const Navbar: React.FC<PropsType> = ({colorBgContainer}) => {
             width={200}
             style={{
                 background: colorBgContainer,
-                height: "92vh"
+                height: "600px"
             }}
         >
             <Menu

@@ -4,7 +4,7 @@ import type {SubmitHandler} from "react-hook-form"
 import {useForm, Controller} from "react-hook-form"
 import type {ProfileDataType} from "./ProfileInfo"
 import type {ProfileFormValues} from "../ProfileContainer"
-import {Button, Checkbox, Form, Input, Space, Typography} from "antd"
+import {Button, Checkbox, Divider, Form, Input, Space, Typography} from "antd"
 
 const {Title} = Typography
 const {Item} = Form
@@ -232,6 +232,7 @@ const ProfileDataForm: FC<ProfileDataType> = ({ profile,  updateProfile, disable
                 }
             />
         </Item>
+        <Divider/>
         <Item
             label="Looking for a job?"
         >

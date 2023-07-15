@@ -56,7 +56,7 @@ class UsersComponent extends React.Component<PropsType> {
             currentPage: this.props.currentPage
         }
 
-        return <>
+        return <div>
             {
                 this.props.isFetching
                     ? <Preloader size="large" style={{padding: "200px 0"}}/>
@@ -68,7 +68,7 @@ class UsersComponent extends React.Component<PropsType> {
                         pagesData={pagesData}
                     />
             }
-        </>
+        </div>
     }
 }
 

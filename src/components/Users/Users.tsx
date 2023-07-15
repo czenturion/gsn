@@ -41,11 +41,19 @@ const Users: React.FC<PropsType> = ({
                 showSizeChanger={false}
             />
         </div>
-        {
-            users.map(u => <UsersShortcut user={u} key={u.id}
-                                          followingInProgress={followingInProgress}
-                                          toggleUserFollow={toggleUserFollow}/>)
-        }
+        <div
+            style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "15px"
+            }}
+        >
+            {
+                users.map(u => <UsersShortcut user={u} key={u.id}
+                                              followingInProgress={followingInProgress}
+                                              toggleUserFollow={toggleUserFollow}/>)
+            }
+        </div>
     </div>
 }
 
