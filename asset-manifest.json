@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/gsn/static/css/main.5b1f11a0.css",
-    "main.js": "/gsn/static/js/main.8e83043a.js",
+    "main.css": "/gsn/static/css/main.4b9079a5.css",
+    "main.js": "/gsn/static/js/main.cecccac3.js",
     "static/css/10.2a338248.chunk.css": "/gsn/static/css/10.2a338248.chunk.css",
     "static/js/10.bb5a1d4f.chunk.js": "/gsn/static/js/10.bb5a1d4f.chunk.js",
     "static/js/610.678a86a7.chunk.js": "/gsn/static/js/610.678a86a7.chunk.js",
@@ -15,8 +15,8 @@
     "static/media/userPhoto.png": "/gsn/static/media/userPhoto.1c8336b2e63f5d3497f8.png",
     "static/media/astroIco.jpg": "/gsn/static/media/astroIco.633b969d20cfb2288f9e.jpg",
     "index.html": "/gsn/index.html",
-    "main.5b1f11a0.css.map": "/gsn/static/css/main.5b1f11a0.css.map",
-    "main.8e83043a.js.map": "/gsn/static/js/main.8e83043a.js.map",
+    "main.4b9079a5.css.map": "/gsn/static/css/main.4b9079a5.css.map",
+    "main.cecccac3.js.map": "/gsn/static/js/main.cecccac3.js.map",
     "10.2a338248.chunk.css.map": "/gsn/static/css/10.2a338248.chunk.css.map",
     "10.bb5a1d4f.chunk.js.map": "/gsn/static/js/10.bb5a1d4f.chunk.js.map",
     "610.678a86a7.chunk.js.map": "/gsn/static/js/610.678a86a7.chunk.js.map",
@@ -29,7 +29,7 @@
     "667.c71b31b4.chunk.js.map": "/gsn/static/js/667.c71b31b4.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5b1f11a0.css",
-    "static/js/main.8e83043a.js"
+    "static/css/main.4b9079a5.css",
+    "static/js/main.cecccac3.js"
   ]
 }
