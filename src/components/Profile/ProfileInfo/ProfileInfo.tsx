@@ -5,15 +5,15 @@ import ProfileStatus from "./ProfileStatus"
 import {capitalize} from "../../../utils/helpers/helpers"
 import * as React from "react"
 import {FC, useState} from "react"
-import {ProfileType} from "../../../redux/profile-reducer"
+import {ProfileContactsType, ProfileType} from "../../../redux/profile-reducer"
 import ProfileDataForm from "./ProfileDataForm"
 import {UseFormSetError} from "react-hook-form"
-import {Button, Card, Collapse, Image, message, Upload} from "antd"
+import {Button, Card, Collapse, Image, message, Table, Upload} from "antd"
 import {UploadOutlined} from "@ant-design/icons"
 import type {DisableEditModeType, ProfileFormValues} from "../ProfileContainer"
 import {Typography} from 'antd'
 
-const {Title, Text} = Typography
+const {Title, Text, Link} = Typography
 
 type PropsType = {
     profile: ProfileType | null
@@ -51,9 +51,9 @@ const ProfileInfo: FC<PropsType> = ({
     const beforeUpload = (file: any) => {
         const isAllowedType = allowedTypes.includes(file.type);
         if (!isAllowedType) {
-            message.error(`Only ${allowedTypes.join(', ')} files are allowed!`);
+            message.error(`Only ${allowedTypes.join(', ')} files are allowed!`)
         }
-        return isAllowedType;
+        return isAllowedType
     }
 
     // this check should be because TS warns about profile might be null
@@ -70,30 +70,33 @@ const ProfileInfo: FC<PropsType> = ({
                         <div className={s.leftField}>
                             {
                                 uploadingData
-                                    ? <Preloader size="large" style={{marginTop: "150px"}}/>
+                                    ? <Preloader
+                                        size="large"
+                                        style={{marginTop: "150px"}}
+                                    />
                                     : profile.photos.large
-                                        ? <div><Image
+                                        ? <Image
                                             src={
                                                 profile.photos.large
                                             }
-                                            alt=""
-                                        /></div>
-                                        : <Image src={userPhoto} alt=""/>
+                                            alt="ava"
+                                        />
+                                        : <img src={userPhoto} alt="ava"/>
                             }
                             {
-                                currentProfileAuthUser && !uploadingData ? <div className={s.photoUpdateButtonField}>
-
-                                    <Upload
-                                        maxCount={1}
-                                        beforeUpload={beforeUpload}
-                                        customRequest={uploadUserPhoto}
-                                        showUploadList={false}
-                                    >
-                                        <Button icon={<UploadOutlined rev={undefined}/>}>
-                                            Upload avatar
-                                        </Button>
-                                    </Upload>
-                                </div>
+                                currentProfileAuthUser && !uploadingData
+                                    ? <div className={s.photoUpdateButtonField}>
+                                        <Upload
+                                            maxCount={1}
+                                            beforeUpload={beforeUpload}
+                                            customRequest={uploadUserPhoto}
+                                            showUploadList={false}
+                                        >
+                                            <Button icon={<UploadOutlined rev={undefined}/>}>
+                                                Upload avatar
+                                            </Button>
+                                        </Upload>
+                                    </div>
                                     : <></>
                             }
                         </div>
@@ -137,7 +140,10 @@ export type ProfileDataType = {
     currentProfileAuthUser?: boolean
     toggleEditMode?: () => void
     disableEditMode?: DisableEditModeType
-    updateProfile?: (formValues: ProfileFormValues, setError: UseFormSetError<ProfileFormValues>, disableEditMode: DisableEditModeType) => void
+    updateProfile?: (
+        formValues: ProfileFormValues,
+        setError: UseFormSetError<ProfileFormValues>,
+        disableEditMode: DisableEditModeType) => void
 }
 
 const ProfileData: FC<ProfileDataType> = ({
@@ -146,18 +152,36 @@ const ProfileData: FC<ProfileDataType> = ({
                                               toggleEditMode
                                           }) => {
 
+    const {contacts} = profile
+
+    const columns = [
+        {
+            title: "Contact",
+            dataIndex: "contact",
+            key: "contact",
+            render: (text: string) => <Text>{text}</Text>
+        },
+        {
+            title: "Link",
+            dataIndex: "link",
+            key: "link",
+            render: (text: string) => <Link href={text} target="_blank">{text}</Link>
+        }
+    ]
+
+    const contactsData = Object.keys(contacts).map(key => {
+        return {
+            key: key,
+            contact: capitalize(key),
+            link: contacts[key as keyof ProfileContactsType]
+        }
+    })
+
     const profileItems = [
         {
             key: 1,
             label: "Contacts",
-            children: <>
-                {
-                    Object.keys(profile.contacts).map(key => {
-                        // @ts-ignore
-                        return <Contact contactTitle={key} contactValue={profile.contacts[key]} key={key}/>
-                    })
-                }
-            </>
+            children: <Table columns={columns} dataSource={contactsData} pagination={false}/>
         },
         {
             key: 2,
@@ -181,25 +205,13 @@ const ProfileData: FC<ProfileDataType> = ({
         <br/>
         <Collapse accordion items={profileItems}/>
         <br/>
-        <Text>
+        <Title level={4}>
             {
                 profile.lookingForAJob
-                    ? "Looking for a job"
-                    : "Not looking for a job"
+                    ? "Looking for a job!"
+                    : "Not looking for a job."
             }
-        </Text>
-    </div>
-}
-
-type ContactType = {
-    contactTitle: string
-    contactValue: string
-}
-
-const Contact: FC<ContactType> = ({contactTitle, contactValue}) => {
-    return <div className={s.contact}>
-            <b>{capitalize(contactTitle)}</b>:
-            <a href={contactValue} target="_blank" rel="noreferrer">{contactValue}</a>
+        </Title>
     </div>
 }
 

@@ -8,6 +8,7 @@
 
 .leftField {
     grid-area: l;
+    display: flex;
     flex-direction: column;
 }
 
