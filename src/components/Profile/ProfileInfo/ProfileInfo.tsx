@@ -48,7 +48,7 @@ const ProfileInfo: FC<PropsType> = ({
         savePhoto(info.file)
     }
 
-    const beforeUpload = (file: any) => {
+    const beforeUpload = (file: File) => {
         const isAllowedType = allowedTypes.includes(file.type);
         if (!isAllowedType) {
             message.error(`Only ${allowedTypes.join(', ')} files are allowed!`)
@@ -65,8 +65,8 @@ const ProfileInfo: FC<PropsType> = ({
         <div>
             {
                 gettingUserProfileData
-                    ? <div style={{padding: "100px 0"}}><Preloader size="large"/></div>
-                    : <div className={s.avatar}>
+                    ? <Preloader size="large" style={{padding: "100px 0"}}/>
+                    : <div className={s.profileInfoPage}>
                         <div className={s.leftField}>
                             {
                                 uploadingData

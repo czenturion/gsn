@@ -3,6 +3,7 @@ import * as React from "react"
 import { Avatar, Col, Menu, Row, Layout } from "antd"
 import { selectIsAuth, selectLogin } from "../../redux/auth-selectors"
 import { useSelector } from "react-redux"
+import {SettingOutlined} from "@ant-design/icons";
 
 const { Header } = Layout
 
@@ -17,23 +18,13 @@ export const AppHeader: React.FC<PropsType> = ({ logOut }) => {
 
 	return (
 		<Header style={{display: 'flex', alignItems: 'center'}}>
-			<div className="logo"/>
 			{
 				isAuth
-					? <Row style={{width: "100%"}}>
-						<Col span={22}>
-						</Col>
-						<Col span={2}
-							 style={{
-								 display: "flex",
-								 alignItems: "center",
-								 justifyContent: "space-between"
-							 }}
-						>
+					? <div style={{display: "flex", flexDirection: "row", alignItems: "center", marginLeft: "auto"}}>
 							<Avatar style={{backgroundColor: 'gray'}}>
 								{login}
 							</Avatar>
-							<Menu theme="dark" mode="horizontal" style={{width: "40px"}}>
+							<Menu theme="dark" mode="horizontal" style={{width: "40px"}} expandIcon={<SettingOutlined />}>
 								<Menu.Item key="1" onClick={logOut}>
 									<span>Log out</span>
 								</Menu.Item>
@@ -41,8 +32,7 @@ export const AppHeader: React.FC<PropsType> = ({ logOut }) => {
 									<NavLink to="/settings">Settings</NavLink>
 								</Menu.Item>
 							</Menu>
-						</Col>
-					</Row>
+					</div>
 					: <></>
 			}
 		</Header>
