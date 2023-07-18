@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI Emoji', serif;
+}
+
+body {
+    background-color: #f5f5f5;
+}
+
+.appWrapper {
+    max-width: 1440px;
+    margin:0 auto;
+}
+
+.initializePreloader {
+    margin: 200px 300px 0 0;
+}
+
+.layout {
+    padding: 0 24px 24px;
+}
+
+.appContent {
+    padding: 24px;
+    margin: 0;
+    min-height: 540px;
+}
+
+.contentPreloader {
+    padding: 200px 0;
+}

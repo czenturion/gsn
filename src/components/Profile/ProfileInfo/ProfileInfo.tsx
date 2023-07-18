@@ -58,14 +58,14 @@ const ProfileInfo: FC<PropsType> = ({
 
     // this check should be because TS warns about profile might be null
     if (!profile) {
-        return <div style={{height: "200px"}}><Preloader style={{marginTop: "100px"}}/></div>
+        return <div style={{height: "400px"}}><Preloader style={{marginTop: "200px"}}/></div>
     }
 
     return (
         <div>
             {
                 gettingUserProfileData
-                    ? <Preloader size="large" style={{padding: "100px 0"}}/>
+                    ? <div style={{height: "400px"}}><Preloader size="large" style={{padding: "200px 0"}}/></div>
                     : <div className={s.profileInfoPage}>
                         <div className={s.leftField}>
                             {

@@ -1,9 +1,9 @@
-import { NavLink } from "react-router-dom"
+import {NavLink} from "react-router-dom"
 import * as React from "react"
-import { Avatar, Col, Menu, Row, Layout } from "antd"
-import { selectIsAuth, selectLogin } from "../../redux/auth-selectors"
-import { useSelector } from "react-redux"
-import {SettingOutlined} from "@ant-design/icons";
+import {Avatar, Layout, Menu} from "antd"
+import {selectIsAuth, selectLogin} from "../../redux/auth-selectors"
+import {useSelector} from "react-redux"
+import {SettingOutlined} from "@ant-design/icons"
 
 const { Header } = Layout
 
@@ -24,11 +24,25 @@ export const AppHeader: React.FC<PropsType> = ({ logOut }) => {
 							<Avatar style={{backgroundColor: 'gray'}}>
 								{login}
 							</Avatar>
-							<Menu theme="dark" mode="horizontal" style={{width: "40px"}} expandIcon={<SettingOutlined />}>
-								<Menu.Item key="1" onClick={logOut}>
+							<Menu
+								theme="dark"
+								mode="horizontal"
+								style={{width: "40px", alignItems: "center"}}
+								overflowedIndicator={
+									<SettingOutlined
+										style={{ fontSize: '200%', marginTop: "22px"}}
+									/>
+								}
+							>
+								<Menu.Item
+									key="1"
+									onClick={logOut}
+								>
 									<span>Log out</span>
 								</Menu.Item>
-								<Menu.Item key="2">
+								<Menu.Item
+									key="2"
+								>
 									<NavLink to="/settings">Settings</NavLink>
 								</Menu.Item>
 							</Menu>

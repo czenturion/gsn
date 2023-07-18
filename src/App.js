@@ -1,4 +1,4 @@
-import "./App.css"
+import s from "./App.module.css"
 import {HashRouter, Navigate, Route, Routes} from "react-router-dom"
 import UsersContainer from "./components/Users/UsersContainer"
 import ProfileContainer from "./components/Profile/ProfileContainer"
@@ -9,7 +9,7 @@ import {initializeApp} from "./redux/app-reducer"
 import Preloader from "./components/common/Preloader/Preloader"
 import store from "./redux/redux-store"
 import "antd/dist/reset.css"
-import {Breadcrumb, Layout, theme} from "antd"
+import {Layout, theme} from "antd"
 import Navbar from "./components/Navbar/Navbar"
 import {logOut} from "./redux/auth-reducer"
 import {AppHeader} from "./components/Header/AppHeader"
@@ -43,26 +43,26 @@ const App = ({ initializeApp, initialized, authIsFetching, logOut }) => {
     }, [])
 
     if ( !initialized ) {
-        return <Preloader size="large" style={{margin: "200px 300px 0 0"}}/>
+        return <Preloader size="large" className={s.initializePreloader}/>
     } else {
         return (
-            <Layout className="app-wrapper">
+            <Layout className={s.appWrapper}>
                 <AppHeader logOut={logOut}/>
                 <Layout>
                     <Navbar colorBgContainer={colorBgContainer} />
-                    <Layout style={{padding: '0 24px 24px'}}>
+                    <Layout className={s.layout}>
                         <Content
+                            className={s.appContent}
                             style={{
-                                padding: 24,
-                                margin: 0,
-                                minHeight: 540,
                                 background: colorBgContainer,
                             }}
                         >
                             {
                                 authIsFetching
-                                    ? <Preloader size="large" style={{padding: "200px 0"}}/>
-                                    : <Suspense fallback={<Preloader size="large" style={{padding: "200px 0"}}/>}>
+                                    ? <Preloader size="large" className={s.contentPreloader}/>
+                                    : <Suspense
+                                        fallback={<Preloader size="large" className={s.contentPreloader}/>}
+                                    >
                                         <Routes>
                                             <Route path="/" element={<Navigate to={"/profile"}/>}/>
                                             <Route path="/profile/:userId" element={<ProfileContainer/>}/>
