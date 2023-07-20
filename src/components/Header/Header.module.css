@@ -1,0 +1,24 @@
+.appHeader {
+    display: flex;
+    align-items: center;
+}
+
+.appHeaderContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: auto;
+}
+
+.headerAvatar {
+    background-color: gray;
+}
+
+.appHeaderMenu {
+    width: 40px;
+    align-items: center;
+}
+
+.appHeaderMenuIcon {
+    margin-top: 22px;
+}

@@ -4,6 +4,7 @@ import {Avatar, Layout, Menu} from "antd"
 import {selectIsAuth, selectLogin} from "../../redux/auth-selectors"
 import {useSelector} from "react-redux"
 import {SettingOutlined} from "@ant-design/icons"
+import s from "./Header.module.css"
 
 const { Header } = Layout
 
@@ -17,20 +18,27 @@ export const AppHeader: React.FC<PropsType> = ({ logOut }) => {
 	const login = useSelector(selectLogin)
 
 	return (
-		<Header style={{display: 'flex', alignItems: 'center'}}>
+		<Header
+			className={s.appHeader}
+		>
 			{
 				isAuth
-					? <div style={{display: "flex", flexDirection: "row", alignItems: "center", marginLeft: "auto"}}>
-							<Avatar style={{backgroundColor: 'gray'}}>
+					? <div
+						className={s.appHeaderContent}
+					>
+							<Avatar
+								className={s.headerAvatar}
+							>
 								{login}
 							</Avatar>
 							<Menu
 								theme="dark"
 								mode="horizontal"
-								style={{width: "40px", alignItems: "center"}}
+								className={s.appHeaderMenu}
 								overflowedIndicator={
 									<SettingOutlined
-										style={{ fontSize: '200%', marginTop: "22px"}}
+										className={s.appHeaderMenuIcon}
+										style={{ fontSize: '200%'}}
 									/>
 								}
 							>
