@@ -22,18 +22,30 @@ const Dialogs: React.FC<PropsType> = (props) => {
     }
 
     return (
-        <div className={s.dialogs}>
-            <div className={s.dialogsItems}>
+        <div
+            className={s.dialogs}
+        >
+            <div
+                className={s.dialogsItems}
+            >
                 {props.dialogsElements}
             </div>
-            <div className={s.messages}>
+            <div
+                className={s.messages}
+            >
                 <Element
-                    className={s.messagesScroll}>
+                    className={s.messagesScroll}
+                >
                     {props.messagesElements}
-                    <div ref={scrollRef} className={s.messagesScrollRef}/>
+                    <div
+                        ref={scrollRef}
+                        className={s.messagesScrollRef}
+                    />
                 </Element>
                 <AddMessageForm
-                    messageSendButton={props.messageSendButton} scrollToBottom={scrollToBottom}/>
+                    messageSendButton={props.messageSendButton}
+                    scrollToBottom={scrollToBottom}
+                />
             </div>
         </div>
     )
@@ -64,14 +76,21 @@ const AddMessageForm: React.FC<AddMessageFormType> = (props) => {
 
     return (
         <form
-            onSubmit={handleSubmit(onSubmit)}>
-            <div className={s.error}>
+            onSubmit={handleSubmit(onSubmit)}
+        >
+            <div
+                className={s.error}
+            >
                 {errors?.message &&
                     <p>{errors?.message?.message}</p>
                 }
             </div>
-            <div className={s.sendMessageField}>
-                <div className={s.messageField}>
+            <div
+                className={s.sendMessageField}
+            >
+                <div
+                    className={s.messageField}
+                >
                     <input
                         type="textarea"
                         placeholder="Enter a new message"
@@ -83,10 +102,15 @@ const AddMessageForm: React.FC<AddMessageFormType> = (props) => {
                                     value: maxMessageLengthValue,
                                     message: `Max length ${maxMessageLengthValue} symbols`
                                 }
-                            })}/>
+                            })}
+                    />
                 </div>
-                <div className={s.btnMessageSend}>
-                    <input type={"submit"}/>
+                <div
+                    className={s.btnMessageSend}
+                >
+                    <input
+                        type={"submit"}
+                    />
                 </div>
             </div>
         </form>
