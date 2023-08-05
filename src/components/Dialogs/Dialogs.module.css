@@ -11,8 +11,8 @@
 
 
 .dialogElement {
-    padding: 20px;
-    border-bottom: 1px solid #b9b9b9;
+    display: flex;
+    flex-direction: row;
 }
 
 .dialogElement img {
@@ -30,6 +30,7 @@
 
 .dialogElement .text {
     padding-top: 4px;
+    color: inherit;
 }
 
 .messages {

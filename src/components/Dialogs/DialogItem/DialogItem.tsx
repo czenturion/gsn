@@ -13,21 +13,27 @@ type PropsType = {
 const DialogItem: React.FC<PropsType> = (props) => {
     return (
         <div
-            className={s.dialogElement}
+            style={{
+                marginTop: '12px'
+            }}
+
         >
             <NavLink
                 to={"/dialogs/" + props.id}
                 style={({isActive}) => ({
-                color: isActive ? '#66d801' : 'black'
-            })}>
+                    color: isActive ? '#66d801' : 'black',
+                })}
+            >
                 <Card>
-                    <img
-                        src={props.ava}
-                        alt="ava"
-                    />
-                    <div
-                        className={s.text}>
-                        {props.name}
+                    <div className={s.dialogElement}>
+                        <img
+                            src={props.ava}
+                            alt="ava"
+                        />
+                        <div
+                            className={s.text}>
+                            {props.name}
+                        </div>
                     </div>
                 </Card>
             </NavLink>
