@@ -4,6 +4,7 @@ import {useRef} from "react"
 import Scroll from "react-scroll"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {ErrorBorder} from "../common/FormsControls/Errors"
+import {Divider} from "antd";
 
 type PropsType = {
     dialogsElements: any
@@ -25,10 +26,13 @@ const Dialogs: React.FC<PropsType> = (props) => {
         <div
             className={s.dialogs}
         >
-            <div
-                className={s.dialogsItems}
-            >
-                {props.dialogsElements}
+            <div style={{display: "flex", flexDirection: 'row'}}>
+                <div
+                    className={s.dialogsItems}
+                >
+                    {props.dialogsElements}
+                </div>
+                <Divider style={{height: '100%', width: '20px', margin: 0}} type="vertical"/>
             </div>
             <div
                 className={s.messages}

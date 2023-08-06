@@ -16,7 +16,6 @@ const DialogItem: React.FC<PropsType> = (props) => {
             style={{
                 marginTop: '12px'
             }}
-
         >
             <NavLink
                 to={"/dialogs/" + props.id}
