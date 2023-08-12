@@ -4,7 +4,7 @@ import {useRef} from "react"
 import Scroll from "react-scroll"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {ErrorBorder} from "../common/FormsControls/Errors"
-import {Divider} from "antd";
+import {Button, Divider, Input, Space} from "antd"
 
 type PropsType = {
     dialogsElements: any
@@ -26,30 +26,32 @@ const Dialogs: React.FC<PropsType> = (props) => {
         <div
             className={s.dialogs}
         >
-            <div style={{display: "flex", flexDirection: 'row'}}>
+            <div>
                 <div
                     className={s.dialogsItems}
                 >
                     {props.dialogsElements}
                 </div>
-                <Divider style={{height: '100%', width: '20px', margin: 0}} type="vertical"/>
             </div>
             <div
                 className={s.messages}
             >
-                <Element
-                    className={s.messagesScroll}
-                >
-                    {props.messagesElements}
-                    <div
-                        ref={scrollRef}
-                        className={s.messagesScrollRef}
+                <Divider style={{height: '100%', width: '20px', margin: 0}} type="vertical"/>
+                <div style={{width: '100%'}}>
+                    <Element
+                        className={s.messagesScroll}
+                    >
+                        {props.messagesElements}
+                        <div
+                            ref={scrollRef}
+                            className={s.messagesScrollRef}
+                        />
+                    </Element>
+                    <AddMessageForm
+                        messageSendButton={props.messageSendButton}
+                        scrollToBottom={scrollToBottom}
                     />
-                </Element>
-                <AddMessageForm
-                    messageSendButton={props.messageSendButton}
-                    scrollToBottom={scrollToBottom}
-                />
+                </div>
             </div>
         </div>
     )
@@ -82,41 +84,45 @@ const AddMessageForm: React.FC<AddMessageFormType> = (props) => {
         <form
             onSubmit={handleSubmit(onSubmit)}
         >
-            <div
-                className={s.error}
-            >
-                {errors?.message &&
-                    <p>{errors?.message?.message}</p>
-                }
-            </div>
-            <div
-                className={s.sendMessageField}
-            >
-                <div
-                    className={s.messageField}
-                >
-                    <input
-                        type="textarea"
-                        placeholder="Enter a new message"
-                        style={ErrorBorder(errors)}
-                        {...register("message",
-                            {
-                                required: true,
-                                maxLength: {
-                                    value: maxMessageLengthValue,
-                                    message: `Max length ${maxMessageLengthValue} symbols`
-                                }
-                            })}
-                    />
-                </div>
-                <div
-                    className={s.btnMessageSend}
-                >
-                    <input
-                        type={"submit"}
-                    />
-                </div>
-            </div>
+            <Space.Compact style={{width: '100%', marginTop: '18px'}}>
+                <Input defaultValue="" placeholder='Message...'/>
+                <Button type="primary">SEND</Button>
+            </Space.Compact>
+            {/*<div*/}
+            {/*    className={s.error}*/}
+            {/*>*/}
+            {/*    {errors?.message &&*/}
+            {/*        <p>{errors?.message?.message}</p>*/}
+            {/*    }*/}
+            {/*</div>*/}
+            {/*<div*/}
+            {/*    className={s.sendMessageField}*/}
+            {/*>*/}
+            {/*    <div*/}
+            {/*        className={s.messageField}*/}
+            {/*    >*/}
+            {/*        <input*/}
+            {/*            type="textarea"*/}
+            {/*            placeholder="Enter a new message"*/}
+            {/*            style={ErrorBorder(errors)}*/}
+            {/*            {...register("message",*/}
+            {/*                {*/}
+            {/*                    required: true,*/}
+            {/*                    maxLength: {*/}
+            {/*                        value: maxMessageLengthValue,*/}
+            {/*                        message: `Max length ${maxMessageLengthValue} symbols`*/}
+            {/*                    }*/}
+            {/*                })}*/}
+            {/*        />*/}
+            {/*    </div>*/}
+            {/*    <div*/}
+            {/*        className={s.btnMessageSend}*/}
+            {/*    >*/}
+            {/*        <input*/}
+            {/*            type={"submit"}*/}
+            {/*        />*/}
+            {/*    </div>*/}
+            {/*</div>*/}
         </form>
     )
 }
