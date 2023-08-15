@@ -36,8 +36,8 @@ const Dialogs: React.FC<PropsType> = (props) => {
             <div
                 className={s.messages}
             >
-                <Divider style={{height: '100%', width: '20px', margin: 0}} type="vertical"/>
-                <div style={{width: '100%'}}>
+                <Divider className={s.divider} type="vertical"/>
+                <div className={s.scrollGrope} >
                     <Element
                         className={s.messagesScroll}
                     >
@@ -67,7 +67,6 @@ type AddMessageFormType = {
 
 const AddMessageForm: React.FC<AddMessageFormType> = (props) => {
     const {
-        register,
         handleSubmit,
         reset,
         formState: {errors}

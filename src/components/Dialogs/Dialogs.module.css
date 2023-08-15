@@ -37,6 +37,16 @@
     flex-direction: row;
 }
 
+.divider {
+    height: 100%;
+    width: 20px;
+    margin: 0;
+}
+
+.scrollGrope {
+    width: 100%;
+}
+
 .messagesScroll {
     position: relative;
     height: 75vh;
